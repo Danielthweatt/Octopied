@@ -1,4 +1,3 @@
-// Modules
 const express = require("express");
 const db = require("../models");
 
@@ -6,11 +5,19 @@ const db = require("../models");
 const router = express.Router();
 
 // Router
-router.get('/', function (req, res) {
-    res.render('home');
+router.get('/', function(req, res){
+    res.render('signin');
 });
 
-router.get('/game', function (req, res) {
+router.get('/signin', function(req, res){
+    res.render('signin');
+});
+
+router.get('/signup', function(req, res){
+    res.render('signup');
+});
+
+router.get('/game', function(req, res){
     res.render('index');
 });
 

@@ -7,9 +7,20 @@ module.exports = function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
+            validate: {
+                isEmail: true
+            },
             unique: true
         },
-        password: DataTypes.BOOLEAN
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        last_login: DataTypes.DATE,
+        status: {
+            type: DataTypes.ENUM('active', 'inactive'),
+            defaultValue: 'active'
+        }
     });
     return Users;
 };
