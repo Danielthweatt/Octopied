@@ -8,7 +8,8 @@ require('dotenv').config();
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(routes);
  
 app.get('/', function (req, res) {
     res.render('home');
