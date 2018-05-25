@@ -6,7 +6,13 @@ const db = require("../models");
 const router = express.Router();
 
 // Router
+router.get('/', function (req, res) {
+    res.render('home');
+});
 
+router.get('/game', function (req, res) {
+    res.render('index');
+});
 
 // Export
 module.exports = router;
