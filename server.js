@@ -12,6 +12,10 @@ app.use(express.static('public'));
 app.use(routes);
  
 app.get('/', function (req, res) {
+    res.render('home');
+});
+
+app.get('/game', function (req, res) {
     res.render('index');
 });
  

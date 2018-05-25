@@ -1,9 +1,12 @@
-{
+const path = require('path');
+require('dotenv').config();
+
+module.exports = {
   "development": {
     "username": "root",
-    "password": null,
+    "password": process.env.PASSWORD,
     "database": "octopied_db",
-    "host": "127.0.0.1",
+    "host": process.env.HOST,
     "dialect": "mysql"
   },
   "test": {
