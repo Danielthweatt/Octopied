@@ -16,8 +16,8 @@ We use SemVer for versioning. For the versions available, see the tags on this r
 * Kendra Kyndberg - Design, Front end
 * Abraham Anderson - Dev Lead, back end
 ## Links
-User Story/WireFrame: https://projects.invisionapp.com/boards/MS3N3XCH2YW/
-Project Management: https://github.com/Dabea/Octopied/issues
+* User Story/WireFrame: https://projects.invisionapp.com/boards/MS3N3XCH2YW/
+* Project Management: https://github.com/Dabea/Octopied/issues
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
 ## Acknowledgments
