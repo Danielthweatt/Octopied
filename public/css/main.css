@@ -3,6 +3,13 @@ body {
   z-index: 0;
 }
 
+.login {
+  width:400px;
+  height:250px;
+  background: #ffffff;
+  margin-left: 25%;
+}
+
 .counter {
   color:white;
 }
