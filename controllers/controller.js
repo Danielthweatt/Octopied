@@ -1,18 +1,42 @@
-// Modules
-const express = require("express");
-const db = require("../models");
+// Routes
 
-// Router Setup
-const router = express.Router();
+module.exports = function(app, passport){
 
-// Router
-router.get('/', function (req, res) {
-    res.render('home');
-});
+    app.get('/', function(req, res){
+        res.render('signin');
+    });
 
-router.get('/game', function (req, res) {
-    res.render('index');
-});
+    app.get('/signin', function(req, res){
+        res.render('signin');
+    });
 
-// Export
-module.exports = router;
+    app.get('/signup', function(req, res){
+        res.render('signup');
+    });
+
+    app.get('/game', function isLoggedIn(req, res, next){
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/signin');
+    }, function(req, res){
+        res.render('index');
+    });
+
+    app.get('/logout', function(req, res){
+        req.session.destroy(function(err){
+            res.redirect('/');
+        });
+    });
+
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/game',
+        failureRedirect: '/signup'
+    }));
+
+    app.post('/signin', passport.authenticate('local-signin', {
+        successRedirect: '/game',
+        failureRedirect: '/signin'
+    }));
+
+};
