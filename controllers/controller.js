@@ -4,6 +4,7 @@ const db = require("../models");
 // Routes
 
 module.exports = function(app, passport){
+
     app.get('/', function(req, res){
         res.render('signin');
     });
@@ -35,4 +36,10 @@ module.exports = function(app, passport){
         successRedirect: '/game',
         failureRedirect: '/signup'
     }));
+
+    app.post('/signin', passport.authenticate('local-signin', {
+        successRedirect: '/game',
+        failureRedirect: '/signin'
+    }));
+
 };
