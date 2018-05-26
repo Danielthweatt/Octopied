@@ -1,6 +1,3 @@
-const express = require("express");
-const db = require("../models");
-
 // Routes
 
 module.exports = function(app, passport){
