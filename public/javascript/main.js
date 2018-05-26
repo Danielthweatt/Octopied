@@ -3,8 +3,8 @@
 let count = 0;
 let clickCount = 0;
 let resources ={
-    worms: 0,
-    fish:0,
+    hearts: 0,
+    babbies:0,
     sharks:0,
     dirt: 0,
     rock:0,
@@ -55,5 +55,4 @@ function evolve() {
     }
 },180);
 }
-
 

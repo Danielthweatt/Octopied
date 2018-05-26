@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const routes = require("./controllers/controller.js");
 const db = require("./models");
+const flash = require('connect-flash');
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(session({secret: 'keyboard cat',resave: true, saveUninitialized:true}));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport/passport.js')(passport, db.users);

@@ -26,6 +26,10 @@ body {
   list-style: none;
 }
 
+.resources ul{
+  list-style: none;
+}
+
 
   /**************** Stage Backgrounds *************/
 .overlay{
