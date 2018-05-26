@@ -2,6 +2,14 @@
 //Seting up Main variables
 let count = 0;
 let clickCount = 0;
+let resources ={
+    worms: 0,
+    fish:0,
+    sharks:0,
+    dirt: 0,
+    rock:0,
+    steel:0
+}
 
 
 $(document).on('click','.octo',clickFrenzy);
@@ -47,3 +55,5 @@ function evolve() {
     }
 },180);
 }
+
+

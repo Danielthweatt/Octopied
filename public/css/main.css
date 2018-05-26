@@ -13,6 +13,20 @@ body {
 .counter {
   color:white;
 }
+
+.health-full {
+  content:'&hearts;';
+  color:red;
+  font-size: 3em;
+  animation:1s  infinite linear;
+}
+
+.resources{
+  color:white;
+  list-style: none;
+}
+
+
   /**************** Stage Backgrounds *************/
 .overlay{
     position:fixed;
@@ -30,6 +44,30 @@ body {
   @keyframes scroll{
     100%{
       background-position:0px 3000px;
+    }
+  }
+
+  @keyframes beat{
+    0%{
+      font-size:3em;
+    }
+    50%{
+      font-size:2.5em;
+    }
+    100%{
+      font-size:3em;
+    }
+  }
+
+  @keyframes beat{
+    0%{
+      font-size:3em;
+    }
+    50%{
+      font-size:2.5em;
+    }
+    100%{
+      font-size:3em;
     }
   }
   
