@@ -18,7 +18,8 @@ app.set('view engine', 'handlebars');
 app.use(session({secret: 'keyboard cat',resave: true, saveUninitialized:true}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(routes);
+require('./config/passport/passport.js')(passport, db.users);
+require('./controllers/controller.js')(app, passport);
  
 db.sequelize.sync().then(function(){
     app.listen(PORT, function(){

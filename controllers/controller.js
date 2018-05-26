@@ -1,25 +1,27 @@
 const express = require("express");
 const db = require("../models");
 
-// Router Setup
-const router = express.Router();
+// Routes
 
-// Router
-router.get('/', function(req, res){
-    res.render('signin');
-});
+module.exports = function(app, passport){
+    app.get('/', function(req, res){
+        res.render('signin');
+    });
 
-router.get('/signin', function(req, res){
-    res.render('signin');
-});
+    app.get('/signin', function(req, res){
+        res.render('signin');
+    });
 
-router.get('/signup', function(req, res){
-    res.render('signup');
-});
+    app.get('/signup', function(req, res){
+        res.render('signup');
+    });
 
-router.get('/game', function(req, res){
-    res.render('index');
-});
+    app.get('/game', function(req, res){
+        res.render('index');
+    });
 
-// Export
-module.exports = router;
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/game',
+        failureRedirect: '/signup'
+    }));
+};
