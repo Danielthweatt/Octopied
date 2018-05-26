@@ -16,8 +16,19 @@ module.exports = function(app, passport){
         res.render('signup');
     });
 
-    app.get('/game', function(req, res){
+    app.get('/game', function isLoggedIn(req, res, next){
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/signin');
+    }, function(req, res){
         res.render('index');
+    });
+
+    app.get('/logout', function(req, res){
+        req.session.destroy(function(err){
+            res.redirect('/');
+        });
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
