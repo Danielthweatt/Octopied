@@ -3,15 +3,15 @@
 module.exports = function(app, passport){
 
     app.get('/', function(req, res){
-        res.render('signin');
+        res.render('index');
     });
 
     app.get('/signin', function(req, res){
-        res.render('signin');
+        res.render('signin', {signin: true, error: req.flash('error')});
     });
 
     app.get('/signup', function(req, res){
-        res.render('signup');
+        res.render('signin', {signin: false, error: req.flash('error')});
     });
 
     app.get('/game', function isLoggedIn(req, res, next){
@@ -20,7 +20,7 @@ module.exports = function(app, passport){
         }
         res.redirect('/signin');
     }, function(req, res){
-        res.render('index');
+        res.render('game');
     });
 
     app.get('/logout', function(req, res){
@@ -31,12 +31,14 @@ module.exports = function(app, passport){
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/game',
-        failureRedirect: '/signup'
+        failureRedirect: '/signup',
+        failureFlash: true
     }));
 
     app.post('/signin', passport.authenticate('local-signin', {
         successRedirect: '/game',
-        failureRedirect: '/signin'
+        failureRedirect: '/signin',
+        failureFlash: true 
     }));
 
 };

@@ -1,8 +1,30 @@
-<h1>Sign-In!</h1>
-<form id="signin" name="signin" method="post" action="signin">
-    <label for="email">Email Address</label>
-    <input class="text" name="email" type="text" />
-    <label for="password">Password</label>
-    <input name="password" type="password" />
-    <input class="btn" type="submit" value="Sign In" />
-</form>
+{{#if signin}}
+    <h1>Sign-In!</h1>
+    <a href="/signup"><button>Sign-Up</button></a>
+    <form id="signin" name="signin" method="post" action="signin">
+        <label for="email">Email Address: </label>
+        <input class="text" name="email" type="text" />
+        <label for="password">Password: </label>
+        <input name="password" type="password" />
+        <input class="btn" type="submit" value="Sign In" />
+    </form>
+    <a href=""><button>Forgot Password?</button></a>
+    {{#if error}}
+        <div>{{error}}</div>
+    {{/if}}
+{{/if}}
+
+{{#unless signin}}
+    <h1>Sign-Up!</h1>
+    <a href="/signin"><button>Sign-In</button></a>
+    <form id="signup" name="signup" method="post" action="/signup">
+        <label for="email">Email Address: </label>
+        <input class="text" name="email" type="email" />
+        <label for="password">Password: </label>
+        <input name="password" type="password" />
+        <input class="btn" type="submit" value="Sign Up" />
+    </form>
+    {{#if error}}
+        <div>{{error}}</div>
+    {{/if}}
+{{/unless}}
