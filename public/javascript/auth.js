@@ -2,9 +2,6 @@ $(function(){
 
     $('#signup').on('submit', function(event){
         
-        // event.preventDefault();
-        
-        // const email = $('#email');
         const pass = $('#pass');
         const rePass = $("#re-pass");
         
@@ -12,18 +9,6 @@ $(function(){
             event.preventDefault();
             alert('Please enter the same password in both fields.');
         }
-        //     pass.val('');
-        //     rePass.val('');
-        //     alert('Please enter the same password in both fields.');
-        // } else {
-        //     $.post("/signup", { 
-        //         email: email.val(), 
-        //         password: pass.val() 
-        //     }).then(function(){
-        //         $.redirect('/game');
-        //     });
-        // } 
-
     });
 
 });

@@ -34,7 +34,7 @@ module.exports = function(passport, user){
             }).then(function(user) {
                 if (user) {
                     return done(null, false, {
-                        message: 'That email is already taken'
+                        message: 'That email is already taken.'
                     });
                 } else {
                     const userPassword = generateHash(password);
@@ -70,7 +70,7 @@ module.exports = function(passport, user){
             }).then(function(user){
                 if (!user) {
                     return done(null, false, {
-                        message: 'Email does not exist'
+                        message: 'Email does not exist.'
                     });
                 }
                 if (!isValidPassword(user.password, password)) {
@@ -83,7 +83,7 @@ module.exports = function(passport, user){
             }).catch(function(err){
                 console.log("Error:", err);
                 return done(null, false, {
-                    message: 'Something went wrong with your Signin'
+                    message: 'Something went wrong with your Signin.'
                 });
             });
         }
