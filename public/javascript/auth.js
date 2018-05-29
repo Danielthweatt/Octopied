@@ -1,5 +1,15 @@
 $(function(){
 
+    $('#forgot').on('submit', function(event){
+        
+        const email = $("#email");
+        
+        if (email.val() === '') {
+            event.preventDefault();
+            alert('Please enter an email address.');
+        }
+    });
+
     $('#signup').on('submit', function(event){
         
         const pass = $('#pass');
