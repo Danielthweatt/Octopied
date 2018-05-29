@@ -1,6 +1,7 @@
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: 0;
+  color:white;
 }
 
 .login {

@@ -3,7 +3,9 @@
 <h1>Octopi Goodness</h1>
 <a href="/logout"><button>Logout</button></a>
 <div class="side-bar">
-    <h2 class="counter"  >0</h2>
+    <h2 >Food: <span class="counter">0</span></h2>
+    <div class="currnet-level">Level:</div>
+    <div class="current-exp">Exp:</div>
     <div class="health" style="hieght:120px; postion:abloute; "> 
         <span  class="health-0 health-full">&hearts;</span>
         <span  class="health-1 health-full">&hearts;</span>
@@ -11,7 +13,7 @@
     </div>
     <div class="resources">
         <ul>
-            <li>Worms: <span class="resource-worms"></span></li>
+            <li>heart: <span class="resource-worms"></span></li>
             <li>Fish: <span class="resource-fish"></span></li>
             <li>Sharks: <span class="resource-shark"></span></li>
             <li>Dirt: <span class="resource-dirt"></span></li>
@@ -19,7 +21,13 @@
             <li>Steel: <span class="resource-steel"></span></li>
         </ul>
     </div>
+    <div class="stats">
+       <div> <span>level:</span> <button class="ability-food">level up food</button> </div>
+        <div><span>level:</span> <button class="ability-attack">level up attack</button> </div>
+        <div><span>level:</span> <button class="ability-other">level up other</button> </div>
+    </div>
 </div>
+
 
 <image class="octo" style="width:80px; margin-left:45%; margin-top:25%;" src="/images/original.gif" ></image>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
