@@ -12,7 +12,6 @@ let resources ={
     rock:0,
     steel:0
 }
-
 let octoStats = {
     level: 1,
     exp: 0,
@@ -28,7 +27,6 @@ let octoStats = {
         rankUp: 0
     }
 };
-
 let tradeCost ={
     dirt: 100,
     rock: 10000,
@@ -48,8 +46,12 @@ $(document).on('click','.octo',clickFrenzy);
 function enable() {
    //setup Listners in here
 }
+
+
 /**
- * Keeps track of the numbers of Clicks 
+ * This function triggers all the events that happen on normal clicks
+ * 
+ * @method clickFrenzy 
  */
 function clickFrenzy() {
     const clickValue = calcualteClickValue();
@@ -67,7 +69,7 @@ function clickFrenzy() {
 /**
  * Changes the Octopus to its second form uses set interal to achive this
  * 
- * 
+ * @method evolve
  */
 function evolve() {
     let evolveFlash = 0
@@ -84,7 +86,13 @@ function evolve() {
 },180);
 }
 
-
+/**
+ * This calcuatees the value that is gained by click baised on the current modiers and items
+ * that they player currently has
+ * 
+ * @method calcualteClickValue
+ * @returns INTEGER clickValue 
+ */
 function calcualteClickValue(){
      const proficiency = (octoStats.proficiency.food * .05) + 1;
      const tool =  0//toolA + toolB + toolC;
@@ -95,6 +103,13 @@ function calcualteClickValue(){
      return clickValue;
 }
 
+/**
+ *  This will calculate how much exp is gained
+ * 
+ * @method gainExperiance
+ * 
+ * still need to refine exp item section
+ */
 function gainExperiance() {
     //exp items still need to be made
     const expItem = 1.25;
@@ -103,6 +118,11 @@ function gainExperiance() {
     $('.current-exp').text(`Exp: ${octoStats.exp}`)
 }
 
+/**
+ * This will level up the charchter baised on exp
+ * 
+ * @method levelup
+ */
 function levelup(){
     if(octoStats.exp > octoStats.level * expGrothModifier){
        alert('level up')
@@ -113,6 +133,13 @@ function levelup(){
     }
 }
 
+/**
+ * This lets you to spend your points to get upgrade materials
+ * 
+ * @method buyItem
+ * @param {any} itemName 
+ * @param {number} [count=1] 
+ */
 function buyItem(itemName, count = 1){
     console.log('fire');
     if(points > tradeCost[itemName] * count){
@@ -125,6 +152,15 @@ function buyItem(itemName, count = 1){
         alert('you dont have enouf points')
     }
 }
+
+/**  
+ * this is a function that will collect the reouces over time
+ * 
+ * need to figure a way to toggle this 
+ */
+// function collectResource(type) {
+//     const 
+// }
 
 $('.buy-dirt').on('click', function(){
     buyItem('dirt');
