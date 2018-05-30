@@ -1,8 +1,8 @@
 
 //Seting up Main variables
 let count = 0;
-let clickCount = 0;
-const expGrothModifier = 50;
+let points = 0;
+const expGrothModifier = 10;
 let resources ={
     hearts: 0,
     babbies:0,
@@ -19,16 +19,22 @@ let octoStats = {
     proficiency :{
         food:1,
         attack:1,
+        gather:1
     },
     abilities: {
         foodFrenzy :0,
         inkSpray :0,
         rankUp: 0
     }
+};
+
+let tradeCost ={
+    dirt: 1,
+    fish: 5,
+    rock: 10,
+    shark:15,
+    steel:20
 }
-
-
-
 
 $(document).on('click','.octo',clickFrenzy);
 
@@ -45,10 +51,10 @@ function enable() {
  */
 function clickFrenzy() {
     const clickValue = calcualteClickValue();
-   clickCount += clickValue;
+    points += clickValue;
    gainExperiance();
    levelup();
-   $('.counter').text(clickCount);
+   $('.counter').text(points);
    if(octoStats.level === 10){
        alert('Oh Something Happening');
       evolve();
@@ -65,10 +71,8 @@ function evolve() {
     let evolveFlash = 0
     const timer = setInterval(function(){
     if((evolveFlash % 2) === 0){
-        console.log("Even", evolveFlash)
         $('.octo').attr('src', '/images/Octopus.gif');
     }else{
-        console.log("Odd", evolveFlash)
         $('.octo').attr('src', '/images/original.gif');
     }
     evolveFlash++;
@@ -98,11 +102,45 @@ function gainExperiance() {
 }
 
 function levelup(){
-    console.log(octoStats.exp, octoStats.level)
     if(octoStats.exp > octoStats.level * expGrothModifier){
        alert('level up')
         octoStats.level ++;
         $('.currnet-level').text(`Level:${octoStats.level}`)
     }
 }
+
+function buyItem(itemName, count = 1){
+    console.log('fire');
+    if(points > tradeCost[itemName] * count){
+        resources[itemName]++;
+        points -= tradeCost[itemName] * count;
+        $('.counter').text(points);
+        const selector = '.resource-' + [itemName];
+        $(selector).text( resources[itemName])
+    }else{
+        alert('you dont have enouf points')
+    }
+}
+
+$('.buy-dirt').on('click', function(){
+    buyItem('dirt');
+});
+
+$('.buy-fish').on('click', function(){
+    buyItem('fish');
+});
+
+$('.buy-shark').on('click', function(){
+    buyItem('shark');
+});
+
+$('.buy-rock').on('click', function(){
+    buyItem('rock');
+});
+
+$('.buy-steel').on('click', function(){
+    buyItem('steel');
+});
+
+
 
