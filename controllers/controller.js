@@ -1,6 +1,7 @@
 const waterfall = require('async-waterfall');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const bCrypt = require('bcrypt-nodejs');
 
 // Routes
 
@@ -18,7 +19,8 @@ module.exports = function(app, passport, users){
             forgot: false,
             reset: false,
             signup: false,
-            error: req.flash('error')
+            error: req.flash('error'),
+            info: req.flash('info')
         });
     });
 
@@ -33,7 +35,7 @@ module.exports = function(app, passport, users){
         });
     });
 
-    app.get('/reset/:token', function(req, res) {
+    app.get('/reset/:token', function(req, res){
         Users.findOne({
             where: { 
                 resetPasswordToken: req.params.token, 
@@ -48,7 +50,8 @@ module.exports = function(app, passport, users){
                 forgot: false,
                 reset: true,
                 signup: false,
-                error: req.flash('error')
+                error: req.flash('error'),
+                token: req.params.token
             });
         }).catch(function(){
             req.flash('error', 'Something went wrong accessing the database.');
@@ -119,7 +122,7 @@ module.exports = function(app, passport, users){
                     });
                 });
             },
-            function(token, user, done) {
+            function(token, user, done){
                 // const smtpTransport = nodemailer.createTransport('SMTP', {
                 //     service: 'SendGrid',
                 //     auth: {
@@ -138,17 +141,102 @@ module.exports = function(app, passport, users){
                 // };
                 // smtpTransport.sendMail(mailOptions, function(err){
                     console.log('http://' + req.headers.host + '/reset/' + token);
-                    req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions.');
+                    // if (!err) {
+                        req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions.');
+                    // }
                     done(null, 'done');
                 // });
             }
-        ], function(err) {
+        ], function(err){
             if (err) {
                 req.flash('error', 'Sorry, something went wrong.');
                 res.redirect('/forgot');
             } else {
                 res.redirect('/forgot');
             }
+        });
+    });
+
+    app.post('/reset/:token', function(req, res){
+        const generateHash = function(password){
+            return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+        };
+        waterfall([
+            function(done) {
+                Users.findOne({
+                    where: { 
+                        resetPasswordToken: req.params.token, 
+                        resetPasswordExpires: { $gt: Date.now() } 
+                    }
+                }).then(function(user){
+                    if (!user) {
+                        req.flash('error', 'Password reset token is invalid or has expired.');
+                        res.render('signin', {
+                            signin: false,
+                            forgot: false,
+                            reset: true,
+                            signup: false,
+                            error: req.flash('error')
+                        });
+                    } else {
+                        Users.update({
+                            password: generateHash(req.body.password)
+                        }, {
+                            where: {
+                                resetPasswordToken: req.params.token
+                            }
+                        }).then(function(){
+                            done(null, user)
+                        }).catch(function(){
+                            req.flash('error', 'Something went wrong accessing the database.');
+                            res.render('signin', {
+                                signin: false,
+                                forgot: false,
+                                reset: true,
+                                signup: false,
+                                error: req.flash('error')
+                            });
+                        });
+                    }
+                }).catch(function(){
+                    req.flash('error', 'Something went wrong accessing the database.');
+                    res.render('signin', {
+                        signin: false,
+                        forgot: false,
+                        reset: true,
+                        signup: false,
+                        error: req.flash('error')
+                    });
+                });
+            },
+            function(user, done) {
+            //   const smtpTransport = nodemailer.createTransport('SMTP', {
+            //     service: 'SendGrid',
+            //     auth: {
+            //       user: '!!! YOUR SENDGRID USERNAME !!!',
+            //       pass: '!!! YOUR SENDGRID PASSWORD !!!'
+            //     }
+            //   });
+            //   const mailOptions = {
+            //     to: user.dataValues.email,
+            //     from: 'passwordreset@demo.com',
+            //     subject: 'Your password has been changed',
+            //     text: 'Hello,\n\n' +
+            //       'This is a confirmation that the password for your account ' + user.datavalues.email + ' has just been changed.\n'
+            //   };
+            //   smtpTransport.sendMail(mailOptions, function(err) {
+                // if (!err) {
+                    req.flash('info', 'Success! Your password has been changed.');
+                // }
+                done(null, 'done');
+            //   });
+            }
+        ], function(err) {
+            if (err) {
+                console.log(err);
+                req.flash('error', 'Something went wrong with sending a confirmation email.');
+            }
+            res.redirect('/signin');
         });
     });
 

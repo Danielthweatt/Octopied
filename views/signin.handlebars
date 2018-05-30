@@ -1,4 +1,7 @@
 {{#if signin}}
+    {{#if info}}
+        <div>{{info}}</div>
+    {{/if}}
     <h1>Sign-In!</h1>
     <a href="/signup"><button>Sign-Up</button></a>
     <form id="signin" name="signin" method="post" action="signin">
@@ -32,7 +35,14 @@
 
 {{#if reset}}
     {{#unless error}}
-        <h1>Yay! You made it to the reset page!</h1>
+        <h1>Please Reset Your Password Now</h1>
+        <form id="reset" name="reset" method="post" action="/reset/{{token}}">
+            <label for="password">New Password: </label>
+            <input name="password" id="pass" type="password" />
+            <label for="re-pass">Re-enter Password: </label>
+            <input name="re-pass" id="re-pass" type="password" />
+            <input class="btn" type="submit" value="Reset" />
+        </form>
     {{/unless}}
     {{#if error}}
         <div>{{error}}</div>
