@@ -2,11 +2,12 @@
 //Seting up Main variables
 let count = 0;
 let points = 0;
-const expGrothModifier = 10;
+const expGrothModifier = 5;
 let resources ={
     hearts: 0,
     babbies:0,
-    sharks:0,
+    fish: 0,
+    shark:0,
     dirt: 0,
     rock:0,
     steel:0
@@ -29,11 +30,12 @@ let octoStats = {
 };
 
 let tradeCost ={
-    dirt: 1,
-    fish: 5,
-    rock: 10,
-    shark:15,
-    steel:20
+    dirt: 100,
+    rock: 10000,
+    steel:20000,
+    worms: 100,
+    fish: 1000,
+    shark: 2000,
 }
 
 $(document).on('click','.octo',clickFrenzy);
@@ -55,7 +57,7 @@ function clickFrenzy() {
    gainExperiance();
    levelup();
    $('.counter').text(points);
-   if(octoStats.level === 10){
+   if(octoStats.level === 10 && octoStats.exp === 0){
        alert('Oh Something Happening');
       evolve();
    }
@@ -105,7 +107,9 @@ function levelup(){
     if(octoStats.exp > octoStats.level * expGrothModifier){
        alert('level up')
         octoStats.level ++;
+        octoStats.exp = 0;
         $('.currnet-level').text(`Level:${octoStats.level}`)
+       
     }
 }
 
@@ -142,5 +146,26 @@ $('.buy-steel').on('click', function(){
     buyItem('steel');
 });
 
+/* Animations that need to be made for the game
 
+* Need Exp Bar
+
+Need animation for click value that is added (something that displays a number and then heads up and fades away)
+
+Need a text animation to display text (for level ups and other events)
+
+** Things that need to be created still
+
+    profeceny level up
+
+    come up with abilites  that have cool downs
+
+    Add babby helpers that gather resouces
+
+
+    **Strech **
+
+    Hp bars for boss Fights
+
+*/
 
