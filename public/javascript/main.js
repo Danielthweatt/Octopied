@@ -5,7 +5,7 @@ const collecitonTimeModifer = 5000;
 const expGrothModifier = 5;
 let resources ={
     hearts: 0,
-    babbies:0,
+    babbies:1,
     worm: 0,
     fish: 0,
     shark:0,
@@ -49,25 +49,51 @@ let collectorStatus ={
 const babby = {
     number: 1,
     active: 0,
-    available: 0,
+    available: 1,
     level: 1,
     hugner:2,
+    createBaby: function() {
+        this.number++
+        this.available = this.number - this.active;
+    },
     feed: function() {
         points -= (this.number * 10  * this.hunger);
     },
     //need to move logic for the collection starting In here
     // currenlty on line 220 with collector state
-    startCollecting: function() {
-        if( this.active < this.number ){
+    startCollecting: function(resource) {
+        if( this.available > 0){
             this.active++;
             this.available--
+            collectorStatus[resource] = true;
+            // Builds the name of the funcition that needs to be called useing the given resource
+            startGivenCollector(resource);
+        }else{
+            console.error('You do not have enouf Babbies')
         }
+       
     },
-    stopCollecting: function() {
-        if( this.active >= 1 && this.active + this.available < this.number){
+    stopCollecting: function(resource) {
+        if( this.active >= 1 ){
             this.active--;
             this.available++
+            collectorStatus[resource] = false;
+        }else{
+            console.error('No colectors to Stop')
         }
+    }
+}
+
+function startGivenCollector(resource){
+    switch(resource){
+        case 'worm':
+            collectWorms();
+            break;
+        case 'fish':
+            collectFish();
+            break;
+        default:
+            console.log('default');    
     }
 }
 
@@ -176,10 +202,12 @@ function levelup(){
  * @param {number} [count=1] 
  */
 function buyResource(itemName, count = 1){
-    console.log(points, tradeCost[itemName]);
     if(points > tradeCost[itemName] * count){
+        //Add resource
         resources[itemName]++;
+        //subtract toatl points
         points -= tradeCost[itemName] * count;
+        //update Screen
         $('.counter').text(points);
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
@@ -215,18 +243,24 @@ function checkForCollectors(){
 
 $('.collect-worm').on('click', function(){
     if(babby.number === 0){
+        console.log("You must have a child to collect resources")
         return;
     }
-    
-    collectorStatus.worm = !collectorStatus.worm;
+    collectorStatus.worm ? babby.stopCollecting('worm') : babby.startCollecting('worm') ;
     const check = collectorStatus.worm ? '[x]' : '[]';
-    if(collectorStatus.worm){
-        babby.startCollecting();
-    }
-    
     $('.collect-worm').text(check);
-    collectWorms(); 
+    
 })
+
+$('.collect-fish').on('click', function(){
+    if(babby.number === 0){
+        console.log("You must have a child to collect resources")
+        return;
+    }
+    collectorStatus.fish ? babby.stopCollecting('fish') : babby.startCollecting('fish') ;
+    const check = collectorStatus.fish ? '[x]' : '[]';
+    $('.collect-fish').text(check);
+})  
 
 function collectWorms() {
     $('.resource-worm').text(resources.worm);
@@ -234,6 +268,32 @@ function collectWorms() {
         setTimeout(function(){
             resources.worm++;
             collectWorms();
+
+        }, (collecitonTimeModifer));
+   
+    }
+}
+
+function collectFish() {
+    $('.resource-fish').text(resources.fish);
+    if(collectorStatus.fish){
+        setTimeout(function(){
+            resources.fish++;
+            collectFish();
+
+        }, (collecitonTimeModifer));
+   
+    }
+}
+
+
+function collectResource(type) {
+    $('.resource-' + type).text(resources[type]);
+    if(collectorStatus[type]){
+        setTimeout(function(){
+            resources[type]++;
+            console.log("resource is added", resources);
+            collectResource(type);
 
         }, (collecitonTimeModifer));
    
@@ -282,7 +342,7 @@ $('.have-babby').on('click', function() {
     //set requirments  Must be lv 11 // have home //  cost 10 fish for first
 
     buyItem('worm', 1);
-    babby.number++;
+    babby.createBaby();
 })
 
 
