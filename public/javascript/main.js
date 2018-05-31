@@ -1,6 +1,7 @@
 //Seting up Main variables
 let count = 0;
 let points = 0;
+const collecitonTimeModifer = 5000;
 const expGrothModifier = 5;
 let resources ={
     hearts: 0,
@@ -42,6 +43,17 @@ let collectorStatus ={
     worm: false,
     fish: false,
     shark: false,
+}
+
+// Could add a generateor to create custom kids and indepent levels ** strech
+const babby = {
+    number: 0,
+    active: 0,
+    level: 1,
+    hugner:2,
+    feed: function() {
+        points -= (this.number * 10  * this.hunger);
+    }
 }
 
 $(document).on('click','.octo',clickFrenzy);
@@ -144,12 +156,11 @@ function levelup(){
 /**
  * This lets you to spend your points to get upgrade materials
  * 
- * @method buyItem
+ * @method buyResource
  * @param {any} itemName 
  * @param {number} [count=1] 
  */
-function buyItem(itemName, count = 1){
-    console.log('fire');
+function buyResource(itemName, count = 1){
     if(points > tradeCost[itemName] * count){
         resources[itemName]++;
         points -= tradeCost[itemName] * count;
@@ -161,24 +172,37 @@ function buyItem(itemName, count = 1){
     }
 }
 
+
+/**
+ * This lets you to spend your points to get upgrade materials
+ * 
+ * @method buyItem
+ * @param {any} itemName 
+ * @param {number} [count=1] 
+ */
+function buyItem(itemName, count = 1){
+    if(resources[itemName] >  count){
+        resources[itemName] -= count;
+        $(`.${itemName}` ).text( resources[itemName]);
+        const selector = '.resource-' + [itemName];
+        $(selector).text( resources[itemName])
+    }else{
+        alert(`you dont have enouf ${itemName}s`)
+    }
+}
 function checkForCollectors(){
     
 
 }
 
 $('.collect-worm').on('click', function(){
-    console.log('first fire')
     collectorStatus.worm = !collectorStatus.worm;
-    console.log(collectorStatus.worm)
     check = collectorStatus.worm ? '[x]' : '[]';
-    console.log(check)
     $('.collect-worm').text(check);
-    collectWorms();
-    
+    collectWorms(); 
 })
 
 function collectWorms() {
-    
     $('.resource-worm').text(resources.worm);
     if(collectorStatus.worm){
         setTimeout(function(){
@@ -186,7 +210,7 @@ function collectWorms() {
             console.log('get More worms')
             collectWorms();
 
-        }, 5000);
+        }, (collecitonTimeModifer));
    
     }
 }
@@ -201,24 +225,38 @@ function collectWorms() {
 // }
 
 $('.buy-dirt').on('click', function(){
-    buyItem('dirt');
+    buyResource('dirt');
 });
 
 $('.buy-fish').on('click', function(){
-    buyItem('fish');
+    buyResource('fish');
 });
 
 $('.buy-shark').on('click', function(){
-    buyItem('shark');
+    buyResource('shark');
 });
 
 $('.buy-rock').on('click', function(){
-    buyItem('rock');
+    buyResource('rock');
 });
 
 $('.buy-steel').on('click', function(){
-    buyItem('steel');
+    buyResource('steel');
 });
+
+
+
+
+
+
+$('.have-babby').on('click', function() {
+    //set requirments  Must be lv 11 // have home //  cost 10 fish for first
+    console.log('test123');
+    buyItem('worm', 2);
+})
+
+
+
 
 /* Animations that need to be made for the game
 
