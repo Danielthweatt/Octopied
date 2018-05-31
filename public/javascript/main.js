@@ -55,6 +55,8 @@ const babby = {
     feed: function() {
         points -= (this.number * 10  * this.hunger);
     },
+    //need to move logic for the collection starting In here
+    // currenlty on line 220 with collector state
     startCollecting: function() {
         if( this.active < this.number ){
             this.active++;
