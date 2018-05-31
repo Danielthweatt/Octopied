@@ -1,4 +1,3 @@
-
 //Seting up Main variables
 let count = 0;
 let points = 0;
@@ -6,6 +5,7 @@ const expGrothModifier = 5;
 let resources ={
     hearts: 0,
     babbies:0,
+    worm: 0,
     fish: 0,
     shark:0,
     dirt: 0,
@@ -34,6 +34,14 @@ let tradeCost ={
     worms: 100,
     fish: 1000,
     shark: 2000,
+}
+let collectorStatus ={
+    dirt: false,
+    rock: false,
+    steel:false,
+    worm: false,
+    fish: false,
+    shark: false,
 }
 
 $(document).on('click','.octo',clickFrenzy);
@@ -153,6 +161,36 @@ function buyItem(itemName, count = 1){
     }
 }
 
+function checkForCollectors(){
+    
+
+}
+
+$('.collect-worm').on('click', function(){
+    console.log('first fire')
+    collectorStatus.worm = !collectorStatus.worm;
+    console.log(collectorStatus.worm)
+    check = collectorStatus.worm ? '[x]' : '[]';
+    console.log(check)
+    $('.collect-worm').text(check);
+    collectWorms();
+    
+})
+
+function collectWorms() {
+    
+    $('.resource-worm').text(resources.worm);
+    if(collectorStatus.worm){
+        setTimeout(function(){
+            resources.worm++;
+            console.log('get More worms')
+            collectWorms();
+
+        }, 5000);
+   
+    }
+}
+
 /**  
  * this is a function that will collect the reouces over time
  * 
@@ -204,4 +242,8 @@ Need a text animation to display text (for level ups and other events)
     Hp bars for boss Fights
 
 */
+
+
+
+
 
