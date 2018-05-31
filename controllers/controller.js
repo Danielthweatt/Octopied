@@ -1,7 +1,8 @@
 const waterfall = require('async-waterfall');
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 const bCrypt = require('bcrypt-nodejs');
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
 
 // Routes
 
@@ -123,29 +124,30 @@ module.exports = function(app, passport, users){
                 });
             },
             function(token, user, done){
-                // const smtpTransport = nodemailer.createTransport('SMTP', {
-                //     service: 'SendGrid',
-                //     auth: {
-                //         user: '!!! YOUR SENDGRID USERNAME !!!',
-                //         pass: '!!! YOUR SENDGRID PASSWORD !!!'
-                //     }
-                // });
-                // const mailOptions = {
-                //     to: user.dataValues.email,
-                //     from: 'passwordreset@octopied.com',
-                //     subject: 'Octopied Password Reset',
-                //     text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Octopied account.\n\n' +
-                //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                //     'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-                // };
-                // smtpTransport.sendMail(mailOptions, function(err){
+                const options = {
+                    auth: {
+                        api_user: 'Group1Project2',
+                        api_key: 'Octopied1'
+                    }
+                }
+                const mailer = nodemailer.createTransport(sgTransport(options));
+                const mailOptions = {
+                    to: user.dataValues.email,
+                    from: 'passwordreset@octopied.com',
+                    subject: 'Octopied Password Reset',
+                    text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Octopied account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                };
+                mailer.sendMail(mailOptions, function(err, res){
                     console.log('http://' + req.headers.host + '/reset/' + token);
-                    // if (!err) {
+                    if (!err) {
                         req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions.');
-                    // }
-                    done(null, 'done');
-                // });
+                    }
+                    console.log(res);
+                    done(err, 'done');
+                });
             }
         ], function(err){
             if (err) {
