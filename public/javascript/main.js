@@ -32,7 +32,7 @@ let tradeCost ={
     dirt: 100,
     rock: 10000,
     steel:20000,
-    worms: 100,
+    worm: 100,
     fish: 1000,
     shark: 2000,
 }
@@ -47,12 +47,25 @@ let collectorStatus ={
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
-    number: 0,
+    number: 1,
     active: 0,
+    available: 0,
     level: 1,
     hugner:2,
     feed: function() {
         points -= (this.number * 10  * this.hunger);
+    },
+    startCollecting: function() {
+        if( this.active < this.number ){
+            this.active++;
+            this.available--
+        }
+    },
+    stopCollecting: function() {
+        if( this.active >= 1 && this.active + this.available < this.number){
+            this.active--;
+            this.available++
+        }
     }
 }
 
@@ -161,6 +174,7 @@ function levelup(){
  * @param {number} [count=1] 
  */
 function buyResource(itemName, count = 1){
+    console.log(points, tradeCost[itemName]);
     if(points > tradeCost[itemName] * count){
         resources[itemName]++;
         points -= tradeCost[itemName] * count;
@@ -174,14 +188,16 @@ function buyResource(itemName, count = 1){
 
 
 /**
- * This lets you to spend your points to get upgrade materials
+ * This will let you use resources to use this you need to input the 
+ * name of the item and the quanity and it will either spend the points or 
+ * it will sent a message letting the user know they do not have the required resources
  * 
  * @method buyItem
  * @param {any} itemName 
  * @param {number} [count=1] 
  */
 function buyItem(itemName, count = 1){
-    if(resources[itemName] >  count){
+    if(resources[itemName] >=  count){
         resources[itemName] -= count;
         $(`.${itemName}` ).text( resources[itemName]);
         const selector = '.resource-' + [itemName];
@@ -196,8 +212,16 @@ function checkForCollectors(){
 }
 
 $('.collect-worm').on('click', function(){
+    if(babby.number === 0){
+        return;
+    }
+    
     collectorStatus.worm = !collectorStatus.worm;
-    check = collectorStatus.worm ? '[x]' : '[]';
+    const check = collectorStatus.worm ? '[x]' : '[]';
+    if(collectorStatus.worm){
+        babby.startCollecting();
+    }
+    
     $('.collect-worm').text(check);
     collectWorms(); 
 })
@@ -207,7 +231,6 @@ function collectWorms() {
     if(collectorStatus.worm){
         setTimeout(function(){
             resources.worm++;
-            console.log('get More worms')
             collectWorms();
 
         }, (collecitonTimeModifer));
@@ -226,6 +249,10 @@ function collectWorms() {
 
 $('.buy-dirt').on('click', function(){
     buyResource('dirt');
+});
+
+$('.buy-worm').on('click', function(){
+    buyResource('worm');
 });
 
 $('.buy-fish').on('click', function(){
@@ -251,8 +278,9 @@ $('.buy-steel').on('click', function(){
 
 $('.have-babby').on('click', function() {
     //set requirments  Must be lv 11 // have home //  cost 10 fish for first
-    console.log('test123');
-    buyItem('worm', 2);
+
+    buyItem('worm', 1);
+    babby.number++;
 })
 
 
