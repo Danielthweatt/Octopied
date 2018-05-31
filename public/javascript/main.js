@@ -44,12 +44,20 @@ let collectorStatus ={
     fish: false,
     shark: false,
 }
+let resourceDiffuculityRank ={
+    dirt: 2,
+    rock: 6,
+    steel:12,
+    worm: 1,
+    fish: 3,
+    shark: 6,
+}
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
-    number: 1,
+    number: 3,
     active: 0,
-    available: 1,
+    available: 3,
     level: 1,
     hugner:2,
     createBaby: function() {
@@ -92,6 +100,18 @@ function startGivenCollector(resource){
         case 'fish':
             collectFish();
             break;
+        case 'shark':
+            collectShark();
+            break;
+        case 'dirt':
+            collectDirt();
+            break;
+        case 'rock':
+            collectRock();
+            break;
+        case 'steel':
+            collectSteel();
+            break;    
         default:
             console.log('default');    
     }
@@ -262,15 +282,55 @@ $('.collect-fish').on('click', function(){
     $('.collect-fish').text(check);
 })  
 
+$('.collect-shark').on('click', function(){
+    if(babby.number === 0){
+        console.log("You must have a child to collect resources")
+        return;
+    }
+    collectorStatus.shark ? babby.stopCollecting('shark') : babby.startCollecting('shark') ;
+    const check = collectorStatus.shark ? '[x]' : '[]';
+    $('.collect-shark').text(check);
+})  
+
+$('.collect-dirt').on('click', function(){
+    if(babby.number === 0){
+        console.log("You must have a child to collect resources")
+        return;
+    }
+    collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
+    const check = collectorStatus.dirt ? '[x]' : '[]';
+    $('.collect-dirt').text(check);
+}) 
+
+$('.collect-rock').on('click', function(){
+    if(babby.number === 0){
+        console.log("You must have a child to collect resources")
+        return;
+    }
+    collectorStatus.rock ? babby.stopCollecting('rock') : babby.startCollecting('rock') ;
+    const check = collectorStatus.rock ? '[x]' : '[]';
+    $('.collect-rock').text(check);
+})
+
+$('.collect-steel').on('click', function(){
+    if(babby.number === 0){
+        console.log("You must have a child to collect resources")
+        return;
+    }
+    collectorStatus.steel ? babby.stopCollecting('steel') : babby.startCollecting('steel') ;
+    const check = collectorStatus.steel ? '[x]' : '[]';
+    $('.collect-steel').text(check);
+})
+
 function collectWorms() {
     $('.resource-worm').text(resources.worm);
     if(collectorStatus.worm){
         setTimeout(function(){
-            resources.worm++;
-            collectWorms();
-
-        }, (collecitonTimeModifer));
-   
+            if(collectorStatus.worm){
+                resources.worm++;
+                collectWorms();
+            }
+        }, (collecitonTimeModifer * resourceDiffuculityRank.worm));
     }
 }
 
@@ -278,11 +338,51 @@ function collectFish() {
     $('.resource-fish').text(resources.fish);
     if(collectorStatus.fish){
         setTimeout(function(){
-            resources.fish++;
-            collectFish();
+            if(collectorStatus.fish){
+                resources.fish++;
+                collectFish();
+            }
+        }, (collecitonTimeModifer  * resourceDiffuculityRank.fish));
+    }
+}
 
-        }, (collecitonTimeModifer));
-   
+function collectShark() {
+    $('.resource-shark').text(resources.shark);
+    if(collectorStatus.shark){
+        setTimeout(function(){
+            resources.shark++;
+            collectShark();
+        }, (collecitonTimeModifer  * resourceDiffuculityRank.shark));
+    }
+}
+
+function collectDirt() {
+    $('.resource-dirt').text(resources.dirt);
+    if(collectorStatus.dirt){
+        setTimeout(function(){
+            resources.dirt++;
+            collectDirt();
+        }, (collecitonTimeModifer  * resourceDiffuculityRank.dirt));
+    }
+}
+
+function collectRock() {
+    $('.resource-rock').text(resources.rock);
+    if(collectorStatus.rock){
+        setTimeout(function(){
+            resources.rock++;
+            collectRock();
+        }, (collecitonTimeModifer  * resourceDiffuculityRank.rock));
+    }
+}
+
+function collectSteel() {
+    $('.resource-steel').text(resources.steel);
+    if(collectorStatus.steel){
+        setTimeout(function(){
+            resources.steel++;
+            collectSteel();
+        }, (collecitonTimeModifer  * resourceDiffuculityRank.steel));
     }
 }
 
