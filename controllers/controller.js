@@ -2,7 +2,6 @@ const waterfall = require('async-waterfall');
 const crypto = require('crypto');
 const bCrypt = require('bcrypt-nodejs');
 const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
 
 // Routes
 
@@ -124,13 +123,13 @@ module.exports = function(app, passport, users){
                 });
             },
             function(token, user, done){
-                const options = {
+                const mailer = nodemailer.createTransport({
+                    service: 'gmail',
                     auth: {
-                        api_user: 'Group1Project2',
-                        api_key: 'Octopied1'
+                        user: 'octopiedhelp@gmail.com',
+                        pass: 'Octopied35'
                     }
-                }
-                const mailer = nodemailer.createTransport(sgTransport(options));
+                });
                 const mailOptions = {
                     to: user.dataValues.email,
                     from: 'passwordreset@octopied.com',
@@ -141,11 +140,9 @@ module.exports = function(app, passport, users){
                     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
                 };
                 mailer.sendMail(mailOptions, function(err, res){
-                    console.log('http://' + req.headers.host + '/reset/' + token);
                     if (!err) {
                         req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions.');
                     }
-                    console.log(res);
                     done(err, 'done');
                 });
             }
@@ -212,30 +209,29 @@ module.exports = function(app, passport, users){
                 });
             },
             function(user, done) {
-            //   const smtpTransport = nodemailer.createTransport('SMTP', {
-            //     service: 'SendGrid',
-            //     auth: {
-            //       user: '!!! YOUR SENDGRID USERNAME !!!',
-            //       pass: '!!! YOUR SENDGRID PASSWORD !!!'
-            //     }
-            //   });
-            //   const mailOptions = {
-            //     to: user.dataValues.email,
-            //     from: 'passwordreset@demo.com',
-            //     subject: 'Your password has been changed',
-            //     text: 'Hello,\n\n' +
-            //       'This is a confirmation that the password for your account ' + user.datavalues.email + ' has just been changed.\n'
-            //   };
-            //   smtpTransport.sendMail(mailOptions, function(err) {
-                // if (!err) {
-                    req.flash('info', 'Success! Your password has been changed.');
-                // }
-                done(null, 'done');
-            //   });
+                const mailer = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'octopiedhelp@gmail.com',
+                        pass: 'Octopied35'
+                    }
+                });
+                const mailOptions = {
+                    to: user.dataValues.email,
+                    from: 'passwordreset@octopied.com',
+                    subject: 'Your password has been changed',
+                    text: 'Hello,\n\n' +
+                    'This is a confirmation that the password for your Octopied account has just been changed.\n'
+                };
+                mailer.sendMail(mailOptions, function(err, res) {
+                    if (!err) {
+                        req.flash('info', 'Success! Your password has been changed.');
+                    }
+                    done(err, 'done');
+                });
             }
         ], function(err) {
             if (err) {
-                console.log(err);
                 req.flash('error', 'Something went wrong with sending a confirmation email.');
             }
             res.redirect('/signin');
