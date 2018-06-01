@@ -21,7 +21,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport/passport.js')(passport, db.users);
-require('./controllers/controller.js')(app, passport);
+require('./controllers/controller.js')(app, passport, db.users);
  
 db.sequelize.sync().then(function(){
     app.listen(PORT, function(){

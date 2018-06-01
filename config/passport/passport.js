@@ -1,8 +1,8 @@
 const bCrypt = require('bcrypt-nodejs');
 
-module.exports = function(passport, user){
+module.exports = function(passport, users){
 
-    const User = user;
+    const Users = users;
     const LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser(function(user, done){
@@ -10,7 +10,7 @@ module.exports = function(passport, user){
     });
 
     passport.deserializeUser(function(id, done){
-        User.findById(id).then(function(user){
+        Users.findById(id).then(function(user){
             if (user) {
                 done(null, user.get());
             } else {
@@ -27,7 +27,7 @@ module.exports = function(passport, user){
             const generateHash = function(password){
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             };
-            User.findOne({
+            Users.findOne({
                 where: {
                     email: email
                 }
@@ -42,7 +42,7 @@ module.exports = function(passport, user){
                         email: email,
                         password: userPassword,
                     };
-                    User.create(data).then(function(newUser, created){
+                    Users.create(data).then(function(newUser, created){
                         if (!newUser) {
                             return done(null, false);
                         }
@@ -63,7 +63,7 @@ module.exports = function(passport, user){
             const isValidPassword = function(userpass, password){
                 return bCrypt.compareSync(password, userpass);
             };
-            User.findOne({
+            Users.findOne({
                 where: {
                     email: email
                 }
