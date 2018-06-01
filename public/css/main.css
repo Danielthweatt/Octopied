@@ -1,7 +1,8 @@
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: 0;
-  color:white;
+  color: #f8bbd0;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .login {
@@ -18,19 +19,34 @@ body {
 .health-full {
   content:'&hearts;';
   color:red;
-  font-size: 3em;
+  font-size: 4em;
   animation:1s  infinite linear;
 }
 
 .resources{
   color:white;
+  font-family: 'Work Sans', sans-serif;
   list-style: none;
+  float: right;
 }
 
 .resources ul{
   list-style: none;
 }
-
+/* game */
+.side-bar{
+  float: left;
+  font-family: 'Work Sans', sans-serif;
+}
+.stats{
+  float: right;
+  font-family: 'Work Sans', sans-serif;
+}
+.gameHeader{
+  font-family: 'Kavivanar', cursive;
+  text-align: center;
+  font-size: 80px;
+}
 
   /**************** Stage Backgrounds *************/
 .overlay{
