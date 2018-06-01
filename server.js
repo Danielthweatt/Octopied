@@ -6,7 +6,6 @@ const exphbs = require('express-handlebars');
 const routes = require("./controllers/controller.js");
 const db = require("./models");
 const flash = require('connect-flash');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,11 +19,20 @@ app.use(session({secret: 'keyboard cat',resave: true, saveUninitialized:true}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport/passport.js')(passport, db.users);
+require('./config/passport/passport.js')(passport, db);
 require('./controllers/controller.js')(app, passport, db.users);
  
 db.sequelize.sync().then(function(){
+    db.config.findOrCreate({
+        where: {
+            id: 1
+        }
+    }).then(function(){
+        console.log('Database configured.');
+    }).catch(function(err){
+        console.log(`Oh boy, it broke: ${err}`);
+    });
     app.listen(PORT, function(){
         console.log("App listening on PORT " + PORT);
     });
-});  
+});

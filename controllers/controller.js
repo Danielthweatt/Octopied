@@ -5,9 +5,11 @@ const nodemailer = require('nodemailer');
 
 // Routes
 
-module.exports = function(app, passport, users){
+module.exports = function(app, passport, db){
 
-    const Users = users;
+    const Users = db.users;
+    const Statistics = db.statistics;
+    const Resources = db.resources;
 
     app.get('/', function(req, res){
         res.render('index');
@@ -19,8 +21,8 @@ module.exports = function(app, passport, users){
             forgot: false,
             reset: false,
             signup: false,
-            error: req.flash('error'),
-            info: req.flash('info')
+            flashError: req.flash('error'),
+            flashInfo: req.flash('info')
         });
     });
 
@@ -30,8 +32,8 @@ module.exports = function(app, passport, users){
             forgot: true,
             reset: false,
             signup: false,
-            error: req.flash('error'),
-            info: req.flash('info')
+            flashError: req.flash('error'),
+            flashInfo: req.flash('info')
         });
     });
 
@@ -50,7 +52,7 @@ module.exports = function(app, passport, users){
                 forgot: false,
                 reset: true,
                 signup: false,
-                error: req.flash('error'),
+                flashError: req.flash('error'),
                 token: req.params.token
             });
         }).catch(function(){
@@ -64,7 +66,7 @@ module.exports = function(app, passport, users){
             forgot: false,
             reset: false,
             signup: true, 
-            error: req.flash('error')
+            flashError: req.flash('error')
         });
     });
 
@@ -80,6 +82,28 @@ module.exports = function(app, passport, users){
     app.get('/logout', function(req, res){
         req.session.destroy(function(err){
             res.redirect('/');
+        });
+    });
+
+    app.put('/game/:id', function(req, res){
+        const id = req.params.id;
+        const statistics = req.body.statistics;
+        const resources = req.body.resources;
+        Statistics.update(statistics, 
+        { 
+            where: {
+                id: id
+            }
+        }).then(function(){}).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
+        });
+        Resources.update(resources,
+        {
+            where: {
+                id: id
+            }
+        }).then(function(){}).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
         });
     });
 
@@ -175,7 +199,7 @@ module.exports = function(app, passport, users){
                             forgot: false,
                             reset: true,
                             signup: false,
-                            error: req.flash('error')
+                            flashError: req.flash('error')
                         });
                     } else {
                         Users.update({
@@ -193,7 +217,7 @@ module.exports = function(app, passport, users){
                                 forgot: false,
                                 reset: true,
                                 signup: false,
-                                error: req.flash('error')
+                                flashError: req.flash('error')
                             });
                         });
                     }
@@ -204,7 +228,7 @@ module.exports = function(app, passport, users){
                         forgot: false,
                         reset: true,
                         signup: false,
-                        error: req.flash('error')
+                        flashError: req.flash('error')
                     });
                 });
             },

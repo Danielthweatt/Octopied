@@ -1,8 +1,10 @@
 const bCrypt = require('bcrypt-nodejs');
 
-module.exports = function(passport, users){
+module.exports = function(passport, db){
 
-    const Users = users;
+    const Users = db.users;
+    const Statistics = db.statistics;
+    const Resources = db.resources;
     const LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser(function(user, done){
@@ -38,7 +40,7 @@ module.exports = function(passport, users){
                     });
                 } else {
                     const userPassword = generateHash(password);
-                    const data ={
+                    const data = {
                         email: email,
                         password: userPassword,
                     };
@@ -47,7 +49,19 @@ module.exports = function(passport, users){
                             return done(null, false);
                         }
                         if (newUser) {
-                            return done(null, newUser);
+                            Statistics.create({
+                                user_id: newUser.dataValues.id
+                            }).then(function(){
+                                Resources.create({
+                                    user_id: newUser.dataValues.id
+                                }).then(function(){
+                                    return done(null, newUser);
+                                }).catch(function(err){
+                                    console.log(`Oh boy, it broke: ${err}`);
+                                });
+                            }).catch(function(err){
+                                console.log(`Oh boy, it broke: ${err}`);
+                            });
                         }            
                     });            
                 }
