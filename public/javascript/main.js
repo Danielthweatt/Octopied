@@ -7,57 +7,58 @@ $.ajax('/game/config', {
 //Seting up Main variables
 let count = 0;
 let points = 0;
-const collecitonTimeModifer = results.collection_time_modifier;
-const expGrothModifier = results.experience_growth_modifier;
+const collecitonTimeModifer = results.gameConfig.collection_time_modifier;
+const expGrothModifier = results.gameConfig.experience_growth_modifier;
 const tradeCost ={
-    dirt: results.dirt_trade_cost,
-    rock: results.rock_trade_cost,
-    steel: results.steel_trade_cost,
-    worm: results.worm_trade_cost,
-    fish: results.fish_trade_cost,
-    shark: results.shark_trade_cost,
-}
+    dirt: results.gameConfig.dirt_trade_cost,
+    rock: results.gameConfig.rock_trade_cost,
+    steel: results.gameConfig.steel_trade_cost,
+    worm: results.gameConfig.worm_trade_cost,
+    fish: results.gameConfig.fish_trade_cost,
+    shark: results.gameConfig.shark_trade_cost
+};
 const resourceDiffuculityRank ={
-    dirt: results.dirt_resource_difficulty_rank,
-    rock: results.rock_resource_difficulty_rank,
-    steel: results.steel_resource_difficulty_rank,
-    worm: results.worm_resource_difficulty_rank,
-    fish: results.fish_resource_difficulty_rank,
-    shark: results.shark_resource_difficulty_rank,
-}
-let resources ={
-    hearts: 0,
-    babbies:1,
-    worm: 0,
-    fish: 0,
-    shark:0,
-    dirt: 0,
-    rock:0,
-    steel:0
-}
-let octoStats = {
-    level: 1,
-    exp: 0,
-    prestidge: 0,
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+    rock: results.gameConfig.rock_resource_difficulty_rank,
+    steel: results.gameConfig.steel_resource_difficulty_rank,
+    worm: results.gameConfig.worm_resource_difficulty_rank,
+    fish: results.gameConfig.fish_resource_difficulty_rank,
+    shark: results.gameConfig.shark_resource_difficulty_rank
+};
+const resources ={
+    hearts: results.resourcesConfig.hearts,
+    babbies: results.resourcesConfig.babies,
+    worm: results.resourcesConfig.worms,
+    fish: results.resourcesConfig.fish,
+    shark: results.resourcesConfig.sharks,
+    dirt: results.resourcesConfig.dirt,
+    rock: results.resourcesConfig.rocks,
+    steel: results.resourcesConfig.steel
+};
+const octoStats = {
+    level: results.statisticsConfig.level,
+    exp: results.statisticsConfig.experience,
+    prestidge: results.statisticsConfig.prestige,
     proficiency :{
-        food:1,
-        attack:1,
-        gather:1
+        food: results.statisticsConfig.food_proficiency,
+        gather: results.statisticsConfig.gather_proficiency,
+        attack: results.statisticsConfig.attack_proficiency,
+        defense: results.statisticsConfig.defense_proficiency
     },
     abilities: {
-        foodFrenzy :0,
-        inkSpray :0,
-        rankUp: 0
+        foodFrenzy: results.statisticsConfig.food_frenzy,
+        inkSpray: results.statisticsConfig.ink_spray,
+        rankUp: results.statisticsConfig.rank_up
     }
 };
-let collectorStatus ={
-    dirt: false,
-    rock: false,
-    steel:false,
-    worm: false,
-    fish: false,
-    shark: false,
-}
+const collectorStatus ={
+    dirt: results.statisticsConfig.dirt_collector_status,
+    rock: results.statisticsConfig.rock_collector_status,
+    steel: results.statisticsConfig.steel_collector_status,
+    worm: results.statisticsConfig.worm_collector_status,
+    fish: results.statisticsConfig.fish_collector_status,
+    shark: results.statisticsConfig.shark_collector_status
+};
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {

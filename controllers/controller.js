@@ -86,8 +86,32 @@ module.exports = function(app, passport, db){
         }
         res.status(401).end();
     }, function(req, res){
-        Config.findAll({}).then(function(results){
-            res.json(results[0].dataValues);
+        const config = {};
+        Config.findOne({
+            where: {
+                id: 1
+            }
+        }).then(function(results){
+            config.gameConfig = results.dataValues;
+            Resources.findOne({
+                where: {
+                    id: req.user.id
+                }
+            }).then(function(results){
+                config.resourcesConfig = results.dataValues;
+                Statistics.findOne({
+                    where: {
+                        id: req.user.id
+                    }
+                }).then(function(results){
+                    config.statisticsConfig = results.dataValues;
+                    res.json(config);
+                }).catch(function(err){
+                    console.log(`Oh boy, it broke: ${err}`);
+                });
+            }).catch(function(err){
+                console.log(`Oh boy, it broke: ${err}`);
+            });
         }).catch(function(err){
             console.log(`Oh boy, it broke: ${err}`);
         });
