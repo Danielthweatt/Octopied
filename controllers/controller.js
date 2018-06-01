@@ -85,28 +85,6 @@ module.exports = function(app, passport, db){
         });
     });
 
-    app.put('/game/:id', function(req, res){
-        const id = req.params.id;
-        const statistics = req.body.statistics;
-        const resources = req.body.resources;
-        Statistics.update(statistics, 
-        { 
-            where: {
-                id: id
-            }
-        }).then(function(){}).catch(function(err){
-            console.log(`Oh boy, it broke: ${err}`);
-        });
-        Resources.update(resources,
-        {
-            where: {
-                id: id
-            }
-        }).then(function(){}).catch(function(err){
-            console.log(`Oh boy, it broke: ${err}`);
-        });
-    });
-
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/game',
         failureRedirect: '/signup',
@@ -268,4 +246,36 @@ module.exports = function(app, passport, db){
         failureFlash: true 
     }));
 
+    app.put('/game', function(req, res){
+        console.log(req.user.id);
+        const userID = req.user.id;
+        const statistics = req.body.statistics;
+        const resources = req.body.resources;
+        Resources.update(resources,
+        {
+            where: {
+                user_id: userID
+            }
+        }).then(function(result){
+            if (result === 0) {
+                return res.status(404).end();
+            }
+            Statistics.update(statistics, 
+            { 
+                where: {
+                    id: id
+                }
+            }).then(function(result){
+                if (result === 0) {
+                    return res.status(404).end();
+                }
+                res.status(200).end();        
+            }).catch(function(err){
+                console.log(`Oh boy, it broke: ${err}`);
+            });
+        }).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
+        });
+    });
+    
 };

@@ -20,7 +20,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport/passport.js')(passport, db);
-require('./controllers/controller.js')(app, passport, db.users);
+require('./controllers/controller.js')(app, passport, db);
  
 db.sequelize.sync().then(function(){
     db.config.findOrCreate({
