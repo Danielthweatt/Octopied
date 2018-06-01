@@ -31,6 +31,21 @@ body {
   list-style: none;
 }
 
+/******** Landon's Styles ***********/
+.primary-button {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 8px 16px 8px 16px;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
+}
+
 
   /**************** Stage Backgrounds *************/
 .overlay{
