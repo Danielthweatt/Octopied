@@ -60,14 +60,6 @@ module.exports = function(sequelize, DataTypes) {
         shark_resource_difficulty_rank: {
             type: DataTypes.INTEGER,
             defaultValue: 6
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-            references: {
-                model: "users",
-                key: "id"
-            }
         }
     });
     return Config;

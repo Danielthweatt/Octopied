@@ -1,8 +1,30 @@
+$(function(){
+
+$.ajax('/game/config', {
+    type: 'GET'
+}).then(function(results){
+
 //Seting up Main variables
 let count = 0;
 let points = 0;
-const collecitonTimeModifer = 5000;
-const expGrothModifier = 5;
+const collecitonTimeModifer = results.collection_time_modifier;
+const expGrothModifier = results.experience_growth_modifier;
+const tradeCost ={
+    dirt: results.dirt_trade_cost,
+    rock: results.rock_trade_cost,
+    steel: results.steel_trade_cost,
+    worm: results.worm_trade_cost,
+    fish: results.fish_trade_cost,
+    shark: results.shark_trade_cost,
+}
+const resourceDiffuculityRank ={
+    dirt: results.dirt_resource_difficulty_rank,
+    rock: results.rock_resource_difficulty_rank,
+    steel: results.steel_resource_difficulty_rank,
+    worm: results.worm_resource_difficulty_rank,
+    fish: results.fish_resource_difficulty_rank,
+    shark: results.shark_resource_difficulty_rank,
+}
 let resources ={
     hearts: 0,
     babbies:1,
@@ -28,14 +50,6 @@ let octoStats = {
         rankUp: 0
     }
 };
-let tradeCost ={
-    dirt: 100,
-    rock: 10000,
-    steel:20000,
-    worm: 100,
-    fish: 1000,
-    shark: 2000,
-}
 let collectorStatus ={
     dirt: false,
     rock: false,
@@ -43,14 +57,6 @@ let collectorStatus ={
     worm: false,
     fish: false,
     shark: false,
-}
-let resourceDiffuculityRank ={
-    dirt: 2,
-    rock: 6,
-    steel:12,
-    worm: 1,
-    fish: 3,
-    shark: 6,
 }
 
 // Could add a generateor to create custom kids and indepent levels ** strech
@@ -472,6 +478,8 @@ Need a text animation to display text (for level ups and other events)
 */
 
 
+}).catch(function(err){
+    console.log(`Oh boy, it broke: ${err}`);
+});
 
-
-
+});

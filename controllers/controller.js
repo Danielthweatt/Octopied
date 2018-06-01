@@ -10,6 +10,7 @@ module.exports = function(app, passport, db){
     const Users = db.users;
     const Statistics = db.statistics;
     const Resources = db.resources;
+    const Config = db.config;
 
     app.get('/', function(req, res){
         res.render('index');
@@ -77,6 +78,19 @@ module.exports = function(app, passport, db){
         res.redirect('/signin');
     }, function(req, res){
         res.render('game');
+    });
+
+    app.get('/game/config', function isLoggedIn(req, res, next){
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.status(401).end();
+    }, function(req, res){
+        Config.findAll({}).then(function(results){
+            res.json(results[0].dataValues);
+        }).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
+        });
     });
 
     app.get('/logout', function(req, res){
