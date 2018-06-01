@@ -1,4 +1,7 @@
 {{#if signin}}
+    {{#if info}}
+        <div>{{info}}</div>
+    {{/if}}
     <h1>Sign-In!</h1>
     <a href="/signup"><button>Sign-Up</button></a>
     <form id="signin" name="signin" method="post" action="signin">
@@ -8,23 +11,61 @@
         <input name="password" type="password" />
         <input class="btn" type="submit" value="Sign In" />
     </form>
-    <a href=""><button>Forgot Password?</button></a>
+    <a href="/forgot"><button>Forgot Password?</button></a>
     {{#if error}}
         <div>{{error}}</div>
     {{/if}}
 {{/if}}
 
-{{#unless signin}}
+{{#if forgot}}
+    <h1>Forgotten Password? We can help with that.</h1>
+    <form id="forgot" name="forgot" method="post" action="/forgot">
+        <label for="email">Please enter your email address: </label>
+        <input name="email" id="email" type="text" />
+        <input class="btn" type="submit" value="Reset Password" />
+    </form>
+    <a href="/signin"><button>Go Back To Sign-In</button></a>
+    {{#if info}}
+        <div>{{info}}</div>
+    {{/if}}
+    {{#if error}}
+        <div>{{error}}</div>
+    {{/if}}
+{{/if}}
+
+{{#if reset}}
+    {{#unless error}}
+        <h1>Please Reset Your Password Now</h1>
+        <form id="reset" name="reset" method="post" action="/reset/{{token}}">
+            <label for="password">New Password: </label>
+            <input name="password" id="pass" type="password" />
+            <label for="re-pass">Re-enter Password: </label>
+            <input name="re-pass" id="re-pass" type="password" />
+            <input class="btn" type="submit" value="Reset" />
+        </form>
+    {{/unless}}
+    {{#if error}}
+        <div>{{error}}</div>
+        <a href="/forgot"><button>Try Resetting Password Again</button></a>
+        <a href="/signin"><button>Go Back To Sign-In</button></a>
+    {{/if}}
+{{/if}}
+
+{{#if signup}}
     <h1>Sign-Up!</h1>
     <a href="/signin"><button>Sign-In</button></a>
     <form id="signup" name="signup" method="post" action="/signup">
         <label for="email">Email Address: </label>
         <input class="text" name="email" type="email" />
         <label for="password">Password: </label>
-        <input name="password" type="password" />
+        <input name="password" id="pass" type="password" />
+        <label for="re-pass">Re-enter Password: </label>
+        <input name="re-pass" id="re-pass" type="password" />
         <input class="btn" type="submit" value="Sign Up" />
     </form>
     {{#if error}}
         <div>{{error}}</div>
     {{/if}}
-{{/unless}}
+{{/if}}
+
+<script src="/javascript/auth.js"></script>

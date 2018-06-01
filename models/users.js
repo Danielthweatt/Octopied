@@ -20,7 +20,9 @@ module.exports = function(sequelize, DataTypes) {
         status: {
             type: DataTypes.ENUM('active', 'inactive'),
             defaultValue: 'active'
-        }
+        },
+        resetPasswordToken: DataTypes.STRING,
+        resetPasswordExpires: DataTypes.DATE
     });
     return Users;
 };
