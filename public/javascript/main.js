@@ -13,6 +13,7 @@ let resources ={
     rock:0,
     steel:0
 }
+
 let octoStats = {
     level: 1,
     exp: 0,
@@ -92,6 +93,7 @@ const babby = {
     }
 }
 
+
 function startGivenCollector(resource){
     switch(resource){
         case 'worm':
@@ -166,6 +168,7 @@ function evolve() {
     }
 },180);
 }
+
 
 /**
  * This calcuatees the value that is gained by click baised on the current modiers and items
@@ -470,8 +473,5 @@ Need a text animation to display text (for level ups and other events)
     Hp bars for boss Fights
 
 */
-
-
-
 
 
