@@ -285,10 +285,35 @@ module.exports = function(app, passport, db){
     }));
 
     app.put('/game', function(req, res){
-        console.log(req.user.id);
         const userID = req.user.id;
-        const statistics = req.body.statistics;
-        const resources = req.body.resources;
+        const statistics = {
+            level: parseInt(req.body.octoStats.level),
+            experience: parseInt(req.body.octoStats.exp),
+            prestige: parseInt(req.body.octoStats.prestidge),
+            food_proficiency: parseInt(req.body.octoStats.proficiency.food),
+            gather_proficiency: parseInt(req.body.octoStats.proficiency.gather),
+            attack_proficiency: parseInt(req.body.octoStats.proficiency.attack),
+            defense_proficiency: parseInt(req.body.octoStats.proficiency.defense),
+            food_frenzy: parseInt(req.body.octoStats.abilities.foodFrenzy),
+            ink_spray: parseInt(req.body.octoStats.abilities.inkSpray),
+            rank_up: parseInt(req.body.octoStats.abilities.rankUp),
+            dirt_collector_status: (req.body.collectorStatus.dirt === 'true') ? true : false,
+            rock_collector_status: (req.body.collectorStatus.rock === 'true') ? true : false,
+            steel_collector_status: (req.body.collectorStatus.steel === 'true') ? true : false,
+            worm_collector_status: (req.body.collectorStatus.worm === 'true') ? true : false,
+            fish_collector_status: (req.body.collectorStatus.fish === 'true') ? true : false,
+            shark_collector_status: (req.body.collectorStatus.shark === 'true') ? true : false,
+        };
+        const resources = {
+            hearts: parseInt(req.body.resources.hearts),
+            babies: parseInt(req.body.resources.babbies),
+            worms: parseInt(req.body.resources.worm),
+            fish: parseInt(req.body.resources.fish),
+            sharks: parseInt(req.body.resources.shark),
+            dirt: parseInt(req.body.resources.dirt),
+            rocks: parseInt(req.body.resources.rock),
+            steel: parseInt(req.body.resources.steel)
+        };
         Resources.update(resources,
         {
             where: {
@@ -301,7 +326,7 @@ module.exports = function(app, passport, db){
             Statistics.update(statistics, 
             { 
                 where: {
-                    id: id
+                    user_id: userID
                 }
             }).then(function(result){
                 if (result === 0) {
