@@ -100,6 +100,14 @@ const resourseUpgradeList = {
     }
 };
 
+function refreshCollectorStatuses(){
+    let check;
+    for (let key in collectorStatus) {
+        check = collectorStatus[key] ? '[X]' : '[]';
+        $(`.collect-${key}`).text(check);
+    }
+};
+
 function refreshDisplay(){
     $('.counter').text(resources.points);
     $('.currnet-level').text(`Level: ${octoStats.level}`);
@@ -111,6 +119,7 @@ function refreshDisplay(){
     $('.resource-dirt').text(resources.dirt);
     $('.resource-rock').text(resources.rock);
     $('.resource-steel').text(resources.steel);
+    refreshCollectorStatuses();
     $('.heart-level').text(resources.hearts);
     $('.food-level').text(octoStats.proficiency.food);
     $('.attack-level').text(octoStats.proficiency.attack);
@@ -121,7 +130,7 @@ function refreshDisplay(){
 
 refreshDisplay();
 
-function updateDB(resources, octoStats, collectorStatus, alertSave){
+function updateDB(alertSave){
     if (alertSave) {
         alert('Your progress is being saved!');
     };
@@ -140,10 +149,10 @@ function updateDB(resources, octoStats, collectorStatus, alertSave){
 };
 
 $('#save-progress').click(function(){
-    updateDB(resources, octoStats, collectorStatus, false);
+    updateDB(false);
 });
 
-setInterval(function(){updateDB(resources, octoStats, collectorStatus, true);}, 180000);
+setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
