@@ -17,6 +17,22 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
+        babies_active: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        babies_available: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        babies_hunger: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        babies_level: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
         worms: {
             type: DataTypes.INTEGER,
             defaultValue: 0

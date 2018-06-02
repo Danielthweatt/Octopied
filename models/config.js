@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         experience_growth_modifier: {
             type: DataTypes.INTEGER,
-            defaultValue: 5
+            defaultValue: 20
         },
         dirt_trade_cost: {
             type: DataTypes.INTEGER,
