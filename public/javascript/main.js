@@ -33,7 +33,8 @@ const resources ={
     shark: results.resourcesConfig.sharks,
     dirt: results.resourcesConfig.dirt,
     rock: results.resourcesConfig.rocks,
-    steel: results.resourcesConfig.steel
+    steel: results.resourcesConfig.steel,
+    house:0
 };
 const octoStats = {
     level: results.statisticsConfig.level,
@@ -60,16 +61,38 @@ const collectorStatus ={
     shark: results.statisticsConfig.shark_collector_status
 };
 
+const resourseUpgradeList = {
+    //rank is defined as level / 3 rounded up
+    //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
+    //when something ranks up it might take a new reouse type to level up
+    house:   {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
+    heart:   {Rank1: "worm" , Rank2: "fish", Rank3: "shark" },
+    food:    {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
+    attack:  {Rank1: "rock" , Rank2: "steel", Rank3: "steel" },
+    defense: {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
+    babby:  {Rank1: "worm" , Rank2: "fish", Rank3: "shark" }
+}
+
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
     number: 3,
     active: 0,
     available: 3,
     level: 1,
+    // Hunger Every time there is not enouf food to feed your babies hunger increases after X once they hit 10 hunger they die? ** strech Goal **
     hugner:2,
     createBaby: function() {
-        this.number++
-        this.available = this.number - this.active;
+        console.log("house" , resources.house)
+        console.log("number" , this.number)
+        console.log(this.number > resources.house);
+        console.log(3 < 6);
+        if(this.number < resources.house){
+            this.number++
+            this.available = this.number - this.active;
+            $('.babby-count').text(this.number);
+        }else {
+            alert('You do not have enogh room in your house')
+        }
     },
     feed: function() {
         points -= (this.number * 10  * this.hunger);
@@ -99,24 +122,6 @@ const babby = {
     }
 }
 
-function updateDB(resources, octoStats, collectorStatus){
-    $.ajax("/game", {
-        type: "PUT",
-        data: {
-            resources: resources,
-            octoStats: octoStats,
-            collectorStatus: collectorStatus
-        }
-    }).then(function(){
-        console.log('Your progress has been saved!');
-    }).catch(function(err){
-        console.log(`Oh boy, it broke: ${err}`);
-    });
-};
-
-$('#save-progress').click(function(){
-    updateDB(resources, octoStats, collectorStatus)
-});
 
 function startGivenCollector(resource){
     switch(resource){
@@ -192,6 +197,7 @@ function evolve() {
     }
 },180);
 }
+
 
 /**
  * This calcuatees the value that is gained by click baised on the current modiers and items
@@ -271,6 +277,7 @@ function buyResource(itemName, count = 1){
  * @method buyItem
  * @param {any} itemName 
  * @param {number} [count=1] 
+ * @return {bool}
  */
 function buyItem(itemName, count = 1){
     if(resources[itemName] >=  count){
@@ -278,10 +285,14 @@ function buyItem(itemName, count = 1){
         $(`.${itemName}` ).text( resources[itemName]);
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
+        return true;
     }else{
         alert(`you dont have enouf ${itemName}s`)
+        return false;
     }
 }
+
+
 function checkForCollectors(){
     
 
