@@ -1,8 +1,10 @@
 const bCrypt = require('bcrypt-nodejs');
 
-module.exports = function(passport, users){
+module.exports = function(passport, db){
 
-    const Users = users;
+    const Users = db.users;
+    const Statistics = db.statistics;
+    const Resources = db.resources;
     const LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser(function(user, done){
@@ -34,11 +36,11 @@ module.exports = function(passport, users){
             }).then(function(user) {
                 if (user) {
                     return done(null, false, {
-                        message: 'That email is already taken.'
+                        message: 'That email is already taken'
                     });
                 } else {
                     const userPassword = generateHash(password);
-                    const data ={
+                    const data = {
                         email: email,
                         password: userPassword,
                     };
@@ -47,7 +49,19 @@ module.exports = function(passport, users){
                             return done(null, false);
                         }
                         if (newUser) {
-                            return done(null, newUser);
+                            Statistics.create({
+                                user_id: newUser.dataValues.id
+                            }).then(function(){
+                                Resources.create({
+                                    user_id: newUser.dataValues.id
+                                }).then(function(){
+                                    return done(null, newUser);
+                                }).catch(function(err){
+                                    console.log(`Oh boy, it broke: ${err}`);
+                                });
+                            }).catch(function(err){
+                                console.log(`Oh boy, it broke: ${err}`);
+                            });
                         }            
                     });            
                 }
@@ -70,12 +84,12 @@ module.exports = function(passport, users){
             }).then(function(user){
                 if (!user) {
                     return done(null, false, {
-                        message: 'Email does not exist.'
+                        message: 'Email does not exist'
                     });
                 }
                 if (!isValidPassword(user.password, password)) {
                     return done(null, false, {
-                        message: 'Incorrect password.'
+                        message: 'Incorrect password'
                     });
                 }
                 const userinfo = user.get();
@@ -83,7 +97,7 @@ module.exports = function(passport, users){
             }).catch(function(err){
                 console.log("Error:", err);
                 return done(null, false, {
-                    message: 'Something went wrong with your Signin.'
+                    message: 'Something went wrong with your Signin'
                 });
             });
         }

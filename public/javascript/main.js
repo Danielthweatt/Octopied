@@ -1,72 +1,182 @@
-//Seting up Main variables
-let count = 0;
-let points = 0;
-const collecitonTimeModifer = 5000;
-const expGrothModifier = 5;
-let resources ={
-    hearts: 0,
-    babbies:1,
-    worm: 0,
-    fish: 0,
-    shark:0,
-    dirt: 0,
-    rock:0,
-    steel:0
-}
+$(function(){
 
-let octoStats = {
-    level: 1,
-    exp: 0,
-    prestidge: 0,
+$.ajax('/game/config', {
+    type: 'GET'
+}).then(function(results){
+
+//Seting up Main variables
+const collecitonTimeModifer = results.gameConfig.collection_time_modifier;
+const expGrothModifier = results.gameConfig.experience_growth_modifier;
+const tradeCost ={
+    dirt: results.gameConfig.dirt_trade_cost,
+    rock: results.gameConfig.rock_trade_cost,
+    steel: results.gameConfig.steel_trade_cost,
+    worm: results.gameConfig.worm_trade_cost,
+    fish: results.gameConfig.fish_trade_cost,
+    shark: results.gameConfig.shark_trade_cost
+};
+const resourceDiffuculityRank ={
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+    rock: results.gameConfig.rock_resource_difficulty_rank,
+    steel: results.gameConfig.steel_resource_difficulty_rank,
+    worm: results.gameConfig.worm_resource_difficulty_rank,
+    fish: results.gameConfig.fish_resource_difficulty_rank,
+    shark: results.gameConfig.shark_resource_difficulty_rank
+};
+const resources ={
+    points: results.resourcesConfig.food,
+    hearts: results.resourcesConfig.hearts,
+    babbies: results.resourcesConfig.babies,
+    babbiesActive: results.resourcesConfig.babies_active,
+    babbiesAvailable: results.resourcesConfig.babies_available,
+    babbiesHunger: results.resourcesConfig.babies_hunger,
+    babbiesLevel: results.resourcesConfig.babies_level,
+    worm: results.resourcesConfig.worms,
+    fish: results.resourcesConfig.fish,
+    shark: results.resourcesConfig.sharks,
+    dirt: results.resourcesConfig.dirt,
+    rock: results.resourcesConfig.rocks,
+    steel: results.resourcesConfig.steel,
+    house: results.resourcesConfig.houses
+};
+const octoStats = {
+    level: results.statisticsConfig.level,
+    exp: results.statisticsConfig.experience,
+    prestidge: results.statisticsConfig.prestige,
+    stage: results.statisticsConfig.stage,
     proficiency :{
-        food:1,
-        attack:1,
-        gather:1
+        food: results.statisticsConfig.food_proficiency,
+        gather: results.statisticsConfig.gather_proficiency,
+        attack: results.statisticsConfig.attack_proficiency,
+        defense: results.statisticsConfig.defense_proficiency
     },
     abilities: {
-        foodFrenzy :0,
-        inkSpray :0,
-        rankUp: 0
+        foodFrenzy: results.statisticsConfig.food_frenzy,
+        inkSpray: results.statisticsConfig.ink_spray,
+        rankUp: results.statisticsConfig.rank_up
     }
 };
-let tradeCost ={
-    dirt: 100,
-    rock: 10000,
-    steel:20000,
-    worm: 100,
-    fish: 1000,
-    shark: 2000,
-}
-let collectorStatus ={
-    dirt: false,
-    rock: false,
-    steel:false,
-    worm: false,
-    fish: false,
-    shark: false,
-}
-let resourceDiffuculityRank ={
-    dirt: 2,
-    rock: 6,
-    steel:12,
-    worm: 1,
-    fish: 3,
-    shark: 6,
-}
+const collectorStatus ={
+    dirt: results.statisticsConfig.dirt_collector_status,
+    rock: results.statisticsConfig.rock_collector_status,
+    steel: results.statisticsConfig.steel_collector_status,
+    worm: results.statisticsConfig.worm_collector_status,
+    fish: results.statisticsConfig.fish_collector_status,
+    shark: results.statisticsConfig.shark_collector_status
+};
+
+const resourseUpgradeList = {
+    //rank is defined as level / 3 rounded up
+    //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
+    //when something ranks up it might take a new reouse type to level up
+    house:   {
+        Rank1: results.gameConfig.house_RUL_rank_one, 
+        Rank2: results.gameConfig.house_RUL_rank_two, 
+        Rank3: results.gameConfig.house_RUL_rank_three 
+    },
+    heart:   {
+        Rank1: results.gameConfig.heart_RUL_rank_one, 
+        Rank2: results.gameConfig.heart_RUL_rank_two, 
+        Rank3: results.gameConfig.heart_RUL_rank_three 
+    },
+    food:    {
+        Rank1: results.gameConfig.food_RUL_rank_one, 
+        Rank2: results.gameConfig.food_RUL_rank_two, 
+        Rank3: results.gameConfig.food_RUL_rank_three 
+    },
+    attack:  {
+        Rank1: results.gameConfig.attack_RUL_rank_one, 
+        Rank2: results.gameConfig.attack_RUL_rank_two, 
+        Rank3: results.gameConfig.attack_RUL_rank_three 
+    },
+    defense: {
+        Rank1: results.gameConfig.defense_RUL_rank_one, 
+        Rank2: results.gameConfig.defense_RUL_rank_two, 
+        Rank3: results.gameConfig.defense_RUL_rank_three 
+    },
+    babby:  {
+        Rank1: results.gameConfig.baby_RUL_rank_one, 
+        Rank2: results.gameConfig.baby_RUL_rank_two, 
+        Rank3: results.gameConfig.baby_RUL_rank_three 
+    }
+};
+
+function refreshCollectorStatuses(){
+    let check;
+    for (let key in collectorStatus) {
+        check = collectorStatus[key] ? '[x]' : '[]';
+        $(`.collect-${key}`).text(check);
+        if (check === '[x]') {
+            startGivenCollector(key);
+        }
+    }
+};
+
+function refreshDisplay(){
+    $('.counter').text(resources.points);
+    $('.currnet-level').text(`Level: ${octoStats.level}`);
+    $('.current-exp').text(`Exp: ${octoStats.exp}`);
+    $('.babby-count').text(resources.babbies);
+    $('.resource-worm').text(resources.worm);
+    $('.resource-fish').text(resources.fish);
+    $('.resource-shark').text(resources.shark);
+    $('.resource-dirt').text(resources.dirt);
+    $('.resource-rock').text(resources.rock);
+    $('.resource-steel').text(resources.steel);
+    refreshCollectorStatuses();
+    $('.heart-level').text(resources.hearts);
+    $('.food-level').text(octoStats.proficiency.food);
+    $('.attack-level').text(octoStats.proficiency.attack);
+    $('.defense-level').text(octoStats.proficiency.defense);
+    $('.house-level').text(resources.house);
+    $('.babby-level').text(resources.babbiesLevel);
+};
+
+refreshDisplay();
+
+function updateDB(alertSave){
+    if (alertSave) {
+        alert('Your progress is being saved!');
+    };
+    $.ajax("/game", {
+        type: "PUT",
+        data: {
+            resources: resources,
+            octoStats: octoStats,
+            collectorStatus: collectorStatus
+        }
+    }).then(function(){
+        console.log('Your progress has been saved!');
+    }).catch(function(err){
+        console.log(`Oh boy, it broke: ${err}`);
+    });
+};
+
+$('#save-progress').click(function(){
+    updateDB(false);
+});
+
+setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
-    number: 3,
-    active: 0,
-    available: 3,
-    level: 1,
-    hugner:2,
+    number: 3, // resources.babbies,
+    active: 0, // resources.babbiesActive,
+    available: 3, //resources.babbiesAvailable,
+    level: 1, //resources.babbiesLevel,
+    // Hunger Every time there is not enouf food to feed your babies hunger increases after X once they hit 10 hunger they die? ** strech Goal **
+    hunger: 2, //resources.babbiesHunger,
     createBaby: function() {
         this.number++
         this.available = this.number - this.active;
+        $('.babby-count').text(this.number);
     },
     feed: function() {
-        points -= (this.number * 10  * this.hunger);
+        resources.points -= ((this.active * 5  * this.hunger) + (this.available * this.hunger));
+        $('.counter').text(resources.points);
+        if(resources.points < 0) {
+            collectorStatus.dirt = false
+        }
     },
     //need to move logic for the collection starting In here
     // currenlty on line 220 with collector state
@@ -92,7 +202,6 @@ const babby = {
         }
     }
 }
-
 
 function startGivenCollector(resource){
     switch(resource){
@@ -138,10 +247,11 @@ function enable() {
  */
 function clickFrenzy() {
     const clickValue = calcualteClickValue();
-    points += clickValue;
+    resources.points += clickValue;
    gainExperiance();
    levelup();
-   $('.counter').text(points);
+   $('.counter').text(resources.points);
+   // TODO: move to leveup function 
    if(octoStats.level === 10 && octoStats.exp === 0){
        alert('Oh Something Happening');
       evolve();
@@ -213,6 +323,7 @@ function levelup(){
         octoStats.level ++;
         octoStats.exp = 0;
         $('.currnet-level').text(`Level:${octoStats.level}`)
+        $('.current-exp').text(`Exp: ${octoStats.exp}`)
        
     }
 }
@@ -225,13 +336,13 @@ function levelup(){
  * @param {number} [count=1] 
  */
 function buyResource(itemName, count = 1){
-    if(points > tradeCost[itemName] * count){
+    if(resources.points > tradeCost[itemName] * count){
         //Add resource
         resources[itemName]++;
         //subtract toatl points
-        points -= tradeCost[itemName] * count;
+        resources.points -= tradeCost[itemName] * count;
         //update Screen
-        $('.counter').text(points);
+        $('.counter').text(resources.points);
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
@@ -248,6 +359,7 @@ function buyResource(itemName, count = 1){
  * @method buyItem
  * @param {any} itemName 
  * @param {number} [count=1] 
+ * @return {bool}
  */
 function buyItem(itemName, count = 1){
     if(resources[itemName] >=  count){
@@ -255,12 +367,17 @@ function buyItem(itemName, count = 1){
         $(`.${itemName}` ).text( resources[itemName]);
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
+        return true;
     }else{
         alert(`you dont have enouf ${itemName}s`)
+        return false;
     }
 }
+
+
 function checkForCollectors(){
-    
+    const check = '[]';
+    $('.collect-shark').text(check);
 
 }
 
@@ -300,6 +417,10 @@ $('.collect-dirt').on('click', function(){
         console.log("You must have a child to collect resources")
         return;
     }
+    if(resources.points < 0){
+        alert('please collect food')
+        return;
+    }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
     const check = collectorStatus.dirt ? '[x]' : '[]';
     $('.collect-dirt').text(check);
@@ -327,7 +448,7 @@ $('.collect-steel').on('click', function(){
 
 function collectWorms() {
     $('.resource-worm').text(resources.worm);
-    if(collectorStatus.worm){
+    if(resources.points > 0 &&collectorStatus.worm){
         setTimeout(function(){
             if(collectorStatus.worm){
                 resources.worm++;
@@ -339,7 +460,7 @@ function collectWorms() {
 
 function collectFish() {
     $('.resource-fish').text(resources.fish);
-    if(collectorStatus.fish){
+    if(resources.points > 0 &&collectorStatus.fish){
         setTimeout(function(){
             if(collectorStatus.fish){
                 resources.fish++;
@@ -351,7 +472,7 @@ function collectFish() {
 
 function collectShark() {
     $('.resource-shark').text(resources.shark);
-    if(collectorStatus.shark){
+    if(resources.points > 0 &&collectorStatus.shark){
         setTimeout(function(){
             resources.shark++;
             collectShark();
@@ -361,7 +482,7 @@ function collectShark() {
 
 function collectDirt() {
     $('.resource-dirt').text(resources.dirt);
-    if(collectorStatus.dirt){
+    if(resources.points > 0 &&collectorStatus.dirt){
         setTimeout(function(){
             resources.dirt++;
             collectDirt();
@@ -371,7 +492,7 @@ function collectDirt() {
 
 function collectRock() {
     $('.resource-rock').text(resources.rock);
-    if(collectorStatus.rock){
+    if(resources.points > 0 &&collectorStatus.rock){
         setTimeout(function(){
             resources.rock++;
             collectRock();
@@ -381,7 +502,7 @@ function collectRock() {
 
 function collectSteel() {
     $('.resource-steel').text(resources.steel);
-    if(collectorStatus.steel){
+    if(resources.points > 0 &&collectorStatus.steel){
         setTimeout(function(){
             resources.steel++;
             collectSteel();
@@ -443,9 +564,16 @@ $('.buy-steel').on('click', function(){
 
 $('.have-babby').on('click', function() {
     //set requirments  Must be lv 11 // have home //  cost 10 fish for first
-
-    buyItem('worm', 1);
-    babby.createBaby();
+    if(babby.number < resources.house){
+        if(buyItem('worm', 1)){
+            babby.createBaby();
+        }
+    }else {
+        alert('You do not have enogh room in your house')
+    }
+      
+    
+   
 })
 
 
@@ -467,11 +595,103 @@ Need a text animation to display text (for level ups and other events)
 
     Add babby helpers that gather resouces
 
+    
 
     **Strech **
 
     Hp bars for boss Fights
 
+
+
+    Clean code Initinative **
+        add function to check if you can collect ( saturday)**
+
+        combind battle and click exp functions
+
+        create function to manage resource loops to git rid of repeated functions
+
+    Next Steps
+        level up profecnices
+        change monster image on new monster 
+        Timer for boss battles
+
+
 */
 
+function theHunger(){
+    babby.feed();
+    console.log('The hunger strikes')
+    setTimeout(() => {
+        theHunger();
+    }, 5000);
+   
+}
+
+/********** The Colseaum ********/
+
+function calculateAttack(){
+    const dammage =  ((octoStats.proficiency.attack * 2) + octoStats.level) * ((octoStats.prestidge * .05) + 1);
+    console.log(dammage);
+     return dammage;
+ }
+ 
+
+let boss = {
+    currentHp : 10,
+    isBoss: false,
+    nextStage:function(){
+            octoStats.stage++
+            if(octoStats.stage % 10 === 0){
+                this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
+                this.isBoss = true;
+                $('.boss-hp').text(this.currentHp);
+            }else{
+                this.currentHp = octoStats.stage * (10 + octoStats.stage);
+                this.isBoss = false;
+                const randomMonster = 'monster-' + Math.floor(Math.random()*10)
+                const $monster = $('.boss-image');
+                $monster.removeClass();
+                $monster.addClass( 'boss-image');
+                $monster.addClass( randomMonster);
+                $('.boss-hp').text(this.currentHp);
+            }
+
+        
+    },
+    // TODO: Clean Up merge two exp functions
+    getRewards: function() {
+        const expItem = 1.25;
+        const gainExperiance = octoStats.prestidge * (expItem) +1;
+        const battleExp = this.isBoss ? (octoStats.stage * 2) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
+        octoStats.exp += gainExperiance + battleExp;
+        $('.current-exp').text(`Exp: ${octoStats.exp}`)
+        const foodBonus = this.isBoss ? (octoStats.stage * 3) : ((octoStats.stage * 3) * 3);
+        resources.points += foodBonus;
+        $('.counter').text(resources.points);
+        levelup();
+    },
+    hit: function(){
+        this.currentHp -= calculateAttack() -2;
+        $('.boss-hp').text(this.currentHp);
+        if(this.currentHp < 1 ){
+            boss.getRewards();
+            boss.nextStage();
+        }
+    }
+    
+}
+
+$('.boss').on('click', function(){
+        boss.hit();
+})
+
+
+
+theHunger();
+
+}).catch(function(err){
+    console.log(`Oh boy, it broke: ${err}`);
+});
+
+});
 

@@ -1,81 +1,77 @@
 module.exports = function(sequelize, DataTypes) {
-    const Resources = sequelize.define("resources", {
+    const Statistics = sequelize.define("statistics", {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        food: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        hearts: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        babies: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        babies_active: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        babies_available: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        babies_hunger: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        babies_level: {
+        level: {
             type: DataTypes.INTEGER,
             defaultValue: 1
         },
-        worms: {
+        experience: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        fish: {
+        prestige: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        sharks: {
+        stage: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
+        food_proficiency: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
+        gather_proficiency: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
+        attack_proficiency: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
+        defense_proficiency: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
+        food_frenzy: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        dirt: {
+        ink_spray: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        rocks: {
+        rank_up: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        steel: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        dirt_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
-        houses: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        rock_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
-        thrusters: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        steel_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
-        feul: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        worm_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
-        shuttle_bodies: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        fish_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
-        shuttle_computers: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        shark_collector_status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -86,5 +82,5 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-    return Resources;
+    return Statistics;
 };

@@ -5,9 +5,12 @@ const nodemailer = require('nodemailer');
 
 // Routes
 
-module.exports = function(app, passport, users){
+module.exports = function(app, passport, db){
 
-    const Users = users;
+    const Users = db.users;
+    const Statistics = db.statistics;
+    const Resources = db.resources;
+    const Config = db.config;
 
     app.get('/', function(req, res){
         res.render('index');
@@ -19,8 +22,8 @@ module.exports = function(app, passport, users){
             forgot: false,
             reset: false,
             signup: false,
-            error: req.flash('error'),
-            info: req.flash('info')
+            flashError: req.flash('error'),
+            flashInfo: req.flash('info')
         });
     });
 
@@ -30,8 +33,8 @@ module.exports = function(app, passport, users){
             forgot: true,
             reset: false,
             signup: false,
-            error: req.flash('error'),
-            info: req.flash('info')
+            flashError: req.flash('error'),
+            flashInfo: req.flash('info')
         });
     });
 
@@ -43,18 +46,18 @@ module.exports = function(app, passport, users){
             }
         }).then(function(user){
             if (!user) {
-                req.flash('error', 'Password reset token is invalid or has expired.');
+                req.flash('error', 'Password reset token is invalid or has expired');
             }
             res.render('signin', {
                 signin: false,
                 forgot: false,
                 reset: true,
                 signup: false,
-                error: req.flash('error'),
+                flashError: req.flash('error'),
                 token: req.params.token
             });
         }).catch(function(){
-            req.flash('error', 'Something went wrong accessing the database.');
+            req.flash('error', 'Something went wrong accessing the database');
         });
     });
 
@@ -64,7 +67,7 @@ module.exports = function(app, passport, users){
             forgot: false,
             reset: false,
             signup: true, 
-            error: req.flash('error')
+            flashError: req.flash('error')
         });
     });
 
@@ -77,9 +80,46 @@ module.exports = function(app, passport, users){
         res.render('game');
     });
 
+    app.get('/game/config', function isLoggedIn(req, res, next){
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.status(401).end();
+    }, function(req, res){
+        const config = {};
+        Config.findOne({
+            where: {
+                id: 1
+            }
+        }).then(function(results){
+            config.gameConfig = results.dataValues;
+            Resources.findOne({
+                where: {
+                    id: req.user.id
+                }
+            }).then(function(results){
+                config.resourcesConfig = results.dataValues;
+                Statistics.findOne({
+                    where: {
+                        id: req.user.id
+                    }
+                }).then(function(results){
+                    config.statisticsConfig = results.dataValues;
+                    res.json(config);
+                }).catch(function(err){
+                    console.log(`Oh boy, it broke: ${err}`);
+                });
+            }).catch(function(err){
+                console.log(`Oh boy, it broke: ${err}`);
+            });
+        }).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
+        });
+    });
+
     app.get('/logout', function(req, res){
         req.session.destroy(function(err){
-            res.redirect('/');
+            res.redirect('/signin');
         });
     });
 
@@ -104,7 +144,7 @@ module.exports = function(app, passport, users){
                     } 
                 }).then(function(user){
                     if (!user) {
-                        req.flash('error', 'No account with that email address exists.');
+                        req.flash('error', 'No account with that email address exists');
                         return res.redirect('/forgot');
                     }
                     Users.update({
@@ -117,7 +157,7 @@ module.exports = function(app, passport, users){
                     }).then(function(){
                         done(null, token, user);
                     }).catch(function(){
-                        req.flash('error', 'Something went wrong accessing the database.');
+                        req.flash('error', 'Something went wrong accessing the database');
                         res.redirect('/forgot');
                     });
                 });
@@ -141,14 +181,14 @@ module.exports = function(app, passport, users){
                 };
                 mailer.sendMail(mailOptions, function(err, res){
                     if (!err) {
-                        req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions.');
+                        req.flash('info', 'An e-mail has been sent to ' + user.dataValues.email + ' with further instructions');
                     }
                     done(err, 'done');
                 });
             }
         ], function(err){
             if (err) {
-                req.flash('error', 'Sorry, something went wrong.');
+                req.flash('error', 'Sorry, something went wrong');
                 res.redirect('/forgot');
             } else {
                 res.redirect('/forgot');
@@ -169,13 +209,13 @@ module.exports = function(app, passport, users){
                     }
                 }).then(function(user){
                     if (!user) {
-                        req.flash('error', 'Password reset token is invalid or has expired.');
+                        req.flash('error', 'Password reset token is invalid or has expired');
                         res.render('signin', {
                             signin: false,
                             forgot: false,
                             reset: true,
                             signup: false,
-                            error: req.flash('error')
+                            flashError: req.flash('error')
                         });
                     } else {
                         Users.update({
@@ -187,24 +227,24 @@ module.exports = function(app, passport, users){
                         }).then(function(){
                             done(null, user)
                         }).catch(function(){
-                            req.flash('error', 'Something went wrong accessing the database.');
+                            req.flash('error', 'Something went wrong accessing the database');
                             res.render('signin', {
                                 signin: false,
                                 forgot: false,
                                 reset: true,
                                 signup: false,
-                                error: req.flash('error')
+                                flashError: req.flash('error')
                             });
                         });
                     }
                 }).catch(function(){
-                    req.flash('error', 'Something went wrong accessing the database.');
+                    req.flash('error', 'Something went wrong accessing the database');
                     res.render('signin', {
                         signin: false,
                         forgot: false,
                         reset: true,
                         signup: false,
-                        error: req.flash('error')
+                        flashError: req.flash('error')
                     });
                 });
             },
@@ -225,14 +265,14 @@ module.exports = function(app, passport, users){
                 };
                 mailer.sendMail(mailOptions, function(err, res) {
                     if (!err) {
-                        req.flash('info', 'Success! Your password has been changed.');
+                        req.flash('info', 'Success! Your password has been changed');
                     }
                     done(err, 'done');
                 });
             }
         ], function(err) {
             if (err) {
-                req.flash('error', 'Something went wrong with sending a confirmation email.');
+                req.flash('error', 'Something went wrong with sending a confirmation email');
             }
             res.redirect('/signin');
         });
@@ -244,4 +284,67 @@ module.exports = function(app, passport, users){
         failureFlash: true 
     }));
 
+    app.put('/game', function(req, res){
+        const userID = req.user.id;
+        const statistics = {
+            level: parseInt(req.body.octoStats.level),
+            experience: parseInt(req.body.octoStats.exp),
+            prestige: parseInt(req.body.octoStats.prestidge),
+            stage: parseInt(req.body.octoStats.stage),
+            food_proficiency: parseInt(req.body.octoStats.proficiency.food),
+            gather_proficiency: parseInt(req.body.octoStats.proficiency.gather),
+            attack_proficiency: parseInt(req.body.octoStats.proficiency.attack),
+            defense_proficiency: parseInt(req.body.octoStats.proficiency.defense),
+            food_frenzy: parseInt(req.body.octoStats.abilities.foodFrenzy),
+            ink_spray: parseInt(req.body.octoStats.abilities.inkSpray),
+            rank_up: parseInt(req.body.octoStats.abilities.rankUp),
+            dirt_collector_status: (req.body.collectorStatus.dirt === 'true') ? true : false,
+            rock_collector_status: (req.body.collectorStatus.rock === 'true') ? true : false,
+            steel_collector_status: (req.body.collectorStatus.steel === 'true') ? true : false,
+            worm_collector_status: (req.body.collectorStatus.worm === 'true') ? true : false,
+            fish_collector_status: (req.body.collectorStatus.fish === 'true') ? true : false,
+            shark_collector_status: (req.body.collectorStatus.shark === 'true') ? true : false,
+        };
+        const resources = {
+            food: parseInt(req.body.resources.points),
+            hearts: parseInt(req.body.resources.hearts),
+            babies: parseInt(req.body.resources.babbies),
+            babies_active: parseInt(req.body.resources.babbiesActive),
+            babies_available: parseInt(req.body.resources.babbiesAvailable),
+            babies_hunger: parseInt(req.body.resources.babbiesHunger),
+            babies_level: parseInt(req.body.resources.babbiesLevel),
+            worms: parseInt(req.body.resources.worm),
+            fish: parseInt(req.body.resources.fish),
+            sharks: parseInt(req.body.resources.shark),
+            dirt: parseInt(req.body.resources.dirt),
+            rocks: parseInt(req.body.resources.rock),
+            steel: parseInt(req.body.resources.steel)
+        };
+        Resources.update(resources,
+        {
+            where: {
+                user_id: userID
+            }
+        }).then(function(result){
+            if (result === 0) {
+                return res.status(404).end();
+            }
+            Statistics.update(statistics, 
+            { 
+                where: {
+                    user_id: userID
+                }
+            }).then(function(result){
+                if (result === 0) {
+                    return res.status(404).end();
+                }
+                res.status(200).end();        
+            }).catch(function(err){
+                console.log(`Oh boy, it broke: ${err}`);
+            });
+        }).catch(function(err){
+            console.log(`Oh boy, it broke: ${err}`);
+        });
+    });
+    
 };
