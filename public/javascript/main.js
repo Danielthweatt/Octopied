@@ -27,6 +27,9 @@ const resourceDiffuculityRank ={
 const resources ={
     hearts: results.resourcesConfig.hearts,
     babbies: results.resourcesConfig.babies,
+    babbiesActive: results.resourcesConfig.babies_active,
+    babbiesAvailable: results.resourcesConfig.babies_available,
+    babbiesHunger: results.resourcesConfig.babies_hunger,
     worm: results.resourcesConfig.worms,
     fish: results.resourcesConfig.fish,
     shark: results.resourcesConfig.sharks,
