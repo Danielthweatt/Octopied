@@ -568,6 +568,12 @@ Need a text animation to display text (for level ups and other events)
 
         create function to manage resource loops to git rid of repeated functions
 
+    Next Steps
+        level up profecnices
+        change monster image on new monster 
+        Timer for boss battles
+
+
 */
 
 function theHunger(){
@@ -601,6 +607,11 @@ let boss = {
             }else{
                 this.currentHp = stage * (10 + stage);
                 this.isBoss = false;
+                const randomMonster = 'monster-' + Math.floor(Math.random()*10)
+                const $monster = $('.boss-image');
+                $monster.removeClass();
+                $monster.addClass( 'boss-image');
+                $monster.addClass( randomMonster);
                 $('.boss-hp').text(this.currentHp);
             }
 
