@@ -1,35 +1,23 @@
 $(function(){
-
-    $('#forgot').on('submit', function(event){
-        
-        const email = $("#email");
-        
-        if (email.val() === '') {
-            event.preventDefault();
-            alert('Please enter an email address.');
-        }
-    });
-
-    $('#reset').on('submit', function(event){
-        
-        const pass = $('#pass');
-        const rePass = $("#re-pass");
-        
-        if (pass.val() !== rePass.val()) {
+    
+    const validatePassword = function(event, password, passwordAgain){
+        if (password.val() !== passwordAgain.val()) {
             event.preventDefault();
             alert('Please enter the same password in both fields.');
         }
+    };
+
+    $('#reset').on('submit', function(event){
+        const pass = $('#pass');
+        if (pass.val() === '') {
+            event.preventDefault();
+            alert('Please enter a password.');
+        }
+        validatePassword(event, pass, $('#re-pass'));
     });
 
     $('#signup').on('submit', function(event){
-        
-        const pass = $('#pass');
-        const rePass = $("#re-pass");
-        
-        if (pass.val() !== rePass.val()) {
-            event.preventDefault();
-            alert('Please enter the same password in both fields.');
-        }
+        validatePassword(event, $('#pass'), $('#re-pass'));
     });
 
 });

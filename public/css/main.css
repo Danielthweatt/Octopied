@@ -92,4 +92,6 @@ body {
     }
   }
   
-  
+  .side-bar{
+    float: left;
+  }

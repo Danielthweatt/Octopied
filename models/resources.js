@@ -5,14 +5,58 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true,
             primaryKey: true,
         },
-        lives: DataTypes.INTEGER,
-        level: DataTypes.INTEGER,
-        worms: DataTypes.INTEGER,
-        fish: DataTypes.INTEGER,
-        sharks: DataTypes.INTEGER,
-        dirt: DataTypes.INTEGER,
-        rocks: DataTypes.INTEGER,
-        metal: DataTypes.INTEGER,
+        hearts: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        babies: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        worms: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        fish: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        sharks: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        dirt: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        rocks: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        steel: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        houses: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        thrusters: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        feul: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        shuttle_bodies: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        shuttle_computers: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
         user_id: {
             type: DataTypes.INTEGER,
             unique: true,

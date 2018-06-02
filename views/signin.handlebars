@@ -1,6 +1,6 @@
 {{#if signin}}
-    {{#if info}}
-        <div>{{info}}</div>
+    {{#if flashInfo}}
+        <div>{{flashInfo}}</div>
     {{/if}}
     <h1>Sign-In!</h1>
     <a href="/signup"><button>Sign-Up</button></a>
@@ -12,8 +12,8 @@
         <input class="btn" type="submit" value="Sign In" />
     </form>
     <a href="/forgot"><button>Forgot Password?</button></a>
-    {{#if error}}
-        <div>{{error}}</div>
+    {{#if flashError}}
+        <div>{{flashError}}</div>
     {{/if}}
 {{/if}}
 
@@ -25,16 +25,16 @@
         <input class="btn" type="submit" value="Reset Password" />
     </form>
     <a href="/signin"><button>Go Back To Sign-In</button></a>
-    {{#if info}}
-        <div>{{info}}</div>
+    {{#if flashInfo}}
+        <div>{{flashInfo}}</div>
     {{/if}}
-    {{#if error}}
-        <div>{{error}}</div>
+    {{#if flashError}}
+        <div>{{flashError}}</div>
     {{/if}}
 {{/if}}
 
 {{#if reset}}
-    {{#unless error}}
+    {{#unless flashError}}
         <h1>Please Reset Your Password Now</h1>
         <form id="reset" name="reset" method="post" action="/reset/{{token}}">
             <label for="password">New Password: </label>
@@ -44,8 +44,8 @@
             <input class="btn" type="submit" value="Reset" />
         </form>
     {{/unless}}
-    {{#if error}}
-        <div>{{error}}</div>
+    {{#if flashError}}
+        <div>{{flashError}}</div>
         <a href="/forgot"><button>Try Resetting Password Again</button></a>
         <a href="/signin"><button>Go Back To Sign-In</button></a>
     {{/if}}
@@ -56,15 +56,15 @@
     <a href="/signin"><button>Sign-In</button></a>
     <form id="signup" name="signup" method="post" action="/signup">
         <label for="email">Email Address: </label>
-        <input class="text" name="email" type="email" />
+        <input class="text" name="email" id="email" type="email" />
         <label for="password">Password: </label>
         <input name="password" id="pass" type="password" />
         <label for="re-pass">Re-enter Password: </label>
         <input name="re-pass" id="re-pass" type="password" />
         <input class="btn" type="submit" value="Sign Up" />
     </form>
-    {{#if error}}
-        <div>{{error}}</div>
+    {{#if flashError}}
+        <div>{{flashError}}</div>
     {{/if}}
 {{/if}}
 
