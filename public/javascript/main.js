@@ -1,58 +1,64 @@
+$(function(){
+
+$.ajax('/game/config', {
+    type: 'GET'
+}).then(function(results){
+
 //Seting up Main variables
 let count = 0;
 let points = 0;
-const collecitonTimeModifer = 5000;
-const expGrothModifier = 5;
-let resources ={
-    hearts: 0,
-    babbies:1,
-    worm: 0,
-    fish: 0,
-    shark:0,
-    dirt: 0,
-    rock:0,
-    steel:0
-}
-
-let octoStats = {
-    level: 1,
-    exp: 0,
-    prestidge: 0,
+const collecitonTimeModifer = results.gameConfig.collection_time_modifier;
+const expGrothModifier = results.gameConfig.experience_growth_modifier;
+const tradeCost ={
+    dirt: results.gameConfig.dirt_trade_cost,
+    rock: results.gameConfig.rock_trade_cost,
+    steel: results.gameConfig.steel_trade_cost,
+    worm: results.gameConfig.worm_trade_cost,
+    fish: results.gameConfig.fish_trade_cost,
+    shark: results.gameConfig.shark_trade_cost
+};
+const resourceDiffuculityRank ={
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+    rock: results.gameConfig.rock_resource_difficulty_rank,
+    steel: results.gameConfig.steel_resource_difficulty_rank,
+    worm: results.gameConfig.worm_resource_difficulty_rank,
+    fish: results.gameConfig.fish_resource_difficulty_rank,
+    shark: results.gameConfig.shark_resource_difficulty_rank
+};
+const resources ={
+    hearts: results.resourcesConfig.hearts,
+    babbies: results.resourcesConfig.babies,
+    worm: results.resourcesConfig.worms,
+    fish: results.resourcesConfig.fish,
+    shark: results.resourcesConfig.sharks,
+    dirt: results.resourcesConfig.dirt,
+    rock: results.resourcesConfig.rocks,
+    steel: results.resourcesConfig.steel
+};
+const octoStats = {
+    level: results.statisticsConfig.level,
+    exp: results.statisticsConfig.experience,
+    prestidge: results.statisticsConfig.prestige,
     proficiency :{
-        food:1,
-        attack:1,
-        gather:1
+        food: results.statisticsConfig.food_proficiency,
+        gather: results.statisticsConfig.gather_proficiency,
+        attack: results.statisticsConfig.attack_proficiency,
+        defense: results.statisticsConfig.defense_proficiency
     },
     abilities: {
-        foodFrenzy :0,
-        inkSpray :0,
-        rankUp: 0
+        foodFrenzy: results.statisticsConfig.food_frenzy,
+        inkSpray: results.statisticsConfig.ink_spray,
+        rankUp: results.statisticsConfig.rank_up
     }
 };
-let tradeCost ={
-    dirt: 100,
-    rock: 10000,
-    steel:20000,
-    worm: 100,
-    fish: 1000,
-    shark: 2000,
-}
-let collectorStatus ={
-    dirt: false,
-    rock: false,
-    steel:false,
-    worm: false,
-    fish: false,
-    shark: false,
-}
-let resourceDiffuculityRank ={
-    dirt: 2,
-    rock: 6,
-    steel:12,
-    worm: 1,
-    fish: 3,
-    shark: 6,
-}
+const collectorStatus ={
+    dirt: results.statisticsConfig.dirt_collector_status,
+    rock: results.statisticsConfig.rock_collector_status,
+    steel: results.statisticsConfig.steel_collector_status,
+    worm: results.statisticsConfig.worm_collector_status,
+    fish: results.statisticsConfig.fish_collector_status,
+    shark: results.statisticsConfig.shark_collector_status
+};
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
@@ -93,6 +99,24 @@ const babby = {
     }
 }
 
+function updateDB(resources, octoStats, collectorStatus){
+    $.ajax("/game", {
+        type: "PUT",
+        data: {
+            resources: resources,
+            octoStats: octoStats,
+            collectorStatus: collectorStatus
+        }
+    }).then(function(){
+        console.log('Your progress has been saved!');
+    }).catch(function(err){
+        console.log(`Oh boy, it broke: ${err}`);
+    });
+};
+
+$('#save-progress').click(function(){
+    updateDB(resources, octoStats, collectorStatus)
+});
 
 function startGivenCollector(resource){
     switch(resource){
@@ -474,4 +498,10 @@ Need a text animation to display text (for level ups and other events)
 
 */
 
+
+}).catch(function(err){
+    console.log(`Oh boy, it broke: ${err}`);
+});
+
+});
 
