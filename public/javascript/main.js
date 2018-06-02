@@ -43,6 +43,7 @@ const octoStats = {
     level: results.statisticsConfig.level,
     exp: results.statisticsConfig.experience,
     prestidge: results.statisticsConfig.prestige,
+    stage: results.statisticsConfig.stage,
     proficiency :{
         food: results.statisticsConfig.food_proficiency,
         gather: results.statisticsConfig.gather_proficiency,
@@ -103,8 +104,11 @@ const resourseUpgradeList = {
 function refreshCollectorStatuses(){
     let check;
     for (let key in collectorStatus) {
-        check = collectorStatus[key] ? '[X]' : '[]';
+        check = collectorStatus[key] ? '[x]' : '[]';
         $(`.collect-${key}`).text(check);
+        if (check === '[x]') {
+            startGivenCollector(key);
+        }
     }
 };
 
@@ -156,12 +160,12 @@ setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
-    number: 3,
-    active: 0,
-    available: 3,
-    level: 1,
+    number: 3, // resources.babbies,
+    active: 0, // resources.babbiesActive,
+    available: 3, //resources.babbiesAvailable,
+    level: 1, //resources.babbiesLevel,
     // Hunger Every time there is not enouf food to feed your babies hunger increases after X once they hit 10 hunger they die? ** strech Goal **
-    hunger:2,
+    hunger: 2, //resources.babbiesHunger,
     createBaby: function() {
         this.number++
         this.available = this.number - this.active;
@@ -626,18 +630,17 @@ function calculateAttack(){
  }
  
 
-let stage = 1;
 let boss = {
     currentHp : 10,
     isBoss: false,
     nextStage:function(){
-            stage++
-            if(stage % 10 === 0){
-                this.currentHp = stage * (20 + (stage * 2));
+            octoStats.stage++
+            if(octoStats.stage % 10 === 0){
+                this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
                 this.isBoss = true;
                 $('.boss-hp').text(this.currentHp);
             }else{
-                this.currentHp = stage * (10 + stage);
+                this.currentHp = octoStats.stage * (10 + octoStats.stage);
                 this.isBoss = false;
                 $('.boss-hp').text(this.currentHp);
             }
@@ -648,10 +651,10 @@ let boss = {
     getRewards: function() {
         const expItem = 1.25;
         const gainExperiance = octoStats.prestidge * (expItem) +1;
-        const battleExp = this.isBoss ? (stage * 2) * (expItem) +1 : ((stage * 2) * 2) * (expItem) +1;
+        const battleExp = this.isBoss ? (octoStats.stage * 2) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
         octoStats.exp += gainExperiance + battleExp;
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
-        const foodBonus = this.isBoss ? (stage * 3) : ((stage * 3) * 3);
+        const foodBonus = this.isBoss ? (octoStats.stage * 3) : ((octoStats.stage * 3) * 3);
         resources.points += foodBonus;
         $('.counter').text(resources.points);
         levelup();
