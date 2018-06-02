@@ -5,8 +5,7 @@ $.ajax('/game/config', {
 }).then(function(results){
 
 //Seting up Main variables
-let count = 0;
-let points = 0;
+let points = results.resourcesConfig.food;
 const collecitonTimeModifer = results.gameConfig.collection_time_modifier;
 const expGrothModifier = results.gameConfig.experience_growth_modifier;
 const tradeCost ={
@@ -65,12 +64,36 @@ const resourseUpgradeList = {
     //rank is defined as level / 3 rounded up
     //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
     //when something ranks up it might take a new reouse type to level up
-    house:   {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
-    heart:   {Rank1: "worm" , Rank2: "fish", Rank3: "shark" },
-    food:    {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
-    attack:  {Rank1: "rock" , Rank2: "steel", Rank3: "steel" },
-    defense: {Rank1: "dirt" , Rank2: "rock", Rank3: "steel" },
-    babby:  {Rank1: "worm" , Rank2: "fish", Rank3: "shark" }
+    house:   {
+        Rank1: results.gameConfig.house_RUL_rank_one, 
+        Rank2: results.gameConfig.house_RUL_rank_two, 
+        Rank3: results.gameConfig.house_RUL_rank_three 
+    },
+    heart:   {
+        Rank1: results.gameConfig.heart_RUL_rank_one, 
+        Rank2: results.gameConfig.heart_RUL_rank_two, 
+        Rank3: results.gameConfig.heart_RUL_rank_three 
+    },
+    food:    {
+        Rank1: results.gameConfig.food_RUL_rank_one, 
+        Rank2: results.gameConfig.food_RUL_rank_two, 
+        Rank3: results.gameConfig.food_RUL_rank_three 
+    },
+    attack:  {
+        Rank1: results.gameConfig.attack_RUL_rank_one, 
+        Rank2: results.gameConfig.attack_RUL_rank_two, 
+        Rank3: results.gameConfig.attack_RUL_rank_three 
+    },
+    defense: {
+        Rank1: results.gameConfig.defense_RUL_rank_one, 
+        Rank2: results.gameConfig.defense_RUL_rank_two, 
+        Rank3: results.gameConfig.defense_RUL_rank_three 
+    },
+    babby:  {
+        Rank1: results.gameConfig.baby_RUL_rank_one, 
+        Rank2: results.gameConfig.baby_RUL_rank_two, 
+        Rank3: results.gameConfig.baby_RUL_rank_three 
+    }
 }
 
 // Could add a generateor to create custom kids and indepent levels ** strech

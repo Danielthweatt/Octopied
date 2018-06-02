@@ -5,6 +5,10 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true,
             primaryKey: true,
         },
+        food: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
         hearts: {
             type: DataTypes.INTEGER,
             defaultValue: 0
