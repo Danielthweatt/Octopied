@@ -509,11 +509,20 @@ Need a text animation to display text (for level ups and other events)
 
     Add babby helpers that gather resouces
 
-    add function to check if you can collect ( saturday)**
+    
 
     **Strech **
 
     Hp bars for boss Fights
+
+
+
+    Clean code Initinative **
+        add function to check if you can collect ( saturday)**
+
+        combind battle and click exp functions
+
+        create function to manage resource loops to git rid of repeated functions
 
 */
 
@@ -526,6 +535,59 @@ function theHunger(){
    
 }
 
+/********** The Colseaum ********/
+
+function calculateAttack(){
+    const dammage =  ((octoStats.proficiency.attack * 2) + octoStats.level) * ((octoStats.prestidge * .05) + 1);
+    console.log(dammage);
+     return dammage;
+ }
+ 
+
+let stage = 1;
+let boss = {
+    currentHp : 10,
+    isBoss: false,
+    nextStage:function(){
+            stage++
+            if(stage % 10 === 0){
+                this.currentHp = stage * (20 + (stage * 2));
+                this.isBoss = true;
+                $('.boss-hp').text(this.currentHp);
+            }else{
+                this.currentHp = stage * (10 + stage);
+                this.isBoss = false;
+                $('.boss-hp').text(this.currentHp);
+            }
+
+        
+    },
+    // TODO: Clean Up merge two exp functions
+    getRewards: function() {
+        const expItem = 1.25;
+        const gainExperiance = octoStats.prestidge * (expItem) +1;
+        const battleExp = this.isBoss ? (stage * 6) * (expItem) +1 : ((stage * 6) * 2) * (expItem) +1;
+        octoStats.exp += gainExperiance + battleExp;
+        $('.current-exp').text(`Exp: ${octoStats.exp}`)
+        levelup();
+    },
+    hit: function(){
+        this.currentHp -= calculateAttack() -2;
+        $('.boss-hp').text(this.currentHp);
+        if(this.currentHp < 1 ){
+            boss.getRewards();
+            boss.nextStage();
+        }
+    }
+    
+}
+
+$('.boss').on('click', function(){
+        boss.hit();
+})
+
+
+
 theHunger();
 
 }).catch(function(err){
@@ -533,3 +595,5 @@ theHunger();
 });
 
 });
+
+
