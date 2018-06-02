@@ -34,18 +34,87 @@ body {
   list-style: none;
 }
 /* game */
+.container{
+  display: grid;
+  grid-template-columns: (fr, fr, fr, fr); 
+  grid-template-rows: (fr, fr, fr, fr);
+  grid-template-rows:minmax(200px, auto);
+  grid-gap: 1em;
+}
+
 .side-bar{
-  float: left;
-  font-family: 'Work Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 4;
+  grid-column-end: 4;
+  border: 1px solid red;
+}
+.heartsFood{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  grid-row-start: 1;
+  grid-row-end:1;
+  grid-column-start:1;
+  grid-column-end:1;
+  border: 1px solid red;
+}
+.resources{
+  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  grid-row-start: 2;
+  grid-row-end:2;
+  grid-column-start:1;
+  grid-column-end:1;
+  border: 1px solid red;
 }
 .stats{
-  float: right;
-  font-family: 'Work Sans', sans-serif;
+  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  grid-row-start: 2;
+  grid-row-end:2;
+  grid-column-start:4;
+  grid-column-end:4;
+  border: 1px solid red;
 }
-.gameHeader{
-  font-family: 'Kavivanar', cursive;
-  text-align: center;
-  font-size: 80px;
+.boss{
+  display:none;
+}
+.octo{
+  grid-row-start: 2;
+  grid-row-end:3;
+  grid-column-start:2;
+  grid-column-end:3;
+}
+.numBabies{
+display: none;
+}
+.setting{
+  display: none;
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+  grid-row-start: 4;
+  grid-row-end:4;
+  grid-column-start:2;
+  grid-column-end:3;
+  border: 1px solid red;
+}
+button{
+ color: white;
 }
 
   /**************** Stage Backgrounds *************/
@@ -90,8 +159,4 @@ body {
     100%{
       font-size:3em;
     }
-  }
-  
-  .side-bar{
-    float: left;
   }

@@ -103,7 +103,7 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enouf Babbies')
+            console.error('You do not have enough babies')
         }
        
     },
@@ -113,7 +113,7 @@ const babby = {
             this.available++
             collectorStatus[resource] = false;
         }else{
-            console.error('No colectors to Stop')
+            console.error('No collectors to Stop')
         }
     }
 }
