@@ -167,6 +167,7 @@ function clickFrenzy() {
    gainExperiance();
    levelup();
    $('.counter').text(points);
+   // TODO: move to leveup function 
    if(octoStats.level === 10 && octoStats.exp === 0){
        alert('Oh Something Happening');
       evolve();
@@ -238,6 +239,7 @@ function levelup(){
         octoStats.level ++;
         octoStats.exp = 0;
         $('.currnet-level').text(`Level:${octoStats.level}`)
+        $('.current-exp').text(`Exp: ${octoStats.exp}`)
        
     }
 }
@@ -566,9 +568,12 @@ let boss = {
     getRewards: function() {
         const expItem = 1.25;
         const gainExperiance = octoStats.prestidge * (expItem) +1;
-        const battleExp = this.isBoss ? (stage * 6) * (expItem) +1 : ((stage * 6) * 2) * (expItem) +1;
+        const battleExp = this.isBoss ? (stage * 2) * (expItem) +1 : ((stage * 2) * 2) * (expItem) +1;
         octoStats.exp += gainExperiance + battleExp;
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
+        const foodBonus = this.isBoss ? (stage * 3) : ((stage * 3) * 3);
+        points += foodBonus;
+        $('.counter').text(points);
         levelup();
     },
     hit: function(){
