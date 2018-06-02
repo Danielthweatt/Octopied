@@ -193,6 +193,7 @@ function evolve() {
 },180);
 }
 
+
 /**
  * This calcuatees the value that is gained by click baised on the current modiers and items
  * that they player currently has
@@ -503,3 +504,4 @@ Need a text animation to display text (for level ups and other events)
 });
 
 });
+
