@@ -34,7 +34,7 @@ const resources ={
     dirt: results.resourcesConfig.dirt,
     rock: results.resourcesConfig.rocks,
     steel: results.resourcesConfig.steel,
-    house:0
+    house:4
 };
 const octoStats = {
     level: results.statisticsConfig.level,
@@ -80,22 +80,18 @@ const babby = {
     available: 3,
     level: 1,
     // Hunger Every time there is not enouf food to feed your babies hunger increases after X once they hit 10 hunger they die? ** strech Goal **
-    hugner:2,
+    hunger:2,
     createBaby: function() {
-        console.log("house" , resources.house)
-        console.log("number" , this.number)
-        console.log(this.number > resources.house);
-        console.log(3 < 6);
-        if(this.number < resources.house){
-            this.number++
-            this.available = this.number - this.active;
-            $('.babby-count').text(this.number);
-        }else {
-            alert('You do not have enogh room in your house')
-        }
+        this.number++
+        this.available = this.number - this.active;
+        $('.babby-count').text(this.number);
     },
     feed: function() {
-        points -= (this.number * 10  * this.hunger);
+        points -= ((this.active * 5  * this.hunger) + (this.available * this.hunger));
+        $('.counter').text(points);
+        if(points < 0) {
+            collectorStatus.dirt = false
+        }
     },
     //need to move logic for the collection starting In here
     // currenlty on line 220 with collector state
@@ -294,7 +290,8 @@ function buyItem(itemName, count = 1){
 
 
 function checkForCollectors(){
-    
+    const check = '[]';
+    $('.collect-shark').text(check);
 
 }
 
@@ -334,6 +331,10 @@ $('.collect-dirt').on('click', function(){
         console.log("You must have a child to collect resources")
         return;
     }
+    if(points < 0){
+        alert('please collect food')
+        return;
+    }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
     const check = collectorStatus.dirt ? '[x]' : '[]';
     $('.collect-dirt').text(check);
@@ -361,7 +362,7 @@ $('.collect-steel').on('click', function(){
 
 function collectWorms() {
     $('.resource-worm').text(resources.worm);
-    if(collectorStatus.worm){
+    if(points > 0 &&collectorStatus.worm){
         setTimeout(function(){
             if(collectorStatus.worm){
                 resources.worm++;
@@ -373,7 +374,7 @@ function collectWorms() {
 
 function collectFish() {
     $('.resource-fish').text(resources.fish);
-    if(collectorStatus.fish){
+    if(points > 0 &&collectorStatus.fish){
         setTimeout(function(){
             if(collectorStatus.fish){
                 resources.fish++;
@@ -385,7 +386,7 @@ function collectFish() {
 
 function collectShark() {
     $('.resource-shark').text(resources.shark);
-    if(collectorStatus.shark){
+    if(points > 0 &&collectorStatus.shark){
         setTimeout(function(){
             resources.shark++;
             collectShark();
@@ -395,7 +396,7 @@ function collectShark() {
 
 function collectDirt() {
     $('.resource-dirt').text(resources.dirt);
-    if(collectorStatus.dirt){
+    if(points > 0 &&collectorStatus.dirt){
         setTimeout(function(){
             resources.dirt++;
             collectDirt();
@@ -405,7 +406,7 @@ function collectDirt() {
 
 function collectRock() {
     $('.resource-rock').text(resources.rock);
-    if(collectorStatus.rock){
+    if(points > 0 &&collectorStatus.rock){
         setTimeout(function(){
             resources.rock++;
             collectRock();
@@ -415,7 +416,7 @@ function collectRock() {
 
 function collectSteel() {
     $('.resource-steel').text(resources.steel);
-    if(collectorStatus.steel){
+    if(points > 0 &&collectorStatus.steel){
         setTimeout(function(){
             resources.steel++;
             collectSteel();
@@ -477,9 +478,16 @@ $('.buy-steel').on('click', function(){
 
 $('.have-babby').on('click', function() {
     //set requirments  Must be lv 11 // have home //  cost 10 fish for first
-
-    buyItem('worm', 1);
-    babby.createBaby();
+    if(babby.number < resources.house){
+        if(buyItem('worm', 1)){
+            babby.createBaby();
+        }
+    }else {
+        alert('You do not have enogh room in your house')
+    }
+      
+    
+   
 })
 
 
@@ -501,6 +509,7 @@ Need a text animation to display text (for level ups and other events)
 
     Add babby helpers that gather resouces
 
+    add function to check if you can collect ( saturday)**
 
     **Strech **
 
@@ -508,6 +517,16 @@ Need a text animation to display text (for level ups and other events)
 
 */
 
+function theHunger(){
+    babby.feed();
+    console.log('The hunger strikes')
+    setTimeout(() => {
+        theHunger();
+    }, 5000);
+   
+}
+
+theHunger();
 
 }).catch(function(err){
     console.log(`Oh boy, it broke: ${err}`);
