@@ -648,7 +648,7 @@ let boss = {
             }else{
                 this.currentHp = octoStats.stage * (10 + octoStats.stage);
                 this.isBoss = false;
-                const randomMonster = 'monster-' + Math.floor(Math.random()*10)
+                const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
                 const $monster = $('.boss-image');
                 $monster.removeClass();
                 $monster.addClass( 'boss-image');
