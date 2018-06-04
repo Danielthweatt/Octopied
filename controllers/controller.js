@@ -81,10 +81,12 @@ module.exports = function(app, passport, db){
     });
 
     app.get('/game/config', function isLoggedIn(req, res, next){
+        console.log("The Use stats is ****************" , req.isAuthenticated())
         if (req.isAuthenticated()) {
             return next();
+            
         }
-        res.status(401).end();
+        res.status(401).end();  res.status(401).end();
     }, function(req, res){
         const config = {};
         Config.findOne({
