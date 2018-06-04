@@ -24,7 +24,7 @@ const resourceDiffuculityRank ={    dirt: results.gameConfig.dirt_resource_diffi
     shark: results.gameConfig.shark_resource_difficulty_rank
 };
 const resources ={
-    //points: results.resourcesConfig.food,
+    points: results.resourcesConfig.food,
     hearts: results.resourcesConfig.hearts,
     babbies: results.resourcesConfig.babies,
     babbiesActive: results.resourcesConfig.babies_active,
