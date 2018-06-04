@@ -675,7 +675,11 @@ function theHunger() {
 /********** The Colseaum ********/
 
 function calculateAttack() {
-    const dammage =  ((octoStats.proficiency.attack * 2) + octoStats.level) * ((octoStats.prestidge * .05) + 1);
+    const crit = (Math.random() > .11) ? 1 : 2.5;
+    const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
+    if(crit === 2.5){
+        console.log('Crital Hit!!');
+    }
     console.log(dammage);
      return dammage;
  }
