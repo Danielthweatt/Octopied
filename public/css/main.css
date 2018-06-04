@@ -1,8 +1,9 @@
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: 0;
-  color: #f8bbd0;
+  color: black;
   font-family: 'Work Sans', sans-serif;
+
 }
 
 .login {
@@ -17,17 +18,9 @@ body {
 }
 
 .health-full {
-  content:'&hearts;';
   color:red;
   font-size: 4em;
   animation:1s  infinite linear;
-}
-
-.resources{
-  color:white;
-  font-family: 'Work Sans', sans-serif;
-  list-style: none;
-  float: right;
 }
 
 .resources ul{
@@ -38,54 +31,84 @@ body {
   display: grid;
   grid-template-columns: (fr, fr, fr, fr); 
   grid-template-rows: (fr, fr, fr, fr);
-  grid-template-rows:minmax(200px, auto);
+  grid-template-rows:minmax(300px, auto);
+  grid-template-columns:minmax(250px, auto);
   grid-gap: 1em;
 }
 
 .side-bar{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  grid-column-start: 4;
-  grid-column-end: 4;
-  border: 1px solid red;
+  justify-content: space-around; */
+  grid-row-start: 2;
+  grid-row-end:2;
+  grid-column-start:1;
+  grid-column-end:1;
+  background-color:#F4849F;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
 }
 .heartsFood{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: space-around; */
   grid-row-start: 1;
   grid-row-end:1;
   grid-column-start:1;
   grid-column-end:1;
-  border: 1px solid red;
+  color: lightgray;
+background-color:#F16687;
+padding: 10px;
+border-radius: 5px;
+  box-shadow: 0 5px 20px;
+  margin-top: 10px;
+  text-align: center;
 }
 .resources{
-  display: flex;
+  /* display: flex; */
   display: none;
-  flex-direction: column;
+  /* flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
-  grid-row-start: 2;
-  grid-row-end:2;
-  grid-column-start:1;
-  grid-column-end:1;
-  border: 1px solid red;
+  justify-content: space-around; */
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  background-color:#F6A3B7;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
+   padding: 10px;
+   font: 40px;
+   line-height: 2em;
 }
 .stats{
-  display: flex;
-  display: none;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
-  grid-row-start: 2;
-  grid-row-end:2;
-  grid-column-start:4;
-  grid-column-end:4;
-  border: 1px solid red;
+  justify-content: space-around; */
+  grid-row-start: 3;
+  grid-row-end:3;
+  grid-column-start:1;
+  grid-column-end:1;
+  background-color: #F6A3B7;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
 }
 .boss{
   display:none;
@@ -116,10 +139,39 @@ display: none;
 button{
  color: white;
 }
-
+.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  z-index: 1;
+  will-change: opacity, transform;
+  transition: all .3s ease-out;
+}
+.modal{
+  background-image: url('/../images/modal-background.png');
+  height: 200px;
+  width: auto;
+}
+.logout,
+#save-progress{
+  padding-top: 50px;
+  float: right;
+  background: #F6A3B7;
+  color: darkgray;
+  display: block;
+  height: auto;
+  width: auto;
+}
   /**************** Stage Backgrounds *************/
 .overlay{
-    position:fixed;
+    position:absolute;
     background:url('/../images/Metallic-Blue24.jpg');
     animation:100s scroll infinite linear;
     top:0;

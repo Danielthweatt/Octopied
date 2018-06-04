@@ -1,21 +1,34 @@
 <main class="stage">
     <div class="overlay"></div>
     <div class="container">
-        <div class="setting">
-            <button id="save-progress">Save Progress</button>
-            <a href="/logout">
-                <button>Logout</button>
-            </a>
+        <div class="modal" id="setting">
+            <div class="modal-content">
+                <h3>What would you like to do?</h3>
+                <button id="save-progress">Save Progress</button>
+                <a href="/logout">
+                    <button class="logout">Logout</button>
+                </a>
+            </div>
         </div>
         <div class="side-bar">
-                <div class="currnet-level">Level:</div>
-                <div class="current-exp">Exp:</div>
+            <div class="currnet-level">
+                <h2>Level:</h2>
+            </div>
+            <div class="current-exp">
+                <h2>Exp:</h2>
+            </div>
         </div>
         <div class="heartsFood">
             <div class="health">
-                <span class="health-0 health-full">&hearts;</span>
-                <span class="health-1 health-full">&hearts;</span>
-                <span class="health-2 health-full">&hearts;</span>
+                <span class="health-0 health-full">
+                    <i class="material-icons medium">favorite</i>
+                </span>
+                <span class="health-1 health-full">
+                    <i class="material-icons medium">favorite</i>
+                </span>
+                <span class="health-2 health-full">
+                    <i class="material-icons medium">favorite</i>
+                </span>
                 <h2>Food:
                     <span class="counter">0</span>
                 </h2>
@@ -31,37 +44,49 @@
             <ul>
                 <li>Worms:
                     <span class="resource-worm"> 0 </span>
-                    <button style="margin:5px;" class="buy-worm">Buy Worm</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-worm">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-worm"> [] </span>
                 </li>
                 <li>Fishs:
                     <span class="resource-fish"> 0 </span>
-                    <button style="margin:5px;" class="buy-fish">Buy Fish</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-fish">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-fish"> [] </span>
                 </li>
                 <li>Sharks:
                     <span class="resource-shark"> 0 </span>
-                    <button style="margin:5px;" class="buy-shark">Buy Shark</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-shark">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-shark"> [] </span>
                 </li>
                 <li>Dirt:
                     <span class="resource-dirt"> 0 </span>
-                    <button style="margin:5px;" class="buy-dirt">Buy Dirt</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-dirt">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-dirt"> [] </span>
                 </li>
                 <li>Rocks:
                     <span class="resource-rock"> 0 </span>
-                    <button style="margin:5px;" class="buy-rock">Buy Rock</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-rock">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-rock"> [] </span>
                 </li>
                 <li>Steel:
                     <span class="resource-steel"> 0 </span>
-                    <button style="margin:5px;" class="buy-steel">Buy Steel</button>
+                    <a class="waves-effect waves-light teal btn-flat buy-steel">
+                        <i class="material-icons">done</i>
+                    </a>
                     <span class="collect-steel"> [] </span>
                 </li>
             </ul>
         </div>
-        <div class="stats">
+        <div class="stats" style="display: none">
             <div>Heart Upgrade:
                 <span class="heart-level"> 1 </span>
                 <button class="upgrade-heart">Heart +</button>
@@ -93,24 +118,63 @@
             <span class="boss-hp">10</span>
         </div>
         <image class="octo" style="width:80px; margin-left:45%; margin-top:25%;" src="/images/original.gif"></image>
-        <div class="buttons">
-            <button type="button" id="settings">Settings</button>
-            <button type="button" id="shop">Shop</button>
-            <button type="button" id="upgrades">Upgrades</button>
-
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large #00e5ff cyan accent-3">
+                <i class="large material-icons">add_circle</i>
+            </a>
+            <ul>
+                <li>
+                    <a class="btn-floating light-blue lighten-2 modal-trigger" data-target="setting"id="settings">
+                        <i class="material-icons">settings</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn-floating cyan lighten-2" id="shop">
+                        <i class="material-icons">shopping_basket</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn-floating teal lighten-2" id="upgrades">
+                        <i class="material-icons">arrow_upward</i>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/javascript/main.js" type="module"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="/javascript/main.js" type="module"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 </main>
 <script>
-    $("#settings").on("click",function(){
-        $(".setting").css("display","block");
-    });
-     $("#shop").on("click",function(){
-        $(".resources").css("display","block");
-    });
-      $("#upgrades").on("click",function(){
-        $(".stats").css("display","block");
+    $(document).ready(function () {
+        $('.fixed-action-btn').floatingActionButton();
+        {            
+                $("#settings").on("click", function () {
+                    $(".modal").modal();
+                });
+        }
+        $("#shop").on("click", function () {
+            if ($(".resources").css("display") == 'none') {
+                $(".resources").css("display", "inline")
+            } else if ($(".stats").css("display") == "inline" && $(".resources").css("display") == 'none') {
+                $(".stats").css("display", "none");
+                $(".resources").css("display", "inline")
+            }
+            else {
+                $(".resources").css("display", "none")
+            }
+        });
+        $("#upgrades").on("click", function () {
+            if ($(".stats").css("display") == 'none') {
+                $(".stats").css("display", "inline");
+            } else if ($(".stats").css("display") == 'none' && $(".resources").css("display") == 'inline') {
+                $(".stats").css("display", "inline")
+                $(".resources").css("display", "none")
+            } else {
+                $(".stats").css("display", "none")
+            }
+        });
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/javascript/main.js" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
