@@ -23,7 +23,12 @@ body {
   animation:1s  infinite linear;
 }
 
-.resources ul{
+.resources {
+  color:white;
+  list-style: none;
+}
+
+.resources ul {
   list-style: none;
 }
 /* game */
@@ -183,13 +188,13 @@ button{
   }
 
   /**************** Animations (KeyFrames) ****************/
-  @keyframes scroll{
+  @keyframes scroll {
     100%{
       background-position:0px 3000px;
     }
   }
 
-  @keyframes beat{
+  @keyframes beat {
     0%{
       font-size:3em;
     }
@@ -201,7 +206,7 @@ button{
     }
   }
 
-  @keyframes beat{
+  @keyframes beat {
     0%{
       font-size:3em;
     }
