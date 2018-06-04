@@ -684,26 +684,12 @@ function calculateAttack() {
 let boss = {
     currentHp : 10,
     isBoss: false,
+    timer: 30,
     
     nextStage:function() {
             octoStats.stage++
             $('.current-stage').text(octoStats.stage);
-            if(octoStats.stage % 10 === 0) {
-                this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
-                this.isBoss = true;
-                $('.boss-hp').text(this.currentHp);
-            }else{
-                this.currentHp = octoStats.stage * (10 + octoStats.stage);
-                this.isBoss = false;
-                const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
-                const $monster = $('.boss-image');
-                $monster.removeClass();
-                $monster.addClass( 'boss-image');
-                $monster.addClass( randomMonster);
-                $('.boss-hp').text(this.currentHp);
-            }
-
-        
+            boss.setMonster();
     },
     // TODO: Clean Up merge two exp functions
     getRewards: function() {
@@ -724,6 +710,40 @@ let boss = {
             boss.getRewards();
             boss.nextStage();
         }
+    },
+    countDown: function() {
+       if(this.timer > 0){
+            this.timer --;
+            $('.battle-time').text(this.timer)
+       }else{
+            this.timer = 31;
+            octoStats.stage--;
+            boss.setMonster();
+       }
+       if(this.isBoss){
+        setTimeout(() => {
+            boss.countDown();
+           }, 1000);
+       }
+     
+      
+    },
+    setMonster: function(){
+        if(octoStats.stage % 10 === 0) {
+            this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
+            this.isBoss = true;
+            $('.boss-hp').text(this.currentHp);
+            boss.countDown();
+        }else{
+            this.currentHp = octoStats.stage * (10 + octoStats.stage);
+            this.isBoss = false;
+            const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
+            const $monster = $('.boss-image');
+            $monster.removeClass();
+            $monster.addClass( 'boss-image');
+            $monster.addClass( randomMonster);
+            $('.boss-hp').text(this.currentHp);
+        }
     }
     
 }
@@ -732,6 +752,8 @@ $('.boss').on('click', function() {
         boss.hit();
 
 })
+
+boss.countDown();
 
 function whichAnimationEvent(){
     var t,
