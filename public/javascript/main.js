@@ -724,6 +724,9 @@ let boss = {
             octoStats.stage--;
             boss.setMonster();
        }
+       if(Math.random() > .5){
+           alert(' You got Attacked');
+       }
        if(this.isBoss){
         setTimeout(() => {
             boss.countDown();
