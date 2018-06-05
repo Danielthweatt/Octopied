@@ -1,28 +1,42 @@
 <div class="row">
-  <div class="top-right col-sm-2">
+  <div class="top-right offset-s10 col s2">
     <a href="/signup" class="waves-effect waves-teal btn-flat">Sign up</a>
   </div>
-  <div class="row">
-    <div class="main col-sm-4">
-      <h1>Octopied</h1>
-      <p>An octopus adventure...in space.</p>
-      <form id="signin" name="signin" method="post" action="signin">
-        <div class="input-field">
-          <label for="email">Email address</label>
-          <input id="email" type="email" name="email" class="validate">
-          <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
-          <div class="input-field">
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password" class="validate">
-            <span class="helper-text" data-error="Password must be 8 charachters" data-success="Perfect"></span>
-          </div>
-          <a href="/forgot" class="waves-effect btn-flat">Forgot Password?</a>
-          <input class="waves-effect waves-light btn submit" type="submit" value="Sign In"></a>
-          {{#if flashError}}
-            <div class="error">{{flashError}}</div>
-          {{/if}}
-        </div>
-      </form>
-    </div>
+</div>
+<div class="row">
+  <div class="main offset-s4 col s4">
+    <h1>Octopied</h1>
+    <p>An octopus adventure...in space.</p>
+    <form id="signin" name="signin" method="post" action="signin">
+      <div class="input-field">
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" class="validate" required>
+        <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
+      </div>
+      <div class="input-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" minlength="5" name="password" class="validate" required>
+        <span class="helper-text" data-error="Password must be 5 characters" data-success="Perfect"></span>
+      </div>
+      <a href="/forgot" class="waves-effect btn-flat">Forgot Password?</a>
+      <input class="waves-effect waves-light btn submit" type="submit" value="Sign In"></a>
+      {{#if flashError}}
+        <div class="error">{{flashError}}</div>
+      {{/if}}
+    </form>
   </div>
 </div>
+<script>
+$("#signin").validate({
+  errorElement : 'div',
+  errorPlacement: function(error, element) {
+    var placement = $(element).data('error');
+    if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+ });
+);
+</script>
