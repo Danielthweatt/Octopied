@@ -1,36 +1,23 @@
-{{!-- {{#if signin}}
-    {{#if flashInfo}}
-        <div>{{flashInfo}}</div>
-    {{/if}}
-        <a href="/signup" class="waves-effect waves-teal btn-flat">Sign up</a>
-    <h1>Sign-In!</h1>
-    <form id="signin" name="signin" method="post" action="signin">
-        <div class="input-field">
-          <input id="password" type="password" class="validate">
-          <label for="password">Password</label>
-        </div>
-        <div class="input-field">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-        <input class="waves-effect waves-light btn" type="submit" value="Sign In"></a>
-    </form>
-    <a href="/forgot" class="waves-effect waves-teal btn-flat">Forgot Password?</a>
-    {{#if flashError}}
-        <div>{{flashError}}</div>
-    {{/if}}
-{{/if}} --}}
 
-{{#if forgot}}
-    <h1>Forgotten Password? We can help with that.</h1>
-    <form id="forgot" name="forgot" method="post" action="/forgot">
-        <div class="input-field">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
+    <div class="row">
+        <div class="top-right col-sm-2">
+            <a href="/" class="waves-effect waves-teal btn-flat">Log In</a>
         </div>
-        <input class="waves-effect waves-light btn" type="submit" value="Reset Password"></a>
-    </form>
-    <a href="/signin" class="waves-effect waves-teal btn-flat">Log In</a>
+    </div>
+    {{#if forgot}}
+    <div class="row">
+        <div class="main col-sm-4">
+            <h1>Forgotten Password? We can help with that.</h1>
+            <form id="reset" name="reset" method="post" action="/forgot">
+                <div class="input-field">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+                <input class="waves-effect waves-light btn submit" type="submit" value="Reset Password">
+                </a>
+            </form>
+        </div>
+    </div>
     {{#if flashInfo}}
         <div>{{flashInfo}}</div>
     {{/if}}
@@ -41,43 +28,53 @@
 
 {{#if reset}}
     {{#unless flashError}}
-        <h1>Please Reset Your Password Now</h1>
-        <form id="reset" name="reset" method="post" action="/reset/{{token}}">
-            <label for="password">New Password: </label>
-            <input name="password" id="pass" type="password" />
-            <label for="re-pass">Re-enter Password: </label>
-            <input name="re-pass" id="re-pass" type="password" />
-            <input class="waves-effect waves-light btn" type="submit" value="Reset"></a>
-        </form>
+        <div class="row">
+            <div class="col-sm-4 main">
+                <h1>Please Reset Your Password Now</h1>
+                <form id="reset" name="reset" method="post" action="/reset/{{token}}">
+                    <div class="input-field">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="pass" type="password" name="password" class="validate">
+                        <label for="password">New Password</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="re-pass" type="password" class="validate">
+                        <label for="re-pass">Confirm Password</label>
+                    </div>
+                    <input class="waves-effect waves-light btn submit" type="submit" value="Reset">
+                    </a>
+                </form>
+            </div>
+        </div>
     {{/unless}}
     {{#if flashError}}
         <div>{{flashError}}</div>
         <a href="/forgot" class="waves-effect waves-teal btn-flat">Try Resetting Password Again</a>
-        <a href="/index" class="waves-effect waves-teal btn-flat">Log In</a>
     {{/if}}
 {{/if}}
 
 {{#if signup}}
-<div class="log-in-grid">
-    <div class="top-right">
-        <a href="/" class="waves-effect waves-teal btn-flat">Log In</a>
-    </div>
-    <div class="main">
+<div class="row">
+    <div class="main col-sm-4">
         <h1>Sign-Up!</h1>
         <form id="signup" name="signup" method="post" action="/signup">
             <div class="input-field">
-            <input id="email" type="email" class="validate">
-            <label for="email">Email</label>
+                <input id="email" type="email" class="validate">
+                <label for="email">Email</label>
             </div>
             <div class="input-field">
-            <input id="pass" type="password" class="validate">
-            <label for="pass">Password</label>
+                <input id="pass" type="password" class="validate">
+                <label for="pass">Password</label>
             </div>
             <div class="input-field">
-            <input id="re-pass" type="password" class="validate">
-            <label for="re-pass">Confirm Password</label>
+                <input id="re-pass" type="password" class="validate">
+                <label for="re-pass">Confirm Password</label>
             </div>
-            <input class="waves-effect waves-light btn" type="submit" value="Register"></a>
+            <input class="waves-effect waves-light btn submit" type="submit" value="Register">
+            </a>
         </form>
         {{#if flashError}}
             <div>{{flashError}}</div>
