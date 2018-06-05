@@ -299,8 +299,9 @@ function calcualteClickValue() {
      const tool =  0//toolA + toolB + toolC;
      const baseCollect = 1;
      const collectValue = baseCollect + tool;
-     const clickValue = Math.ceil( ((octoStats.level * collectValue) * proficiency ));
-
+     const clickValue = Math.ceil( ((octoStats.level * (collectValue + octoStats.proficiency.food * 2) ) * proficiency ));
+    console.log(clickValue);
+    console.log(proficiency);
      return clickValue;
 }
 
@@ -348,7 +349,7 @@ function levelup() {
  * @param {number} [count=1] 
  */
 function buyResource(itemName, count = 1) {
-    if(resources.points > tradeCost[itemName] * count) {
+    if(resources.points >= tradeCost[itemName] * count) {
         //Add resource
         resources[itemName]++;
         //subtract toatl points
@@ -724,7 +725,9 @@ let boss = {
             octoStats.stage--;
             boss.setMonster();
        }
+       
        if(this.isBoss){
+           boss.attack();
         setTimeout(() => {
             boss.countDown();
            }, 1000);
@@ -733,6 +736,7 @@ let boss = {
       
     },
     setMonster: function(){
+        this.timer = 30;
         if(octoStats.stage % 10 === 0) {
             this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
             this.isBoss = true;
@@ -748,7 +752,18 @@ let boss = {
             $monster.addClass( randomMonster);
             $('.boss-hp').text(this.currentHp);
         }
-    }
+    },
+    attack: function(){
+        if(Math.random() > .15){
+            const dammge = boss.calcuateBossDammge;
+            alert(`You got attacked for  ${dammge}`);
+        }
+    },
+    calcuateBossDammge: function() {
+
+       const dammge =   ((octoStats.stage * 30) - octoStats.level) * ((1 - octoStats.proficiency.defense * .04) + .1) 
+       return dammge;
+    },
     
 }
 
