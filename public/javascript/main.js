@@ -795,7 +795,7 @@ function whichAnimationEvent(){
                 function(event) {
      $(this).remove();
     });
-  });
+  }); 
 
 
 theHunger();
