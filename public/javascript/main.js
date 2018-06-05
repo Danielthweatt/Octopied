@@ -795,7 +795,8 @@ function whichAnimationEvent(){
   var animationEvent = whichAnimationEvent();
   
   $(".boss").click(function(){
-   $('.boss-image').append(`<div style=" position: absolute" class="slash-${attackCounter}"></div>`)
+   $('.boss-image').append(`<div style=" position: absolute" class="slash-${attackCounter}"> <audio id="player" src="/aduio/swing1.wav"></audio>  </audio></div>`)
+   $('#player').trigger("play");
    if(attackCounter < 5){
        attackCounter++;
    }else{
@@ -805,7 +806,7 @@ function whichAnimationEvent(){
    console.log(attackCounter);
     $('.slash-1').one(animationEvent,
                 function(event) {
-     $(this).remove();
+     //$(this).remove();
     });
   });
 
