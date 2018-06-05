@@ -1,17 +1,5 @@
 
 body {
-<<<<<<< HEAD
-  background:url('/../images/Metallic-Blue1.jpg');
-  z-index: -2;
-  color:white;
-}
-
-#alert {
-  opacity: 0;
-}
-
-.login {
-=======
   /* background:url('/../images/Metallic-Blue1.jpg'); */
   /* z-index: 0; */
 }
@@ -33,7 +21,6 @@ P {
 }
 
 /* .login {
->>>>>>> 2e4cc4a9a777ad65c177cca3eea63e9559409939
   width:400px;
   height:250px;
   background: #ffffff;
@@ -58,22 +45,7 @@ P {
 
 .resources ul {
   list-style: none;
-<<<<<<< HEAD
-}
-
-.baby {
-  width: 20px;
-  position: relative;
-  animation-name: baby;
-  animation-duration: 90s;
-  animation-delay: 2s;
-  animation-iteration-count: infinite;
-  z-index: -1;
-}
-
-=======
 } */
->>>>>>> 2e4cc4a9a777ad65c177cca3eea63e9559409939
 
   /**************** Stage Backgrounds *************/
 .overlay {
