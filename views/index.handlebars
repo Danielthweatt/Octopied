@@ -7,7 +7,7 @@
   <div class="main offset-s4 col s4">
     <h1>Octopied</h1>
     <p>An octopus adventure...in space.</p>
-    <form id="signin" name="signin" method="post" action="signin">
+    <form id="signin" name="signin" method="post" action="signin" novalidate>
       <div class="input-field">
         <label for="email">Email address</label>
         <input id="email" type="email" name="email" class="validate" required>
@@ -19,13 +19,14 @@
         <span class="helper-text" data-error="Password must be 5 characters" data-success="Perfect"></span>
       </div>
       <a href="/forgot" class="waves-effect btn-flat">Forgot Password?</a>
-      <input class="waves-effect waves-light btn submit" type="submit" value="Sign In"></a>
+      <input class="waves-effect waves-light btn" type="submit" value="Sign In"></a>
       {{#if flashError}}
         <div class="error">{{flashError}}</div>
       {{/if}}
     </form>
   </div>
 </div>
+<script src="/javascript/auth.js"></script>
 <script>
 $("#signin").validate({
   errorElement : 'div',
