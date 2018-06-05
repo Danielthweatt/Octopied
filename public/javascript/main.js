@@ -131,6 +131,7 @@ function refreshDisplay() {
     $('.defense-level').text(octoStats.proficiency.defense);
     $('.house-level').text(resources.house);
     $('.babby-level').text(resources.babbiesLevel);
+    $('.house-level').text(resources.house)
     if(octoStats.level > 9){
         $('.octo').attr('src', '/images/Octopus.gif');
     }
@@ -392,13 +393,31 @@ function buyUpgrade(upgrade) {
    const rankName = 'Rank' + rank
    const requiredResource = resourseUpgradeList[upgrade][rankName];
     const resourceQuanityNeeded = 3 * octoStats.proficiency[upgrade] * rank ;
-   if (resourceQuanityNeeded <  resources[requiredResource]) {
+   if (resourceQuanityNeeded <=  resources[requiredResource]) {
     resources[requiredResource] -=resourceQuanityNeeded;
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
        alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`)
    }
+}
+
+function buildHouse(){
+    const currentHouseLevel = resources.house;
+    let rank = Math.ceil(currentHouseLevel / 2) ;
+    if(rank === 0){rank++}
+    const rankName = 'Rank' + rank
+    const resourceQuanityNeeded = 3 * resources.house * rank;
+    const requiredResource = resourseUpgradeList.house[rankName];
+    console.log(rankName , resourseUpgradeList.house)
+    if (resourceQuanityNeeded <=  resources[requiredResource]) {
+        resources[requiredResource] -=resourceQuanityNeeded;
+        resources.house++;
+        alert('house Updated')
+       $('.house-level').text(resources.house)
+       }else{
+           alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`)
+       }
 }
 
 
@@ -422,6 +441,10 @@ $('.upgrade-attack').on('click', function() {
 
 $('.upgrade-defense').on('click', function() {
     buyUpgrade('defense')
+})
+
+$('.upgrade-house').on('click', function() {
+    buildHouse();
 })
 
 $('.collect-worm').on('click', function() {
@@ -699,10 +722,10 @@ let boss = {
     getRewards: function() {
         const expItem = 1.25;
         const gainExperiance = octoStats.prestidge * (expItem) +1;
-        const battleExp = this.isBoss ? (octoStats.stage * 2) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
+        const battleExp = this.isBoss ? (octoStats.stage * 5) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
         octoStats.exp += gainExperiance + battleExp;
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
-        const foodBonus = this.isBoss ? (octoStats.stage * 3) : ((octoStats.stage * 3) * 3);
+        const foodBonus = this.isBoss ? (octoStats.stage * 10) : ((octoStats.stage * 3) * 3);
         resources.points += foodBonus;
         $('.counter').text(resources.points);
         levelup();
@@ -727,7 +750,7 @@ let boss = {
        if(Math.random() > .5){
            alert(' You got Attacked');
        }
-       if(this.isBoss){
+       if(this.isBoss === true){
         setTimeout(() => {
             boss.countDown();
            }, 1000);
@@ -799,6 +822,7 @@ function whichAnimationEvent(){
 
 
 theHunger();
+boss.setMonster();
 
 
 }).catch(function(err) {
