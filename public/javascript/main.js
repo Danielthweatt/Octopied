@@ -16,7 +16,8 @@ const tradeCost ={
     fish: results.gameConfig.fish_trade_cost,
     shark: results.gameConfig.shark_trade_cost
 };
-const resourceDiffuculityRank ={    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+const resourceDiffuculityRank ={    
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
     rock: results.gameConfig.rock_resource_difficulty_rank,
     steel: results.gameConfig.steel_resource_difficulty_rank,
     worm: results.gameConfig.worm_resource_difficulty_rank,
@@ -64,7 +65,6 @@ const collectorStatus ={
     fish: results.statisticsConfig.fish_collector_status,
     shark: results.statisticsConfig.shark_collector_status
 };
-
 const resourseUpgradeList = {
     //rank is defined as level / 3 rounded up
     //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
@@ -100,6 +100,7 @@ const resourseUpgradeList = {
         Rank3: results.gameConfig.baby_RUL_rank_three 
     }
 };
+let timeOut;
 
 function refreshCollectorStatuses() {
     let check;
@@ -136,11 +137,19 @@ function refreshDisplay() {
     }
 };
 
-refreshDisplay();
+function gameAlert(message) {
+    clearTimeout(timeOut);
+    $('#alert').text(message);
+    $('#alert').css('opacity', 1);
+    timeOut = setTimeout(function(){
+        $('#alert').css('opacity', 0);
+        $('#alert').text('');
+    }, 2500);
+};
 
 function updateDB(alertSave) {
     if (alertSave) {
-        alert('Your progress is being saved!');
+        gameAlert('Saving Progress...');
     };
     $.ajax("/game", {
         type: "PUT",
@@ -156,11 +165,13 @@ function updateDB(alertSave) {
     });
 };
 
+refreshDisplay();
+
 $('#save-progress').click(function() {
     updateDB(false);
 });
 
-setInterval(function() {updateDB(true);}, 180000);
+setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
@@ -198,7 +209,7 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enouf Babbies')
+            console.error('You do not have enough babies.');
         }
        
     },
@@ -333,8 +344,8 @@ function levelup() {
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
 
         if(octoStats.level === 10 && octoStats.exp === 0) {
-            alert('Oh Something Happening');
-           evolve();
+            gameAlert('Octo-Growth!');
+            evolve();
         }
        
     }
@@ -358,7 +369,7 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert(`you dont have enouf points You Need  ${tradeCost[itemName]}  points`)
+        gameAlert(`You don't have enough points. You need ${tradeCost[itemName]} points.`);
     }
 }
 
@@ -381,7 +392,7 @@ function buyItem(itemName, count = 1) {
         $(selector).text( resources[itemName])
         return true;
     }else{
-        alert(`you dont have enouf ${itemName}s`)
+        gameAlert(`You don't have enough ${itemName}s.`);
         return false;
     }
 }
@@ -397,7 +408,7 @@ function buyUpgrade(upgrade) {
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`)
+       gameAlert(`You need ${resourceQuanityNeeded} ${requiredResource} to buy this item.`);
    }
 }
 
@@ -461,7 +472,7 @@ $('.collect-dirt').on('click', function() {
         return;
     }
     if(resources.points < 0) {
-        alert('please collect food')
+        gameAlert('Please collect food.');
         return;
     }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
@@ -613,8 +624,8 @@ $('.have-babby').on('click', function() {
         if(buyItem('worm', 1)) {
             babby.createBaby();
         }
-    }else {
-        alert('You do not have enogh room in your house')
+    } else {
+        gameAlert('You do not have enough room in your house.');
     }
       
     
