@@ -3,7 +3,8 @@ $(function(){
     const validatePassword = function(event, password, passwordAgain){
         if (password.val() !== passwordAgain.val()) {
             event.preventDefault();
-            alert('Please enter the same password in both fields.');
+            const toastHTML = 'Please enter the same password in both fields.';
+            M.toast({html: toastHTML});
         }
     };
 
@@ -11,7 +12,8 @@ $(function(){
         const pass = $('#pass');
         if (pass.val() === '') {
             event.preventDefault();
-            alert('Please enter a password.');
+            const toastHTML = 'Please enter a password.'
+            M.toast({html: toastHTML});
         }
         validatePassword(event, pass, $('#re-pass'));
     });
