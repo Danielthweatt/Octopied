@@ -132,6 +132,7 @@ function refreshDisplay() {
     $('.defense-level').text(octoStats.proficiency.defense);
     $('.house-level').text(resources.house);
     $('.babby-level').text(resources.babbiesLevel);
+    $('.house-level').text(resources.house)
     if(octoStats.level > 9){
         $('.octo').attr('src', '/images/Octopus.gif');
     }
@@ -149,7 +150,8 @@ function gameAlert(message) {
 
 function updateDB(alertSave) {
     if (alertSave) {
-        gameAlert('Saving Progress...');
+        const toastHTML = 'Your progress is being saved!';
+        M.toast({html: toastHTML});
     };
     $.ajax("/game", {
         type: "PUT",
@@ -209,7 +211,7 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enough babies.');
+            console.error('You do not have enough babies')
         }
        
     },
@@ -219,7 +221,7 @@ const babby = {
             this.available++
             collectorStatus[resource] = false;
         }else{
-            console.error('No colectors to Stop')
+            console.error('No collectors to Stop')
         }
     }
 }
@@ -344,8 +346,9 @@ function levelup() {
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
 
         if(octoStats.level === 10 && octoStats.exp === 0) {
-            gameAlert('Octo-Growth!');
-            evolve();
+            const toastHTML = 'Oh Something Happening';
+            M.toast({html: toastHTML});
+           evolve();
         }
        
     }
@@ -369,7 +372,8 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        gameAlert(`You don't have enough points. You need ${tradeCost[itemName]} points.`);
+        const toastHTML = `You dont have enough points! You Need  ${tradeCost[itemName]}  points`
+        M.toast({html:toastHTML})
     }
 }
 
@@ -392,7 +396,8 @@ function buyItem(itemName, count = 1) {
         $(selector).text( resources[itemName])
         return true;
     }else{
-        gameAlert(`You don't have enough ${itemName}s.`);
+        const toastHTML = `you dont have enough ${itemName}s`
+        M.toast({html:toastHTML});
         return false;
     }
 }
@@ -403,13 +408,32 @@ function buyUpgrade(upgrade) {
    const rankName = 'Rank' + rank
    const requiredResource = resourseUpgradeList[upgrade][rankName];
     const resourceQuanityNeeded = 3 * octoStats.proficiency[upgrade] * rank ;
-   if (resourceQuanityNeeded <  resources[requiredResource]) {
+   if (resourceQuanityNeeded <=  resources[requiredResource]) {
     resources[requiredResource] -=resourceQuanityNeeded;
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       gameAlert(`You need ${resourceQuanityNeeded} ${requiredResource} to buy this item.`);
+       const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`
+       M.toast({html:toastHTML});
    }
+}
+
+function buildHouse(){
+    const currentHouseLevel = resources.house;
+    let rank = Math.ceil(currentHouseLevel / 2) ;
+    if(rank === 0){rank++}
+    const rankName = 'Rank' + rank
+    const resourceQuanityNeeded = 3 * resources.house * rank;
+    const requiredResource = resourseUpgradeList.house[rankName];
+    console.log(rankName , resourseUpgradeList.house)
+    if (resourceQuanityNeeded <=  resources[requiredResource]) {
+        resources[requiredResource] -=resourceQuanityNeeded;
+        resources.house++;
+        alert('house Updated')
+       $('.house-level').text(resources.house)
+       }else{
+           alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`)
+       }
 }
 
 
@@ -433,6 +457,10 @@ $('.upgrade-attack').on('click', function() {
 
 $('.upgrade-defense').on('click', function() {
     buyUpgrade('defense')
+})
+
+$('.upgrade-house').on('click', function() {
+    buildHouse();
 })
 
 $('.collect-worm').on('click', function() {
@@ -472,7 +500,8 @@ $('.collect-dirt').on('click', function() {
         return;
     }
     if(resources.points < 0) {
-        gameAlert('Please collect food.');
+        const toastHTML = 'please collect food'
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
@@ -624,8 +653,9 @@ $('.have-babby').on('click', function() {
         if(buyItem('worm', 1)) {
             babby.createBaby();
         }
-    } else {
-        gameAlert('You do not have enough room in your house.');
+    }else {
+        const toastHTML = 'You do not have enogh room in your house'
+        M.toast({html: toastHTML});
     }
       
     
@@ -686,7 +716,11 @@ function theHunger() {
 /********** The Colseaum ********/
 
 function calculateAttack() {
-    const dammage =  ((octoStats.proficiency.attack * 2) + octoStats.level) * ((octoStats.prestidge * .05) + 1);
+    const crit = (Math.random() > .11) ? 1 : 2.5;
+    const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
+    if(crit === 2.5){
+        console.log('Crital Hit!!');
+    }
     console.log(dammage);
      return dammage;
  }
@@ -695,35 +729,21 @@ function calculateAttack() {
 let boss = {
     currentHp : 10,
     isBoss: false,
+    timer: 30,
     
     nextStage:function() {
             octoStats.stage++
             $('.current-stage').text(octoStats.stage);
-            if(octoStats.stage % 10 === 0) {
-                this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
-                this.isBoss = true;
-                $('.boss-hp').text(this.currentHp);
-            }else{
-                this.currentHp = octoStats.stage * (10 + octoStats.stage);
-                this.isBoss = false;
-                const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
-                const $monster = $('.boss-image');
-                $monster.removeClass();
-                $monster.addClass( 'boss-image');
-                $monster.addClass( randomMonster);
-                $('.boss-hp').text(this.currentHp);
-            }
-
-        
+            boss.setMonster();
     },
     // TODO: Clean Up merge two exp functions
     getRewards: function() {
         const expItem = 1.25;
         const gainExperiance = octoStats.prestidge * (expItem) +1;
-        const battleExp = this.isBoss ? (octoStats.stage * 2) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
+        const battleExp = this.isBoss ? (octoStats.stage * 5) * (expItem) +1 : ((octoStats.stage * 2) * 2) * (expItem) +1;
         octoStats.exp += gainExperiance + battleExp;
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
-        const foodBonus = this.isBoss ? (octoStats.stage * 3) : ((octoStats.stage * 3) * 3);
+        const foodBonus = this.isBoss ? (octoStats.stage * 10) : ((octoStats.stage * 3) * 3);
         resources.points += foodBonus;
         $('.counter').text(resources.points);
         levelup();
@@ -735,6 +755,43 @@ let boss = {
             boss.getRewards();
             boss.nextStage();
         }
+    },
+    countDown: function() {
+       if(this.timer > 0){
+            this.timer --;
+            $('.battle-time').text(this.timer)
+       }else{
+            this.timer = 31;
+            octoStats.stage--;
+            boss.setMonster();
+       }
+       if(Math.random() > .5){
+           alert(' You got Attacked');
+       }
+       if(this.isBoss === true){
+        setTimeout(() => {
+            boss.countDown();
+           }, 1000);
+       }
+     
+      
+    },
+    setMonster: function(){
+        if(octoStats.stage % 10 === 0) {
+            this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
+            this.isBoss = true;
+            $('.boss-hp').text(this.currentHp);
+            boss.countDown();
+        }else{
+            this.currentHp = octoStats.stage * (10 + octoStats.stage);
+            this.isBoss = false;
+            const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
+            const $monster = $('.boss-image');
+            $monster.removeClass();
+            $monster.addClass( 'boss-image');
+            $monster.addClass( randomMonster);
+            $('.boss-hp').text(this.currentHp);
+        }
     }
     
 }
@@ -743,6 +800,8 @@ $('.boss').on('click', function() {
         boss.hit();
 
 })
+
+boss.countDown();
 
 function whichAnimationEvent(){
     var t,
@@ -777,10 +836,11 @@ function whichAnimationEvent(){
                 function(event) {
      $(this).remove();
     });
-  });
+  }); 
 
 
 theHunger();
+boss.setMonster();
 
 
 }).catch(function(err) {
