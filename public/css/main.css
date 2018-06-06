@@ -1,7 +1,7 @@
 
 body {
-  /* background:url('/../images/Metallic-Blue1.jpg'); */
-  /* z-index: 0; */
+  background:url('/../images/Metallic-Blue1.jpg');
+  z-index: 0;
 }
 
 h1 {
@@ -14,17 +14,6 @@ P {
   font-size: 16px;
   line-height: 24px;
   font-family: 'Work Sans', sans-serif;
-}
-
-.error {
-  color: rgb(247, 169, 169);
-}
-
-/* .login {
-  width:400px;
-  height:250px;
-  background: #ffffff;
-  margin-left: 25%;
 }
 
 .counter {
@@ -45,7 +34,7 @@ P {
 
 .resources ul {
   list-style: none;
-} */
+}
 
   /**************** Stage Backgrounds *************/
 .overlay {
