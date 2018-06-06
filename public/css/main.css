@@ -126,9 +126,9 @@ border-radius: 5px;
   grid-column-start:2;
   grid-column-end:3;
 }
-.numBabies{
+/* .numBabies{
 display: none;
-}
+} */
 .setting{
   display: none;
 }
@@ -143,6 +143,10 @@ display: none;
   grid-column-end:3;
   border: 1px solid red;
 } */
+
+p{
+  font-size: 20px;
+}
 
 .waves-effect {
   position: relative;
