@@ -35,7 +35,7 @@ export function buyItem(itemName, count = 1){
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert(`you dont have enouf ${itemName}s`)
+        alert(`you dont have enough ${itemName}s`)
     }
 }
 
