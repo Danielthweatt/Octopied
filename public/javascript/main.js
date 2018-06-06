@@ -360,7 +360,7 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        const toastHTML = `You dont have enough points! You Need  ${tradeCost[itemName]}  points`
+        const toastHTML = `You dont have enough food! You Need  ${tradeCost[itemName]}  food`
         M.toast({html:toastHTML})
     }
 }
@@ -401,7 +401,7 @@ function buyUpgrade(upgrade) {
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`
+       const toastHTML = `You need ${resourceQuanityNeeded}  ${requiredResource} to buy this item!`
        M.toast({html:toastHTML});
    }
 }
@@ -431,7 +431,8 @@ $('.upgrade-defense').on('click', function() {
 
 $('.collect-worm').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.worm ? babby.stopCollecting('worm') : babby.startCollecting('worm') ;
@@ -442,7 +443,8 @@ $('.collect-worm').on('click', function() {
 
 $('.collect-fish').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.fish ? babby.stopCollecting('fish') : babby.startCollecting('fish') ;
@@ -452,7 +454,8 @@ $('.collect-fish').on('click', function() {
 
 $('.collect-shark').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.shark ? babby.stopCollecting('shark') : babby.startCollecting('shark') ;
@@ -462,7 +465,8 @@ $('.collect-shark').on('click', function() {
 
 $('.collect-dirt').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     if(resources.points < 0) {
@@ -477,7 +481,8 @@ $('.collect-dirt').on('click', function() {
 
 $('.collect-rock').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.rock ? babby.stopCollecting('rock') : babby.startCollecting('rock') ;
@@ -487,7 +492,8 @@ $('.collect-rock').on('click', function() {
 
 $('.collect-steel').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+       const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.steel ? babby.stopCollecting('steel') : babby.startCollecting('steel') ;
@@ -620,7 +626,7 @@ $('.have-babby').on('click', function() {
             babby.createBaby();
         }
     }else {
-        const toastHTML = 'You do not have enogh room in your house'
+        const toastHTML = 'You do not have enough room in your house!'
         M.toast({html: toastHTML});
     }
       
