@@ -1,21 +1,21 @@
 <main class="stage">
     <div class="overlay"></div>
-    <div class="container">
+    <div class="wrapper">
         <div class="modal" id="setting">
             <div class="modal-content">
                 <h3>What would you like to do?</h3>
-                <button id="save-progress">Save Progress</button>
+                <button id="save-progress" class="waves-effect waves-light btn-large">Save Progress</button>
                 <a href="/logout">
-                    <button class="logout">Logout</button>
+                    <button class="logout waves-effect waves-light btn-large">Logout</button>
                 </a>
             </div>
         </div>
         <div class="side-bar">
             <div class="currnet-level">
-                <h2>Level:</h2>
+                <h3>Level:</h3>
             </div>
             <div class="current-exp">
-                <h2>Exp:</h2>
+                <h3>Exp:</h3>
             </div>
         </div>
         <div class="heartsFood">
@@ -29,9 +29,9 @@
                 <span class="health-2 health-full">
                     <i class="material-icons medium">favorite</i>
                 </span>
-                <h2>Food:
+                <h3>Food:
                     <span class="counter">0</span>
-                </h2>
+                </h3>
             </div>
         </div>
         <div class="numBabies">
@@ -44,44 +44,44 @@
             <ul>
                 <li>Worms:
                     <span class="resource-worm"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-worm">
+                    <button><a class="buy-worm">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button>
                     <span class="collect-worm"> [] </span>
                 </li>
                 <li>Fishs:
                     <span class="resource-fish"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-fish">
+                    <button><a class="buy-fish">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button>
                     <span class="collect-fish"> [] </span>
                 </li>
                 <li>Sharks:
                     <span class="resource-shark"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-shark">
+                 <button><a class="buy-shark">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button> 
                     <span class="collect-shark"> [] </span>
                 </li>
                 <li>Dirt:
                     <span class="resource-dirt"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-dirt">
+                    <button><a class="buy-dirt">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button>
                     <span class="collect-dirt"> [] </span>
                 </li>
                 <li>Rocks:
                     <span class="resource-rock"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-rock">
+                    <button><a class="buy-rock">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button>
                     <span class="collect-rock"> [] </span>
                 </li>
                 <li>Steel:
                     <span class="resource-steel"> 0 </span>
-                    <a class="waves-effect waves-light teal btn-flat buy-steel">
+                    <button><a class="buy-steel">
                         <i class="material-icons">done</i>
-                    </a>
+                    </a></button>
                     <span class="collect-steel"> [] </span>
                 </li>
             </ul>
@@ -89,27 +89,27 @@
         <div class="stats" style="display: none">
             <div>Heart Upgrade:
                 <span class="heart-level"> 1 </span>
-                <button class="upgrade-heart">Heart +</button>
+                <button class="upgrade-heart material-icons">exposure_plus_1</button>
             </div>
             <div>Food Upgrade:
                 <span class="food-level"> 1 </span>
-                <button class="upgrade-food">Food Gathering +</button>
+                <button class="upgrade-food material-icons">exposure_plus_1</button>
             </div>
             <div>Attack Upgrade:
                 <span class="attack-level">1 </span>
-                <button class="upgrade-attack">Attack + </button>
+                <button class="upgrade-attack material-icons">exposure_plus_1</button>
             </div>
             <div>Defense Upgrade:
                 <span class="defense-level">1 </span>
-                <button class="upgrade-defense">Defense +</button>
+                <button class="upgrade-defense material-icons">exposure_plus_1</button>
             </div>
             <div>House Upgrade:
                 <span class="house-level"> 1 </span>
-                <button class="upgrade-house">House +</button>
+                <button class="upgrade-house material-icons">exposure_plus_1</button>
             </div>
             <div>Level Up Babies:
                 <span class="babby-level"> 1 </span>
-                <button class="upgrade-babby">Baby +</button>
+                <button class="upgrade-babby material-icons">exposure_plus_1</button>
             </div>
         </div>
 
@@ -140,9 +140,6 @@
                 </li>
             </ul>
         </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="/javascript/main.js" type="module"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 </main>
 <script>
     $(document).ready(function () {
@@ -153,10 +150,10 @@
                 });
         }
         $("#shop").on("click", function () {
-            if ($(".resources").css("display") == 'none') {
-                $(".resources").css("display", "inline")
-            } else if ($(".stats").css("display") == "inline" && $(".resources").css("display") == 'none') {
+           if ($(".stats").css("display") == "inline" && $(".resources").css("display") == 'none') {
                 $(".stats").css("display", "none");
+                $(".resources").css("display", "inline");
+            } else if ($(".resources").css("display") == 'none') {
                 $(".resources").css("display", "inline")
             }
             else {
@@ -164,11 +161,11 @@
             }
         });
         $("#upgrades").on("click", function () {
-            if ($(".stats").css("display") == 'none') {
+            if ($(".stats").css("display") == 'none' && $(".resources").css("display") == 'inline') {
+                $(".resources").css("display", "none");
                 $(".stats").css("display", "inline");
-            } else if ($(".stats").css("display") == 'none' && $(".resources").css("display") == 'inline') {
-                $(".stats").css("display", "inline")
-                $(".resources").css("display", "none")
+            } else if ($(".stats").css("display") == 'none') {
+                $(".stats").css("display", "inline");
             } else {
                 $(".stats").css("display", "none")
             }

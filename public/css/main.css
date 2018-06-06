@@ -3,6 +3,7 @@ body {
   z-index: 0;
   color: black;
   font-family: 'Work Sans', sans-serif;
+  padding: 10px;
 
 }
 
@@ -18,33 +19,31 @@ body {
 }
 
 .health-full {
-  color:red;
+  color: darkred;
   font-size: 4em;
   animation:1s  infinite linear;
 }
 
-.resources {
-  color:white;
-  list-style: none;
-}
 
 .resources ul {
   list-style: none;
 }
+
 /* game */
-.container{
+.wrapper{
   display: grid;
-  grid-template-columns: (fr, fr, fr, fr); 
-  grid-template-rows: (fr, fr, fr, fr);
-  grid-template-rows:minmax(300px, auto);
-  grid-template-columns:minmax(250px, auto);
+  grid-template-columns: 1fr, 1fr, 1fr, 1fr; 
+  grid-template-rows: 1fr, 1fr, 1fr, 1fr;
+  /* grid-template-rows:minmax(300px, auto);
+  grid-template-columns:minmax(250px, auto); */
   grid-gap: 1em;
 }
 
 .side-bar{
-  /* display: flex;
+  text-align: center;
+  display: flex;
   flex-direction: column;
-  justify-content: space-around; */
+  justify-content: space-around;
   grid-row-start: 2;
   grid-row-end:2;
   grid-column-start:1;
@@ -53,16 +52,15 @@ body {
   border-radius: 5px;
     box-shadow: 0 5px 20px;
     margin-top: 10px;
-    text-align: center;
     padding: 10px;
     color: lightgray;
     margin-top: -1em;
 }
 .heartsFood{
-  /* display: flex;
+  text-align: center;
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-around; */
+  justify-content: space-around;
   grid-row-start: 1;
   grid-row-end:1;
   grid-column-start:1;
@@ -72,15 +70,13 @@ background-color:#F16687;
 padding: 10px;
 border-radius: 5px;
   box-shadow: 0 5px 20px;
-  margin-top: 10px;
-  text-align: center;
 }
 .resources{
-  /* display: flex; */
+  display: flex;
   display: none;
-  /* flex-direction: column;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around; */
+  justify-content: space-around;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 1;
@@ -97,16 +93,19 @@ border-radius: 5px;
    font: 40px;
    line-height: 2em;
 }
+
+
 .stats{
-  /* display: flex; */
-  /* flex-direction: column;
+  display: flex;
+  display: none;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around; */
+  justify-content: space-around;
   grid-row-start: 3;
-  grid-row-end:3;
-  grid-column-start:1;
-  grid-column-end:1;
-  background-color: #F6A3B7;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  background-color:#F6A3B7;
   border-radius: 5px;
     box-shadow: 0 5px 20px;
     margin-top: 10px;
@@ -114,6 +113,9 @@ border-radius: 5px;
     padding: 10px;
     color: lightgray;
     margin-top: -1em;
+   padding: 10px;
+   font: 40px;
+   line-height: 2em;
 }
 .boss{
   display:none;
@@ -130,7 +132,7 @@ display: none;
 .setting{
   display: none;
 }
-.buttons{
+/* .buttons{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -140,10 +142,8 @@ display: none;
   grid-column-start:2;
   grid-column-end:3;
   border: 1px solid red;
-}
-button{
- color: white;
-}
+} */
+
 .waves-effect {
   position: relative;
   cursor: pointer;
@@ -161,22 +161,27 @@ button{
 }
 .modal{
   background-image: url('/../images/modal-background.png');
-  height: 200px;
+  height: auto;
   width: auto;
+  border:none;
+  outline:none;
 }
-.logout,
+
+
+.logout
 #save-progress{
   padding-top: 50px;
-  float: right;
+  color: light-gray;
+  /* float: right;
   background: #F6A3B7;
   color: darkgray;
   display: block;
   height: auto;
-  width: auto;
+  width: auto; */
 }
   /**************** Stage Backgrounds *************/
 .overlay{
-    position:absolute;
+    position:fixed;
     background:url('/../images/Metallic-Blue24.jpg');
     animation:100s scroll infinite linear;
     top:0;
@@ -206,14 +211,21 @@ button{
     }
   }
 
-  @keyframes beat {
-    0%{
-      font-size:3em;
-    }
-    50%{
-      font-size:2.5em;
-    }
-    100%{
-      font-size:3em;
-    }
+/* media queries */ 
+
+@media (max-width: 460px){
+  .material-icons{
+    font-size: 10px;
   }
+background{
+  background-image:url('/../images/Metallic-Blue24.jpg'),
+  url('/../images/reef.jpg');
+background-repeat: no-repeat,
+  no-repeat;
+background-position: top,
+bottom;
+}
+resources{
+  color: darkblue;
+} 
+}
