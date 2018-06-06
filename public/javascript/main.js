@@ -5,7 +5,8 @@ $.ajax('/game/config', {
 }).then(function(results) {
 
 //Seting up Main variables
-let attackCounter = 1 ;
+let attackCounter = results.gameConfig.attack_counter;
+console.log(attackCounter);
 const collecitonTimeModifer = results.gameConfig.collection_time_modifier;
 const expGrothModifier = results.gameConfig.experience_growth_modifier;
 const tradeCost ={
