@@ -16,7 +16,8 @@ const tradeCost ={
     fish: results.gameConfig.fish_trade_cost,
     shark: results.gameConfig.shark_trade_cost
 };
-const resourceDiffuculityRank ={    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+const resourceDiffuculityRank ={    
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
     rock: results.gameConfig.rock_resource_difficulty_rank,
     steel: results.gameConfig.steel_resource_difficulty_rank,
     worm: results.gameConfig.worm_resource_difficulty_rank,
@@ -64,7 +65,6 @@ const collectorStatus ={
     fish: results.statisticsConfig.fish_collector_status,
     shark: results.statisticsConfig.shark_collector_status
 };
-
 const resourseUpgradeList = {
     //rank is defined as level / 3 rounded up
     //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
@@ -137,7 +137,6 @@ function refreshDisplay() {
     }
 };
 
-refreshDisplay();
 
 function updateDB(alertSave) {
     if (alertSave) {
@@ -158,11 +157,13 @@ function updateDB(alertSave) {
     });
 };
 
+refreshDisplay();
+
 $('#save-progress').click(function() {
     updateDB(false);
 });
 
-setInterval(function() {updateDB(true);}, 180000);
+setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
