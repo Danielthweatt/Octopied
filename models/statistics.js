@@ -17,10 +17,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        food: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
         stage: {
             type: DataTypes.INTEGER,
             defaultValue: 1
