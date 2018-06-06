@@ -1,5 +1,4 @@
 $(function(){
-<<<<<<< HEAD
     $("#signin").validate({
         rules: {
             email: {
@@ -28,18 +27,9 @@ $(function(){
             } else {
                 error.insertAfter(element);
             }
-=======
-    
-    const validatePassword = function(event, password, passwordAgain){
-        if (password.val() !== passwordAgain.val()) {
-            event.preventDefault();
-            const toastHTML = 'Please enter the same password in both fields.';
-            M.toast({html: toastHTML});
->>>>>>> 4438a6198ad16adf61935d05c46259f6bf9826a0
         }
     });
 
-<<<<<<< HEAD
     $("#signup").validate({
         rules: {
             email: {
@@ -71,14 +61,6 @@ $(function(){
             } else {
                 error.insertAfter(element);
             }
-=======
-    $('#reset').on('submit', function(event){
-        const pass = $('#pass');
-        if (pass.val() === '') {
-            event.preventDefault();
-            const toastHTML = 'Please enter a password.'
-            M.toast({html: toastHTML});
->>>>>>> 4438a6198ad16adf61935d05c46259f6bf9826a0
         }
     });
 
@@ -103,7 +85,7 @@ $(function(){
             password: {
                 required: "Password is required.",
                 minlength: "Password must be at least 5 characters."
-            }
+            },
             repass: {
                 equalTo: "Passwords must match."
             }
