@@ -1,7 +1,10 @@
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: 0;
-  color:white;
+  color: black;
+  font-family: 'Work Sans', sans-serif;
+  padding: 10px;
+
 }
 
 .login {
@@ -16,24 +19,172 @@ body {
 }
 
 .health-full {
-  content:'&hearts;';
-  color:red;
-  font-size: 3em;
+  color: darkred;
+  font-size: 4em;
   animation:1s  infinite linear;
 }
 
-.resources {
-  color:white;
-  list-style: none;
-}
 
 .resources ul {
   list-style: none;
 }
 
+/* game */
+.wrapper{
+  display: grid;
+  grid-template-columns: 1fr, 1fr, 1fr, 1fr; 
+  grid-template-rows: 1fr, 1fr, 1fr, 1fr;
+  /* grid-template-rows:minmax(300px, auto);
+  grid-template-columns:minmax(250px, auto); */
+  grid-gap: 1em;
+}
 
+.side-bar{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  grid-row-start: 2;
+  grid-row-end:2;
+  grid-column-start:1;
+  grid-column-end:1;
+  background-color:#F4849F;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
+}
+.heartsFood{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  grid-row-start: 1;
+  grid-row-end:1;
+  grid-column-start:1;
+  grid-column-end:1;
+  color: lightgray;
+background-color:#F16687;
+padding: 10px;
+border-radius: 5px;
+  box-shadow: 0 5px 20px;
+}
+.resources{
+  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  background-color:#F6A3B7;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
+   padding: 10px;
+   font: 40px;
+   line-height: 2em;
+}
+
+
+.stats{
+  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  background-color:#F6A3B7;
+  border-radius: 5px;
+    box-shadow: 0 5px 20px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
+    color: lightgray;
+    margin-top: -1em;
+   padding: 10px;
+   font: 40px;
+   line-height: 2em;
+}
+.boss{
+  display:none;
+}
+.octo{
+  grid-row-start: 2;
+  grid-row-end:3;
+  grid-column-start:2;
+  grid-column-end:3;
+}
+/* .numBabies{
+display: none;
+} */
+.setting{
+  display: none;
+}
+/* .buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+  grid-row-start: 4;
+  grid-row-end:4;
+  grid-column-start:2;
+  grid-column-end:3;
+  border: 1px solid red;
+} */
+
+p{
+  font-size: 20px;
+}
+
+.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  z-index: 1;
+  will-change: opacity, transform;
+  transition: all .3s ease-out;
+}
+.modal{
+  background-image: url('/../images/modal-background.png');
+  height: auto;
+  width: auto;
+  border:none;
+  outline:none;
+}
+
+
+.logout
+#save-progress{
+  padding-top: 50px;
+  color: light-gray;
+  /* float: right;
+  background: #F6A3B7;
+  color: darkgray;
+  display: block;
+  height: auto;
+  width: auto; */
+}
   /**************** Stage Backgrounds *************/
-.overlay {
+.overlay{
     position:fixed;
     background:url('/../images/Metallic-Blue24.jpg');
     animation:100s scroll infinite linear;
@@ -64,242 +215,21 @@ body {
     }
   }
 
-  @keyframes beat {
-    0%{
-      font-size:3em;
-    }
-    50%{
-      font-size:2.5em;
-    }
-    100%{
-      font-size:3em;
-    }
+/* media queries */ 
+
+@media (max-width: 460px){
+  .material-icons{
+    font-size: 10px;
   }
-
-  @keyframes slash-animation-1 {
-    /* 0%{
-      opacity: 0;
-      background-position:  -960px -540px;
-    }
-    50%{
-      background-position:  -960px -540px;
-      opacity: 0;
-    } */
-    /* 51%{
-      background-position:  -960px -540px;
-      opacity: 1;
-    } */
-    100%{
-      background-position:  -960px -540px;
-      opacity: 1;
-    }
-    
-  }
-
-  @keyframes slash-animation-2 {
-    0%{
-      opacity: 0;
-      background-position:  -960px 0px;
-    }
-    50%{
-      background-position:  -960px 0px;
-      opacity: 0;
-    }
-    51%{
-      background-position:  -960px 0px;
-      opacity: 1;
-    }
-    100%{
-      background-position: 0 0px;
-      opacity: 1;
-    }
-  }
-
-  @keyframes slash-animation-3 {
-    0%{
-      opacity: 0;
-      background-position:  -960px -180px;
-    }
-    50%{
-      background-position:  -960px -180px;
-      opacity: 0;
-    }
-    51%{
-      background-position:  -960px -180px;
-      opacity: 1;
-    }
-    100%{
-      background-position: 0 -180px;;
-      opacity: 1;
-    }
-    
-  }
-
-  @keyframes slash-animation-4 {
-    0%{
-      opacity: 0;
-      background-position:  -960px -360px;
-    }
-    50%{
-      background-position:  -960px -360px;
-      opacity: 0;
-    }
-    51%{
-      background-position:  -960px -360px;
-      opacity: 1;
-    }
-    100%{
-      background-position: 0 -360px;;
-      opacity: 1;
-    }
-    
-  }
-
-  @keyframes slash-animation-5 {
-    0%{
-      opacity: 0;
-      background-position:  -960px -540px;
-    }
-    50%{
-      background-position:  -960px -540px;
-      opacity: 0;
-    }
-    51%{
-      background-position:  -960px -540px;
-      opacity: 1;
-    }
-    100%{
-      background-position: 0 -540px;;
-      opacity: 1;
-    }
-    
-  }
-
-.slash-1 {
-    width:180px;
-    height:180px;
-    background:  url('/../images/slash2.png')  0 -540px;
-    animation: slash-animation-1 .25s steps(5)  1;
-    transform: scale(-.7,.7) ;
-  }
-
-
-.slash-5 {
-  width:180px;
-  height:180px;
-  background:  url('/../images/slash2.png')  0 -540px;
-  animation: slash-animation-5 .25s steps(5)  1;
-  transform: scale(-.7,.7) ;
+background{
+  background-image:url('/../images/Metallic-Blue24.jpg'),
+  url('/../images/reef.jpg');
+background-repeat: no-repeat,
+  no-repeat;
+background-position: top,
+bottom;
 }
-
-  .slash-4 {
-    width:180px;
-    height:180px;
-    background:  url('/../images/slash2.png')  0 -360px;
-    animation: slash-animation-4 .25s steps(5)  1;
-    transform: scale(.7,.7) ;
-  }
-
-  .slash-3 {
-    width:180px;
-    height:180px;
-    background:  url('/../images/slash2.png')  0 -180px;
-    animation: slash-animation-3 .25s steps(5)  1;
-    transform: scale(.7,-.7) ;
-  }
-  
-.slash-2 {
-  width:180px;
-  height:180px;
-  background:  url('/../images/slash2.png')  0 0px;
-  animation: slash-animation-2 .25s steps(5)  1;
-  transform: scale(.7,-.7) ;
+resources{
+  color: darkblue;
+} 
 }
-
-
-  .side-bar {
-    float: left;
-  }
-
-  .monster {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -450px -345px;
-  }
-
-  .monster-13 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -450px -345px;
-  }
-
-  .monster-12 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -300px -345px;
-  }
-
-  .monster-11 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  0 -355px;
-  }
-
-  .monster-10 {
-    width:150px;    height:150px;
-    background:  url('/../images/monster.png')  -150px -355px;
-  }
-  .monster-9 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -150px -355px;
-  }
-
-  .monster-8 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  0 -180px;
-  }
-  
-  .monster-7 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -150px -180px;
-  }
-
-  .monster-6 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -300px -180px;
-  }
-
-  .monster-5 {
-    width:150px;
-    height:150px;
-    background:  url('/../images/monster.png')  -450px -180px;
-  }
-
-  .monster-4{
-    width:150px;
-    height:180px;
-    background:  url('/../images/monster.png')  -450px 0;
-  }
-
-  .monster-3 {
-    width:150px;
-    height:180px;
-    background:  url('/../images/monster.png')  -300px 0;
-  }
-
-  .monster-2 {
-    width:150px;
-    height:180px;
-    background:  url('/../images/monster.png')  -150px 0;
-
-  }
-
-  .monster-1 {
-    width:150px;
-    height:180px;
-    background:  url('/../images/monster.png')  0 0;
-  }

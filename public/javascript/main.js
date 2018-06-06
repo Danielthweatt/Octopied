@@ -140,7 +140,8 @@ refreshDisplay();
 
 function updateDB(alertSave) {
     if (alertSave) {
-        alert('Your progress is being saved!');
+        const toastHTML = 'Your progress is being saved!';
+        M.toast({html: toastHTML});
     };
     $.ajax("/game", {
         type: "PUT",
@@ -198,7 +199,7 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enouf Babbies')
+            console.error('You do not have enough babies')
         }
        
     },
@@ -208,7 +209,7 @@ const babby = {
             this.available++
             collectorStatus[resource] = false;
         }else{
-            console.error('No colectors to Stop')
+            console.error('No collectors to Stop')
         }
     }
 }
@@ -333,7 +334,8 @@ function levelup() {
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
 
         if(octoStats.level === 10 && octoStats.exp === 0) {
-            alert('Oh Something Happening');
+            const toastHTML = 'Oh Something Happening';
+            M.toast({html: toastHTML});
            evolve();
         }
        
@@ -358,7 +360,8 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert(`you dont have enouf points You Need  ${tradeCost[itemName]}  points`)
+        const toastHTML = `You dont have enough points! You Need  ${tradeCost[itemName]}  points`
+        M.toast({html:toastHTML})
     }
 }
 
@@ -381,7 +384,8 @@ function buyItem(itemName, count = 1) {
         $(selector).text( resources[itemName])
         return true;
     }else{
-        alert(`you dont have enouf ${itemName}s`)
+        const toastHTML = `you dont have enough ${itemName}s`
+        M.toast({html:toastHTML});
         return false;
     }
 }
@@ -397,7 +401,8 @@ function buyUpgrade(upgrade) {
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`)
+       const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`
+       M.toast({html:toastHTML});
    }
 }
 
@@ -461,7 +466,8 @@ $('.collect-dirt').on('click', function() {
         return;
     }
     if(resources.points < 0) {
-        alert('please collect food')
+        const toastHTML = 'please collect food'
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
@@ -614,7 +620,8 @@ $('.have-babby').on('click', function() {
             babby.createBaby();
         }
     }else {
-        alert('You do not have enogh room in your house')
+        const toastHTML = 'You do not have enogh room in your house'
+        M.toast({html: toastHTML});
     }
       
     
