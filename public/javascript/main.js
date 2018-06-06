@@ -419,10 +419,12 @@ function buildHouse(){
     if (resourceQuanityNeeded <=  resources[requiredResource]) {
         resources[requiredResource] -=resourceQuanityNeeded;
         resources.house++;
-        alert('house Updated')
+        const toastHTML = 'house Updated'
+        M.toast({html: toastHTML});
        $('.house-level').text(resources.house)
        }else{
-           alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`)
+           const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`
+           M.toast({html: toastHTML});
        }
 }
 
@@ -715,7 +717,8 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
-        console.log('Crital Hit!!');
+        const toastHTML = 'Crital Hit!!';
+        M.toast({html: toastHTML});
     }
     console.log(dammage);
      return dammage;
@@ -762,7 +765,8 @@ let boss = {
             boss.setMonster();
        }
        if(Math.random() > .5){
-           alert(' You got Attacked');
+           const toastHTML = ' You got Attacked'
+           M.toast({html: toastHTML});
        }
        if(this.isBoss === true){
         setTimeout(() => {
