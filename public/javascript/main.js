@@ -100,7 +100,6 @@ const resourseUpgradeList = {
         Rank3: results.gameConfig.baby_RUL_rank_three 
     }
 };
-let timeOut;
 
 function refreshCollectorStatuses() {
     let check;
@@ -138,15 +137,6 @@ function refreshDisplay() {
     }
 };
 
-function gameAlert(message) {
-    clearTimeout(timeOut);
-    $('#alert').text(message);
-    $('#alert').css('opacity', 1);
-    timeOut = setTimeout(function(){
-        $('#alert').css('opacity', 0);
-        $('#alert').text('');
-    }, 2500);
-};
 
 function updateDB(alertSave) {
     if (alertSave) {

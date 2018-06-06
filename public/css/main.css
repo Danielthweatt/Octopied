@@ -1,3 +1,4 @@
+
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: -2;
@@ -7,15 +8,16 @@ body {
 
 }
 
-#alert {
-  opacity: 0;
+h1 {
+  font-size: 36px;
+  line-height: 54px;
+  font-family: 'Nova Slim', cursive;
 }
 
-.login {
-  width:400px;
-  height:250px;
-  background: #ffffff;
-  margin-left: 25%;
+P {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .counter {
