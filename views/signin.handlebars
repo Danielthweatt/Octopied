@@ -4,7 +4,7 @@
     {{/if}}
     <div class="row">
         <div class="offset-s10 col s2">
-            <a href="/signup" class="waves-effect waves-teal btn-flat">Sign up</a>
+            <a href="/signup" class="btn-flat teal-text">Sign up</a>
         </div>
     </div>
     <div class="row">
@@ -14,22 +14,22 @@
             <form id="signin" name="signin" method="post" action="/signin" novalidate>
                 <div class="input-field">
                     <label for="email">Email address</label>
-                    <input id="email" type="email" name="email" class="validate">
+                    <input id="email" type="email" name="email">
                     <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
                 </div>
                 <div class="input-field">
                     <label for="password">Password</label>
                     <input id="password" type="password" name="password" class="validate">
-                    <span class="helper-text" data-error="Password must be 8 characters" data-success="Perfect"></span>
+                    <span class="helper-text" data-success="Perfect"></span>
                 </div>
-                <a href="/forgot" class="waves-effect btn-flat">Forgot Password?</a>
-                <input class="waves-effect waves-light btn" type="submit" value="Sign In"></a>
+                <input class="btn white-text" type="submit" value="Sign In"></a>
+                <a href="/forgot" class="btn-flat teal-text">Forgot Password?</a>
             </form>
         </div>
     </div>
     {{#if flashError}}
     <div class="row">
-        <div class="offset-s6 col s2">
+        <div class="offset-s4 col s2">
             <div class="error">{{flashError}}</div>
         </div>
     </div>
@@ -38,11 +38,18 @@
 
 {{#if forgot}}
     {{#if flashInfo}}
-        <div>{{flashInfo}}</div>
+        <div class="modal">
+            <div class="modal-content">
+                <h4>{{flashInfo}}</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+            </div>
+        </div>
     {{/if}}
     <div class="row">
         <div class="offset-s10 col s2">
-            <a href="/signin" class="waves-effect waves-teal btn-flat">Log In</a>
+            <a href="/signin" class="btn-flat teal-text">Log In</a>
         </div>
     </div>
     <div class="row">
@@ -52,16 +59,16 @@
                 <div class="input-field">
                     <label for="email">Email address</label>
                     <input id="email" type="email" name="email" class="validate">
-                    <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
+                    <span class="helper-text" data-success="Perfect"></span>
                 </div>
-                <input class="waves-effect waves-light btn" type="submit" value="Reset Password">
+                <input class="btn white-text" type="submit" value="Reset Password">
                 </a>
             </form>
         </div>
     </div>
     {{#if flashError}}
     <div class="row">
-        <div class="offset-s6 col s2">
+        <div class="offset-s4 col s2">
             <div class="error">{{flashError}}</div>
         </div>
     </div>
@@ -71,7 +78,7 @@
 {{#if reset}}
     <div class="row">
         <div class="offset-s10 col s2">
-            <a href="/signin" class="waves-effect waves-teal btn-flat">Log In</a>
+            <a href="/signin" class="btn-flat teal-text">Log In</a>
         </div>
     </div>
     {{#unless flashError}}
@@ -82,20 +89,20 @@
                     <div class="input-field">
                         <label for="password">Password</label>
                         <input id="pass" type="password" name="password" class="validate">
-                        <span class="helper-text" data-error="Password must be 5 characters" data-success="Perfect"></span>
+                        <span class="helper-text" data-success="Perfect"></span>
                     </div>
                     <div class="input-field">
                         <label for="re-pass">Confirm Password</label>
                         <input id="repass" type="password" name="repass" class="validate">
-                         <span class="helper-text" data-error="Your passwords do not match" data-success="Perfect"></span>
+                         <span class="helper-text" data-success="Perfect"></span>
                     </div>
-                    <input class="waves-effect waves-light btn" type="submit" value="Reset"></a>
+                    <input class="btn white-text" type="submit" value="Reset"></a>
                 </form>
             </div>
         </div>
         {{#if flashError}}
             <div class="row">
-                <div class="offset-s6 col s2">
+                <div class="offset-s4 col s2">
                     <div class="error">{{flashError}}</div>
                 </div>
             </div>
@@ -103,14 +110,14 @@
     {{/unless}}
     {{#if flashError}}
         <div>{{flashError}}</div>
-            <a href="/forgot" class="waves-effect waves-teal btn-flat">Try Resetting Password Again</a>
+            <a href="/forgot" class="btn-flat teal-text">Try Resetting Password Again</a>
     {{/if}}
 {{/if}}
 
 {{#if signup}}
     <div class="row">
         <div class="offset-s10 col s2">
-            <a href="/signin" class="waves-effect waves-teal btn-flat">Log In</a>
+            <a href="/signin" class="btn-flat teal-text">Log In</a>
         </div>
     </div>
     <div class="row">
@@ -120,25 +127,25 @@
                 <div class="input-field">
                     <label for="email">Email address</label>
                     <input id="email" type="email" name="email" class="validate">
-                    <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
+                    <span class="helper-text" data-success="Perfect"></span>
                 </div>
                 <div class="input-field">
                     <label for="password">Password</label>
                     <input id="pass" type="password" name="password" class="validate">
-                    <span class="helper-text" data-error="Password must be 5 characters" data-success="Perfect"></span>
+                    <span class="helper-text" data-success="Perfect"></span>
                 </div>
                 <div class="input-field">
                     <label for="repass">Confirm Password</label>
                     <input id="repass" type="password" name="repass" class="validate">
-                    <span class="helper-text" data-error="Your passwords do not match" data-success="Perfect"></span>
+                    <span class="helper-text" data-success="Perfect"></span>
                 </div>
-                <input class="waves-effect waves-light btn" type="submit" value="Register"></a>
+                <input class="btn white-text" type="submit" value="Register"></a>
             </form>
         </div>
     </div>
     {{#if flashError}}
     <div class="row">
-        <div class="offset-s6 col s2">
+        <div class="offset-s4 col s2">
             <div class="error">{{flashError}}</div>
         </div>
     </div>

@@ -13,15 +13,16 @@ $(function(){
         messages: {
             email:{
                 required: "Email is required.",
+                email: "Please enter a valid email address."
             },
             password: {
                 required: "Password is required.",
                 minlength: "Password must be at least 8 characters."
             }
         },
-        errorElement : 'div',
+        errorElement : 'span',
         errorPlacement: function(error, element) {
-            var placement = $(element).data('error');
+            const placement = $(element).data('error');
             if (placement) {
                 $(placement).append(error)
             } else {
@@ -45,13 +46,19 @@ $(function(){
             }
         },
         messages: {
-            email:{
-                required: "Email is required.",
+            messages: {
+                email:{
+                    required: "Email is required.",
+                    email: "Please enter a valid email address."
+                },
+                password: {
+                    required: "Password is required.",
+                    minlength: "Password must be at least 8 characters."
+                }
+                repass: {
+                    equalTo: "Your passwords must match."
+                }
             },
-            password: {
-                required: "Password is required.",
-                minlength: "Password must be at least 5 characters."
-            }
         },
         errorElement : 'div',
         errorPlacement: function(error, element) {
@@ -81,13 +88,14 @@ $(function(){
         messages: {
             email:{
                 required: "Email is required.",
+                email: "Please enter a valid email address."
             },
             password: {
                 required: "Password is required.",
-                minlength: "Password must be at least 5 characters."
-            },
+                minlength: "Password must be at least 8 characters."
+            }
             repass: {
-                equalTo: "Passwords must match."
+                equalTo: "Your passwords must match."
             }
         },
         errorElement : 'div',
