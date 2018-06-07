@@ -178,6 +178,9 @@ const babby = {
         resources.babbies = this.number;
         this.available = this.number - this.active;
         resources.babbiesAvailable = this.available;
+        if (this.number === 0) {
+            theHunger();
+        }
         $('.babby-count').text(this.number);
     },
     feed: function() {
@@ -367,7 +370,7 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text(resources[itemName]); //?
     } else {
-        const toastHTML = `You don't have enough points! You need ${tradeCost[itemName]} points.`;
+        const toastHTML = `You don't have enough food! You need ${tradeCost[itemName]} food.`;
         M.toast({html:toastHTML});
     }
 };
@@ -829,10 +832,7 @@ $(".boss").click(function() {
     });
 }); 
 
-
-theHunger();
 boss.setMonster();
-
 
 }).catch(function(err) {
     console.log(`Oh boy, it broke: ${err}`);
