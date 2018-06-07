@@ -866,7 +866,7 @@ function whichAnimationEvent(){
 
   function changeStage(){
      const stageBackground ={
-          stage1:'<div class="stage-1"></div>',
+          stage1:'<div class="stage-1"></div> <div class="overlay"></div>',
           stage2: ' <div class="stars"></div><div class="clouds"></div> <div class="twinkling"></div>',
           stage3: '<div class="stars"></div><div class="stars-2"></div> ',
           stage4: '<div class="stars"></div><div class="stars-2"></div><div class="space-clouds"></div> ',
