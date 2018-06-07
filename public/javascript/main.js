@@ -601,7 +601,7 @@ function collectResource(type) {
     if(collectorStatus[type]) {
         setTimeout(function() {
             resources[type]++;
-            const toastHTML = "resource is added", resources;
+            const toastHTML = `resource is added: ${resources}`;
             M.toast({html:toastHTML})
             collectResource(type);
 
@@ -709,8 +709,7 @@ Need a text animation to display text (for level ups and other events)
 
 function theHunger() {
     babby.feed();
-    const toastHTML = 'The hunger strikes';
-    M.toast({html:toastHTML});
+    console.log("The hunger strikes")
     setTimeout(() => {
         theHunger();
     }, 5000);
@@ -723,13 +722,8 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
-<<<<<<< HEAD
-        const innerHTML = 'Crital Hit!!';
-        M.toast({html:toastHTML});
-=======
         const toastHTML = 'Crital Hit!!';
         M.toast({html: toastHTML});
->>>>>>> 2a440db568f1f415af520580e16d02fb09979e7a
     }
     console.log(dammage);
      return dammage;
