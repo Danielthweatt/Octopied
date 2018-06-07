@@ -70,11 +70,12 @@
   grid-column-end:1;
   background-color:#F4849F;
   border-radius: 5px;
-    box-shadow: 0 5px 20px;
+  box-shadow: 5px 0 10px gray;
     margin-top: 10px;
     padding: 10px;
-    color: lightgray;
+    color: darkslategray;
     margin-top: -1em;
+    font-family: 'Nova Slim', cursive;
 }
 
 .heartsFood{
@@ -86,11 +87,12 @@
   grid-row-end:1;
   grid-column-start:1;
   grid-column-end:1;
-  color: lightgray;
+  color: darkslategray;
 background-color:#F16687;
 padding: 10px;
 border-radius: 5px;
-  box-shadow: 0 5px 20px;
+  box-shadow: 5px 0 10px gray;
+  font-family: 'Nova Slim', cursive;
 }
 
 .resources{
@@ -105,11 +107,11 @@ border-radius: 5px;
   grid-column-end: 1;
   background-color:#F6A3B7;
   border-radius: 5px;
-    box-shadow: 0 5px 20px;
+  box-shadow: 5px 0 10px gray;
     margin-top: 10px;
     text-align: center;
     padding: 10px;
-    color: lightgray;
+    color: darkslategray;
     margin-top: -1em;
    padding: 10px;
    font: 40px;
@@ -128,29 +130,28 @@ border-radius: 5px;
   grid-column-end: 1;
   background-color:#F6A3B7;
   border-radius: 5px;
-    box-shadow: 0 5px 20px;
+  box-shadow: 5px 0 10px gray;
     margin-top: 10px;
     text-align: center;
     padding: 10px;
-    color: lightgray;
+    color: darkslategray;
     margin-top: -1em;
    padding: 10px;
    font: 40px;
    line-height: 2em;
 }
 .boss{
-  background-color: blue;
   grid-row-start: 1;
   grid-row-end:1;
-  grid-column-start:4;
-  grid-column-end:4;
+  grid-column-start:3;
+  grid-column-end:3;
 }
 .octo{
 
   grid-row-start: 2;
-  grid-row-end:3;
+  grid-row-end:2;
   grid-column-start:2;
-  grid-column-end:3;
+  grid-column-end:2;
 }
 
 .setting{
@@ -243,19 +244,22 @@ p{
 
 @media (max-width: 460px){
   .material-icons{
-    font-size: 10px;
+    font-size: 15px;
   }
-background{
-  background-image:url('/../images/Metallic-Blue24.jpg'),
-  url('/../images/reef.jpg');
-background-repeat: no-repeat,
-  no-repeat;
-background-position: top,
-bottom;
-}
-resources{
-  color: darkblue;
-} 
+  body{
+font-size: 13px;
+  }
+  .boss{
+    grid-row-start: 1;
+    grid-row-end:1;
+    grid-column-start:2;
+    grid-column-end:2;
+  }
+
+  modal, 
+  .btn-large{
+margin: 5px;
+  }
 }
 
 

@@ -213,7 +213,9 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enough babies');
+           const toastHTML =  'You do not have enough babies';
+        M.toast({html:toastHTML})
+        
         }
        
     },
