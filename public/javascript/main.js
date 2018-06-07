@@ -601,7 +601,11 @@ function collectResource(type) {
     if(collectorStatus[type]) {
         setTimeout(function() {
             resources[type]++;
+<<<<<<< HEAD
             const toastHTML = `resource is added ${resources}`;
+=======
+            const toastHTML = `resource is added: ${resources}`;
+>>>>>>> 61391a50630b8d475be74cedc8260e63d29d82ae
             M.toast({html:toastHTML})
             collectResource(type);
 
@@ -709,6 +713,10 @@ Need a text animation to display text (for level ups and other events)
 
 function theHunger() {
     babby.feed();
+<<<<<<< HEAD
+=======
+    console.log("The hunger strikes")
+>>>>>>> 61391a50630b8d475be74cedc8260e63d29d82ae
     setTimeout(() => {
         theHunger();
     }, 5000);
@@ -721,11 +729,14 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
+<<<<<<< HEAD
         $('.boss-container').addClass('crit-hit');
         $('.crit-hit').one(animationEvent,
             function(event) {
               $(this).removeClass('crit-hit');
         });
+=======
+>>>>>>> 61391a50630b8d475be74cedc8260e63d29d82ae
         const toastHTML = 'Crital Hit!!';
         M.toast({html: toastHTML});
     }
