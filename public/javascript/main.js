@@ -793,7 +793,7 @@ const boss = {
 };
 
 $('.boss').on('click', function() {
-        boss.hit();
+    boss.hit();
 });
 
 boss.countDown();
