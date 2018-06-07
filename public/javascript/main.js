@@ -191,7 +191,13 @@ const babby = {
         if ((resources.points - ((this.active * 4 ) + (this.available * this.hunger))) > 0) {
             resources.points -= ((this.active * 4 ) + (this.available * this.hunger));
             $('.counter').text(resources.points);
-        } else {
+            if (this.hunger > 0) {
+                this.hunger = 0;
+                resources.babbiesHunger = this.hunger;
+                const toastHTML = 'Your babies have food again! Get them collecting again!';
+                M.toast({html: toastHTML});
+            }
+        } else if (this.hunger === 0) {
             $('.counter').text(0);
             resources.points = 0;
             collectorStatus.worm = false;
@@ -201,8 +207,20 @@ const babby = {
             collectorStatus.rock = false;
             collectorStatus.steel = false;
             refreshDisplay();
+            this.hunger = 1;
+            resources.babbiesHunger = this.hunger;
             const toastHTML = 'You are out of food! Your babies have stopped collecting.';
             M.toast({html: toastHTML});
+        } else if (this.hunger > 0) {
+            this.hunger++;
+            resources.babbiesHunger = this.hunger;
+            if (this.hunger % 5 === 0) {
+                const toastHTML = `Your babies are hungry!`;
+                M.toast({html: toastHTML});
+            }
+            if (this.hunger % 50) {
+                // You lose the game? Or a baby dies? The latter sounds a little dark...
+            }
         }
     },
     //need to move logic for the collection starting In here
@@ -769,7 +787,7 @@ const boss = {
         $('.counter').text(resources.points);
         levelup();
         if (octoStats.stage % 20 === 0) {
-            // get access to rocket ship part
+            // get ability to purchase a new rocket ship part
         }
         boss.nextStage();
     },
@@ -804,6 +822,7 @@ const boss = {
             if (Math.random() > .5) {
                 const toastHTML = `You've been attacked!`;
                 M.toast({html:toastHTML});
+                // lose your own hp
             }
             setTimeout(() => {
                 boss.bossCountDown();
@@ -815,6 +834,7 @@ const boss = {
             if (Math.random() < .1) {
                 const toastHTML = `You've been attacked!`;
                 M.toast({html:toastHTML});
+                // lose your own hp
             }
             setTimeout(() => {
                 boss.monsterCountDown();
@@ -892,6 +912,16 @@ $(".boss").click(function() {
 
 boss.setMonster();
 boss.monsterCountDown();
+
+function youWin() {
+    // a function that informs you that you win and resets your data so you can play again
+    // called if you unlock the ability to buy your rocket ship parts and actually buy them
+};
+
+function youLose() {
+    // a function that informs you that you lose and resets your data so you can play again
+    // called if you lose all your health or (maybe) if your babies get too hungry
+};
 
 }).catch(function(err) {
     console.log(`Oh boy, it broke: ${err}`);
