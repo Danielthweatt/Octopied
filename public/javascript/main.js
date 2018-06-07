@@ -107,6 +107,8 @@ function refreshCollectorStatuses() {
         check = collectorStatus[key] ? '[x]' : '[]';
         $(`.collect-${key}`).text(check);
         if (check === '[x]') {
+            const toastHTML = `You have a baby collecting ${key}${(key === 'rock' || key === 'shark' || key === 'worm') ? 's' : ''}!`;
+            M.toast({html:toastHTML});
             startGivenCollector(key);
         }
     }
@@ -179,6 +181,8 @@ const babby = {
         this.available = this.number - this.active;
         resources.babbiesAvailable = this.available;
         if (this.number === 0) {
+            const toastHTML = `Your baby ${(resources.babbies === 0) ? ' is' : 's are'} hungry! They will eat your food.`;
+            M.toast({html:toastHTML});
             theHunger();
         }
         $('.babby-count').text(this.number);
@@ -231,6 +235,12 @@ const babby = {
         }
     }
 };
+
+if (resources.babbies > 0) {
+    const toastHTML = `Your baby${(resources.babbies === 0) ? ' is' : 's are'} hungry! They will eat your food.`;
+    M.toast({html:toastHTML});
+    theHunger();
+}
 
 function startGivenCollector(resource) {
     switch(resource) {
@@ -429,7 +439,7 @@ function buildHouse() {
     const requiredResource = resourseUpgradeList.house[rankName];
     console.log(rankName, resourseUpgradeList.house)
     if (resourceQuanityNeeded <=  resources[requiredResource]) {
-        resources[requiredResource] -=resourceQuanityNeeded;
+        resources[requiredResource] -= resourceQuanityNeeded;
         resources.house++;
         const toastHTML = 'House updated.';
         M.toast({html:toastHTML});
@@ -476,7 +486,9 @@ $('.collect-worm').on('click', function() {
     }
     collectorStatus.worm ? babby.stopCollecting('worm') : babby.startCollecting('worm');
     const check = collectorStatus.worm ? '[x]' : '[]';
-    $('.collect-worm').text(check);    
+    $('.collect-worm').text(check);
+    const toastHTML = 'You now have a baby collecting worms!';
+    M.toast({html:toastHTML});    
 });
 
 $('.collect-fish').on('click', function() {
@@ -488,6 +500,8 @@ $('.collect-fish').on('click', function() {
     collectorStatus.fish ? babby.stopCollecting('fish') : babby.startCollecting('fish');
     const check = collectorStatus.fish ? '[x]' : '[]';
     $('.collect-fish').text(check);
+    const toastHTML = 'You now have a baby collecting fish!';
+    M.toast({html:toastHTML});
 });
 
 $('.collect-shark').on('click', function() {
@@ -499,6 +513,8 @@ $('.collect-shark').on('click', function() {
     collectorStatus.shark ? babby.stopCollecting('shark') : babby.startCollecting('shark');
     const check = collectorStatus.shark ? '[x]' : '[]';
     $('.collect-shark').text(check);
+    const toastHTML = 'You now have a baby collecting sharks!';
+    M.toast({html:toastHTML});
 });  
 
 $('.collect-dirt').on('click', function() {
@@ -515,6 +531,8 @@ $('.collect-dirt').on('click', function() {
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt');
     const check = collectorStatus.dirt ? '[x]' : '[]';
     $('.collect-dirt').text(check);
+    const toastHTML = 'You now have a baby collecting dirt!';
+    M.toast({html:toastHTML});
 }); 
 
 $('.collect-rock').on('click', function() {
@@ -526,6 +544,8 @@ $('.collect-rock').on('click', function() {
     collectorStatus.rock ? babby.stopCollecting('rock') : babby.startCollecting('rock');
     const check = collectorStatus.rock ? '[x]' : '[]';
     $('.collect-rock').text(check);
+    const toastHTML = 'You now have a baby collecting rocks!';
+    M.toast({html:toastHTML});
 });
 
 $('.collect-steel').on('click', function() {
@@ -537,6 +557,8 @@ $('.collect-steel').on('click', function() {
     collectorStatus.steel ? babby.stopCollecting('steel') : babby.startCollecting('steel');
     const check = collectorStatus.steel ? '[x]' : '[]';
     $('.collect-steel').text(check);
+    const toastHTML = 'You now have a baby collecting steel!';
+    M.toast({html:toastHTML});
 });
 
 function collectWorms() {
@@ -725,14 +747,14 @@ function calculateAttack() {
     return dammage;
 };
  
+$('.battle-time-div').hide();
 
 const boss = {
     currentHp : 10,
     isBoss: false,
     timer: 30,
     nextStage:function() {
-        octoStats.stage++
-        $('.current-stage').text(octoStats.stage);
+        octoStats.stage++;
         boss.setMonster();
     },
     // TODO: Clean Up merge two exp functions
@@ -746,41 +768,76 @@ const boss = {
         resources.points += foodBonus;
         $('.counter').text(resources.points);
         levelup();
+        if (octoStats.stage % 20 === 0) {
+            // get access to rocket ship part
+        }
+        boss.nextStage();
     },
     hit: function() {
         this.currentHp -= calculateAttack() - 2;
         $('.boss-hp').text(this.currentHp);
         if(this.currentHp < 1 ) {
+            if (this.isBoss) {
+                $('.battle-time-div').hide();
+                $('.battle-time').text('');
+                this.timer = 31;
+            }
+            const toastHTML = `You killed the ${(this.isBoss) ? 'boss' : 'monster'}!`;
+            M.toast({html:toastHTML});
             boss.getRewards();
-            boss.nextStage();
         }
     },
-    countDown: function() {
-       if (this.timer > 0) {
-            this.timer --;
-            $('.battle-time').text(this.timer)
-        } else {
-            this.timer = 31;
-            octoStats.stage--;
-            boss.setMonster();
+    bossCountDown: function() {
+        if (this.isBoss) {
+            if (this.timer > 0) {
+                this.timer --;
+                $('.battle-time').text(this.timer);
+            } else {
+                this.timer = 31;
+                $('.battle-time-div').hide();
+                $('.battle-time').text('');
+                const toastHTML = `The boss beat you! Go back a stage.`;
+                M.toast({html:toastHTML});
+                octoStats.stage--;
+                boss.setMonster();
+            }
+            if (Math.random() > .5) {
+                const toastHTML = `You've been attacked!`;
+                M.toast({html:toastHTML});
+            }
+            setTimeout(() => {
+                boss.bossCountDown();
+            }, 1000);
         }
-        if (Math.random() > .5) {
-            const toastHTML = `You've been attacked!`;
-            M.toast({html:toastHTML});
-        }
-        if (this.isBoss === true) {
-        setTimeout(() => {
-            boss.countDown();
-           }, 1000);
+    },
+    monsterCountDown: function() {
+        if (!this.isBoss) {
+            if (Math.random() < .1) {
+                const toastHTML = `You've been attacked!`;
+                M.toast({html:toastHTML});
+            }
+            setTimeout(() => {
+                boss.monsterCountDown();
+            }, 3000);
         }
     },
     setMonster: function(){
         if (octoStats.stage % 10 === 0) {
+            $('.current-stage').text(octoStats.stage);
             this.currentHp = octoStats.stage * (20 + (octoStats.stage * 2));
             this.isBoss = true;
+            const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
+            const $monster = $('.boss-image');
+            $monster.removeClass();
+            $monster.addClass( 'boss-image');
+            $monster.addClass( randomMonster);
             $('.boss-hp').text(this.currentHp);
-            boss.countDown();
+            $('.battle-time-div').show();
+            const toastHTML = `Here comes a boss! The clock is ticking...`;
+            M.toast({html:toastHTML});
+            boss.bossCountDown();
         } else {
+            $('.current-stage').text(octoStats.stage);
             this.currentHp = octoStats.stage * (10 + octoStats.stage);
             this.isBoss = false;
             const randomMonster = 'monster-' + Math.ceil(Math.random()*13)
@@ -789,6 +846,7 @@ const boss = {
             $monster.addClass( 'boss-image');
             $monster.addClass( randomMonster);
             $('.boss-hp').text(this.currentHp);
+            boss.monsterCountDown();
         }
     }
     
@@ -797,8 +855,6 @@ const boss = {
 $('.boss').on('click', function() {
     boss.hit();
 });
-
-boss.countDown();
 
 function whichAnimationEvent(){
     var t,
@@ -835,6 +891,7 @@ $(".boss").click(function() {
 }); 
 
 boss.setMonster();
+boss.monsterCountDown();
 
 }).catch(function(err) {
     console.log(`Oh boy, it broke: ${err}`);
