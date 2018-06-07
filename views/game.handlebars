@@ -1,6 +1,11 @@
-{{!-- <div class="game-background"> --}}
+
+
+<div class="backgrounds">
+    
+</div>
+
+
 <main class="stage">
-    <div class="overlay"></div>
     <div class="wrapper">
         <div class="modal" id="setting">
             <div class="modal-content">
@@ -22,13 +27,13 @@
         <div class="heartsFood">
             <div class="health">
                 <span class="health-0 health-full">
-                    <i class="material-icons medium">favorite</i>
+                    <i class="material-icons small">favorite</i>
                 </span>
                 <span class="health-1 health-full">
-                    <i class="material-icons medium">favorite</i>
+                    <i class="material-icons small">favorite</i>
                 </span>
                 <span class="health-2 health-full">
-                    <i class="material-icons medium">favorite</i>
+                    <i class="material-icons small">favorite</i>
                 </span>
                 <p>Food:
                     <span class="counter">0</span>
@@ -114,12 +119,15 @@
                 <button class="upgrade-babby material-icons">exposure_plus_1</button>
             </div>
         </div>
-        <div class="boss"><span>HP:</span>  <span class="boss-hp">10</span> 
-            <div class="boss-image monster"></div>
-            <div><span>Stage: </span><span class="current-stage" ></span></div>
-            <div class="battle-time-div">Battle Time: <span class="battle-time"></span></div>
+        <div class="boss "><span>HP:</span>  <span class="boss-hp">10</span> 
+            <div class="boss-container">
+                    <div class="boss-image monster crit-hit"></div>
+            </div>
+            
+            <div > <span>Stage:</span> <span class="current-stage" ></span></div>
+            <div class="battle-time-div"> Battle Time: <span class="battle-time"></span> </div>
         </div>
-        <image class="octo" style="width:80px; margin-left:45%; margin-top:25%;" src="/images/original.gif"></image>
+        <image class="octo" style="width:130px;" src="/images/original.gif"></image>
         
         
         <div class="fixed-action-btn">
@@ -144,6 +152,7 @@
                 </li>
             </ul>
         </div>
+    </div>    
 </main>
 {{!-- </div> --}}
 <script>

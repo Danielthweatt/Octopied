@@ -5,6 +5,7 @@
   height: 100%;
 }
 
+
 .header-one {
   font-size: 36px;
   line-height: 54px;
@@ -57,6 +58,7 @@
   /* grid-template-rows:minmax(300px, auto);
   grid-template-columns:minmax(250px, auto); */
   grid-gap: 1em;
+  z-index: 1;
 }
 
 .side-bar{
@@ -76,6 +78,8 @@
     color: darkslategray;
     margin-top: -1em;
     font-family: 'Nova Slim', cursive;
+
+  z-index: 2;  
 }
 
 .heartsFood{
@@ -93,6 +97,7 @@ padding: 10px;
 border-radius: 5px;
   box-shadow: 5px 0 10px gray;
   font-family: 'Nova Slim', cursive;
+  z-index: 2;  
 }
 
 .resources{
@@ -116,6 +121,7 @@ border-radius: 5px;
    padding: 10px;
    font: 40px;
    line-height: 2em;
+   z-index: 2;  
 }
 
 .stats{
@@ -143,11 +149,15 @@ border-radius: 5px;
 .boss{
   grid-row-start: 1;
   grid-row-end:1;
-  grid-column-start:3;
-  grid-column-end:3;
+  grid-column-start:2;
+  grid-column-end:2;
+  margin-left:30%;
+  color:white;
+  font-size: 24px;
 }
 .octo{
-
+  width:130px;
+  margin-left: 30%;
   grid-row-start: 2;
   grid-row-end:2;
   grid-column-start:2;
@@ -214,7 +224,7 @@ p{
   bottom: 10%;
   left:7%;  
 }
-  /**************** Stage Backgrounds *************/
+  /* *************** Stage Backgrounds ************ */
 .overlay{
     position:fixed;
     background:url('/../images/Metallic-Blue24.jpg');
@@ -228,7 +238,7 @@ p{
   }
 
   /**************** Animations (KeyFrames) ****************/
-  @keyframes scroll {
+   @keyframes scroll {
     100%{
       background-position:0px 3000px;
     }
@@ -244,7 +254,7 @@ p{
     100%{
       font-size:3em;
     }
-  }
+  }  
 
 /* media queries */ 
 
@@ -266,233 +276,4 @@ font-size: 13px;
   .btn-large{
 margin: 5px;
   }
-}
-
-
-@keyframes slash-animation-1 {
-  /* 0%{
-    opacity: 0;
-    background-position:  -960px -540px;
-  }
-  50%{
-    background-position:  -960px -540px;
-    opacity: 0;
-  } */
-  /* 51%{
-    background-position:  -960px -540px;
-    opacity: 1;
-  } */
-  100%{
-    background-position:  -960px -540px;
-    opacity: 1;
-  }
-  
-}
-
-@keyframes slash-animation-2 {
-  0%{
-    opacity: 0;
-    background-position:  -960px 0px;
-  }
-  50%{
-    background-position:  -960px 0px;
-    opacity: 0;
-  }
-  51%{
-    background-position:  -960px 0px;
-    opacity: 1;
-  }
-  100%{
-    background-position: 0 0px;
-    opacity: 1;
-  }
-}
-
-@keyframes slash-animation-3 {
-  0%{
-    opacity: 0;
-    background-position:  -960px -180px;
-  }
-  50%{
-    background-position:  -960px -180px;
-    opacity: 0;
-  }
-  51%{
-    background-position:  -960px -180px;
-    opacity: 1;
-  }
-  100%{
-    background-position: 0 -180px;;
-    opacity: 1;
-  }
-  
-}
-
-@keyframes slash-animation-4 {
-  0%{
-    opacity: 0;
-    background-position:  -960px -360px;
-  }
-  50%{
-    background-position:  -960px -360px;
-    opacity: 0;
-  }
-  51%{
-    background-position:  -960px -360px;
-    opacity: 1;
-  }
-  100%{
-    background-position: 0 -360px;;
-    opacity: 1;
-  }
-  
-}
-
-@keyframes slash-animation-5 {
-  0%{
-    opacity: 0;
-    background-position:  -960px -540px;
-  }
-  50%{
-    background-position:  -960px -540px;
-    opacity: 0;
-  }
-  51%{
-    background-position:  -960px -540px;
-    opacity: 1;
-  }
-  100%{
-    background-position: 0 -540px;;
-    opacity: 1;
-  }
-  
-}
-
-.slash-1 {
-  width:180px;
-  height:180px;
-  background:  url('/../images/slash2.png')  0 -540px;
-  animation: slash-animation-1 .25s steps(5)  1;
-  transform: scale(-.7,.7) ;
-}
-
-
-.slash-5 {
-width:180px;
-height:180px;
-background:  url('/../images/slash2.png')  0 -540px;
-animation: slash-animation-5 .25s steps(5)  1;
-transform: scale(-.7,.7) ;
-}
-
-.slash-4 {
-  width:180px;
-  height:180px;
-  background:  url('/../images/slash2.png')  0 -360px;
-  animation: slash-animation-4 .25s steps(5)  1;
-  transform: scale(.7,.7) ;
-}
-
-.slash-3 {
-  width:180px;
-  height:180px;
-  background:  url('/../images/slash2.png')  0 -180px;
-  animation: slash-animation-3 .25s steps(5)  1;
-  transform: scale(.7,-.7) ;
-}
-
-.slash-2 {
-width:180px;
-height:180px;
-background:  url('/../images/slash2.png')  0 0px;
-animation: slash-animation-2 .25s steps(5)  1;
-transform: scale(.7,-.7) ;
-}
-
-
-.side-bar {
-  float: left;
-}
-
-.monster {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -450px -345px;
-}
-
-.monster-13 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -450px -345px;
-}
-
-.monster-12 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -300px -345px;
-}
-
-.monster-11 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  0 -355px;
-}
-
-.monster-10 {
-  width:150px;    height:150px;
-  background:  url('/../images/monster.png')  -150px -355px;
-}
-.monster-9 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -150px -355px;
-}
-
-.monster-8 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  0 -180px;
-}
-
-.monster-7 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -150px -180px;
-}
-
-.monster-6 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -300px -180px;
-}
-
-.monster-5 {
-  width:150px;
-  height:150px;
-  background:  url('/../images/monster.png')  -450px -180px;
-}
-
-.monster-4{
-  width:150px;
-  height:180px;
-  background:  url('/../images/monster.png')  -450px 0;
-}
-
-.monster-3 {
-  width:150px;
-  height:180px;
-  background:  url('/../images/monster.png')  -300px 0;
-}
-
-.monster-2 {
-  width:150px;
-  height:180px;
-  background:  url('/../images/monster.png')  -150px 0;
-
-}
-
-.monster-1 {
-  width:150px;
-  height:180px;
-  background:  url('/../images/monster.png')  0 0;
 }

@@ -902,13 +902,69 @@ $(".boss").click(function() {
        attackCounter++;
     } else {
        attackCounter = 1;
-       $('.boss-image').empty();
-    }
-    console.log(attackCounter);
-    $('.slash-1').one(animationEvent, function(event) {
+      
+   }
+   console.log(attackCounter);
+    $('.slash-1').one(animationEvent,
+                function(event) {
         $(this).remove();
     });
-}); 
+    $('.slash-2').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-3').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-4').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-5').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+  }); 
+
+  function changeStage(){
+     const stageBackground ={
+          stage1:'<div class="stage-1"></div> <div class="overlay"></div>',
+          stage2: ' <div class="stars"></div><div class="clouds"></div> <div class="twinkling"></div>',
+          stage3: '<div class="stars"></div><div class="stars-2"></div> ',
+          stage4: '<div class="stars"></div><div class="stars-2"></div><div class="space-clouds"></div> ',
+          stage5: '<div class="stars-2"></div><div class="space-clouds"></div> <div class="stars-nebula"</div>'
+
+      }
+      $('.backgrounds').empty();
+
+      if (octoStats.stage <=10) {
+        $('.backgrounds').append( stageBackground.stage1);
+      }
+      if (octoStats.stage <= 20 &&  octoStats.stage > 10) {
+        $('.backgrounds').append( stageBackground.stage2);
+      }    
+      if (octoStats.stage <= 30 &&  octoStats.stage > 20)   {
+        $('.backgrounds').append( stageBackground.stage3);
+      }
+      if (octoStats.stage <= 40 &&  octoStats.stage > 30)   {
+        $('.backgrounds').append( stageBackground.stage4);
+      }
+      if (octoStats.stage > 40)   {
+        $('.backgrounds').append( stageBackground.stage5);
+      }
+     
+      
+          
+         
+     
+           
+             
+       
+        
+  }
+
+changeStage();
 
 boss.setMonster();
 boss.monsterCountDown();
@@ -922,6 +978,8 @@ function youLose() {
     // a function that informs you that you lose and resets your data so you can play again
     // called if you lose all your health or (maybe) if your babies get too hungry
 };
+
+
 
 }).catch(function(err) {
     console.log(`Oh boy, it broke: ${err}`);
