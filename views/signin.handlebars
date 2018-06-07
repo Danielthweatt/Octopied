@@ -1,155 +1,156 @@
-{{#if signin}}
-    {{#if flashInfo}}
-        <div>{{flashInfo}}</div>
-    {{/if}}
-    <div class="row">
-        <div class="offset-s10 col s2">
-            <a href="/signup" class="btn-flat teal-text">Sign up</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="offset-s4 col s4">
-            <h1 class="header-one">Octopied</h1>
-            <p>An octopus adventure...in space.</p>
-            <form id="signin" name="signin" method="post" action="/signin" novalidate>
-                <div class="input-field">
-                    <label for="email">Email address</label>
-                    <input id="email" type="email" name="email">
-                    <span class="helper-text" data-error="Please enter a valid email address." data-success="Perfect"></span>
-                </div>
-                <div class="input-field">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password" class="validate">
-                    <span class="helper-text" data-success="Perfect"></span>
-                </div>
-                <input class="btn white-text" type="submit" value="Sign In"></a>
-                <a href="/forgot" class="btn-flat teal-text">Forgot Password?</a>
-            </form>
-        </div>
-    </div>
-    {{#if flashError}}
-    <div class="row">
-        <div class="offset-s4 col s2">
-            <div class="error">{{flashError}}</div>
-        </div>
-    </div>
-    {{/if}}
-{{/if}}
 
-{{#if forgot}}
-    {{#if flashInfo}}
-        <div class="modal">
-            <div class="modal-content">
-                <h4>{{flashInfo}}</h4>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    {{#if signin}}
+        {{#if flashInfo}}
+            <div>{{flashInfo}}</div>
+        {{/if}}
+        <div class="row">
+            <div class="offset-s10 col s2">
+                <a href="/signup" class="btn-flat teal-text">Sign up</a>
             </div>
         </div>
-    {{/if}}
-    <div class="row">
-        <div class="offset-s10 col s2">
-            <a href="/signin" class="btn-flat teal-text">Log In</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="offset-s4 col s4">
-            <h1 class="header-one">Forgotten Password? We can help with that.</h1>
-            <form id="reset" name="reset" method="post" action="/forgot" novalidate>
-                <div class="input-field">
-                    <label for="email">Email address</label>
-                    <input id="email" type="email" name="email" class="validate">
-                    <span class="helper-text" data-success="Perfect"></span>
-                </div>
-                <input class="btn white-text" type="submit" value="Reset Password">
-                </a>
-            </form>
-        </div>
-    </div>
-    {{#if flashError}}
-    <div class="row">
-        <div class="offset-s4 col s2">
-            <div class="error">{{flashError}}</div>
-        </div>
-    </div>
-    {{/if}}
-{{/if}}
-
-{{#if reset}}
-    <div class="row">
-        <div class="offset-s10 col s2">
-            <a href="/signin" class="btn-flat teal-text">Log In</a>
-        </div>
-    </div>
-    {{#unless flashError}}
         <div class="row">
             <div class="offset-s4 col s4">
-                <h1 class="header-one">Please Reset Your Password Now</h1>
-                <form id="reset" name="reset" method="post" action="/reset/{{token}}" novalidate>
+                <h1 class="header-one">Octopied</h1>
+                <p>An octopus adventure...in space.</p>
+                <form id="signin" name="signin" method="post" action="/signin" novalidate>
+                    <div class="input-field">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" name="email">
+                        <span class="helper-text" data-error="" data-success="Perfect"></span>
+                    </div>
+                    <div class="input-field">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password" class="validate">
+                        <span class="helper-text" data-error="" data-success="Perfect"></span>
+                    </div>
+                    <input class="btn white-text" type="submit" value="Sign In"></a>
+                    <a href="/forgot" class="btn-flat teal-text">Forgot Password?</a>
+                </form>
+            </div>
+        </div>
+        {{#if flashError}}
+        <div class="row">
+            <div class="offset-s4 col s2">
+                <div class="error">{{flashError}}</div>
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+
+    {{#if forgot}}
+        {{#if flashInfo}}
+            <div class="modal">
+                <div class="modal-content">
+                    <h4>{{flashInfo}}</h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+            </div>
+        {{/if}}
+        <div class="row">
+            <div class="offset-s10 col s2">
+                <a href="/signin" class="btn-flat teal-text">Log In</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-s4 col s4">
+                <h1 class="header-one">Forgotten Password? We can help with that.</h1>
+                <form id="reset" name="reset" method="post" action="/forgot" novalidate>
+                    <div class="input-field">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" name="email" class="validate">
+                        <span class="helper-text" data-success="Perfect"></span>
+                    </div>
+                    <input class="btn white-text" type="submit" value="Reset Password">
+                    </a>
+                </form>
+            </div>
+        </div>
+        {{#if flashError}}
+        <div class="row">
+            <div class="offset-s4 col s2">
+                <div class="error">{{flashError}}</div>
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+
+    {{#if reset}}
+        <div class="row">
+            <div class="offset-s10 col s2">
+                <a href="/signin" class="btn-flat teal-text">Log In</a>
+            </div>
+        </div>
+        {{#unless flashError}}
+            <div class="row">
+                <div class="offset-s4 col s4">
+                    <h1 class="header-one">Please Reset Your Password Now</h1>
+                    <form id="reset" name="reset" method="post" action="/reset/{{token}}" novalidate>
+                        <div class="input-field">
+                            <label for="password">Password</label>
+                            <input id="pass" type="password" name="password" class="validate">
+                            <span class="helper-text" data-success="Perfect"></span>
+                        </div>
+                        <div class="input-field">
+                            <label for="re-pass">Confirm Password</label>
+                            <input id="repass" type="password" name="repass" class="validate">
+                            <span class="helper-text" data-success="Perfect"></span>
+                        </div>
+                        <input class="btn white-text" type="submit" value="Reset"></a>
+                    </form>
+                </div>
+            </div>
+            {{#if flashError}}
+                <div class="row">
+                    <div class="offset-s4 col s2">
+                        <div class="error">{{flashError}}</div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/unless}}
+        {{#if flashError}}
+            <div>{{flashError}}</div>
+                <a href="/forgot" class="btn-flat teal-text">Try Resetting Password Again</a>
+        {{/if}}
+    {{/if}}
+
+    {{#if signup}}
+        <div class="row">
+            <div class="offset-s10 col s2">
+                <a href="/signin" class="btn-flat teal-text">Log In</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-s4 col s4">
+                <h1 class="header-one">Sign-Up!</h1>
+                <form id="signup" name="signup" method="post" action="/signup" novalidate>
+                    <div class="input-field">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" name="email" class="validate">
+                        <span class="helper-text" data-success="Perfect"></span>
+                    </div>
                     <div class="input-field">
                         <label for="password">Password</label>
                         <input id="pass" type="password" name="password" class="validate">
                         <span class="helper-text" data-success="Perfect"></span>
                     </div>
                     <div class="input-field">
-                        <label for="re-pass">Confirm Password</label>
+                        <label for="repass">Confirm Password</label>
                         <input id="repass" type="password" name="repass" class="validate">
-                         <span class="helper-text" data-success="Perfect"></span>
+                        <span class="helper-text" data-success="Perfect"></span>
                     </div>
-                    <input class="btn white-text" type="submit" value="Reset"></a>
+                    <input class="btn white-text" type="submit" value="Register"></a>
                 </form>
             </div>
         </div>
         {{#if flashError}}
-            <div class="row">
-                <div class="offset-s4 col s2">
-                    <div class="error">{{flashError}}</div>
-                </div>
+        <div class="row">
+            <div class="offset-s4 col s2">
+                <div class="error">{{flashError}}</div>
             </div>
+        </div>
         {{/if}}
-    {{/unless}}
-    {{#if flashError}}
-        <div>{{flashError}}</div>
-            <a href="/forgot" class="btn-flat teal-text">Try Resetting Password Again</a>
     {{/if}}
-{{/if}}
-
-{{#if signup}}
-    <div class="row">
-        <div class="offset-s10 col s2">
-            <a href="/signin" class="btn-flat teal-text">Log In</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="offset-s4 col s4">
-            <h1 class="header-one">Sign-Up!</h1>
-            <form id="signup" name="signup" method="post" action="/signup" novalidate>
-                <div class="input-field">
-                    <label for="email">Email address</label>
-                    <input id="email" type="email" name="email" class="validate">
-                    <span class="helper-text" data-success="Perfect"></span>
-                </div>
-                <div class="input-field">
-                    <label for="password">Password</label>
-                    <input id="pass" type="password" name="password" class="validate">
-                    <span class="helper-text" data-success="Perfect"></span>
-                </div>
-                <div class="input-field">
-                    <label for="repass">Confirm Password</label>
-                    <input id="repass" type="password" name="repass" class="validate">
-                    <span class="helper-text" data-success="Perfect"></span>
-                </div>
-                <input class="btn white-text" type="submit" value="Register"></a>
-            </form>
-        </div>
-    </div>
-    {{#if flashError}}
-    <div class="row">
-        <div class="offset-s4 col s2">
-            <div class="error">{{flashError}}</div>
-        </div>
-    </div>
-    {{/if}}
-{{/if}}
 
 <script src="/javascript/auth.js"></script>

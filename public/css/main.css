@@ -1,6 +1,7 @@
 
-body {
-  font-family: 'Work Sans', sans-serif;
+.game-background {
+  background: url('/../images/Metallic-Blue1.jpg');
+  z-index: 0;
 }
 
 .header-one {
@@ -8,9 +9,11 @@ body {
   line-height: 54px;
   font-family: 'Nova Slim', cursive;
 }
+
 .error {
   color: red;
 }
+
 .counter {
   color:white;
 }
@@ -20,7 +23,6 @@ body {
   font-size: 4em;
   animation:1s  infinite linear;
 }
-
 
 .resources ul {
   list-style: none;
@@ -53,6 +55,7 @@ body {
     color: lightgray;
     margin-top: -1em;
 }
+
 .heartsFood{
   text-align: center;
   display: flex;
@@ -68,6 +71,7 @@ padding: 10px;
 border-radius: 5px;
   box-shadow: 0 5px 20px;
 }
+
 .resources{
   display: flex;
   display: none;
@@ -90,7 +94,6 @@ border-radius: 5px;
    font: 40px;
    line-height: 2em;
 }
-
 
 .stats{
   display: flex;
