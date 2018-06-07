@@ -1,3 +1,4 @@
+
 body {
   background:url('/../images/Metallic-Blue1.jpg');
   z-index: 0;
@@ -7,11 +8,16 @@ body {
 
 }
 
-.login {
-  width:400px;
-  height:250px;
-  background: #ffffff;
-  margin-left: 25%;
+h1 {
+  font-size: 36px;
+  line-height: 54px;
+  font-family: 'Nova Slim', cursive;
+}
+
+P {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .counter {
@@ -118,17 +124,20 @@ border-radius: 5px;
    line-height: 2em;
 }
 .boss{
-  
+  background-color: blue;
+  grid-row-start: 1;
+  grid-row-end:1;
+  grid-column-start:4;
+  grid-column-end:4;
 }
 .octo{
+
   grid-row-start: 2;
   grid-row-end:3;
   grid-column-start:2;
   grid-column-end:3;
 }
-/* .numBabies{
-display: none;
-} */
+
 .setting{
   display: none;
 }
@@ -193,7 +202,7 @@ p{
     width:100%;
     height:100%;
     opacity: 0.05;
-    z-index: -1;
+    z-index: -3;
   }
 
   /**************** Animations (KeyFrames) ****************/

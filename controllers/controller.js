@@ -13,7 +13,14 @@ module.exports = function(app, passport, db){
     const Config = db.config;
 
     app.get('/', function(req, res){
-        res.render('index');
+        res.render('signin', {
+            signin: true,
+            forgot: false,
+            reset: false,
+            signup: false,
+            flashError: req.flash('error'),
+            flashInfo: req.flash('info')
+        });
     });
 
     app.get('/signin', function(req, res){

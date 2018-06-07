@@ -14,7 +14,8 @@ export function buyResource(itemName, count = 1){
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert('you dont have enouf points')
+        const toastHTML = 'You dont have enough food!';
+        M.toast({html: toastHTML});
     }
 }
 
@@ -35,7 +36,8 @@ export function buyItem(itemName, count = 1){
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert(`you dont have enough ${itemName}s`)
+        const toastHTML = `you dont have enough ${itemName}s!`
+        M.toast({html: toastHTML});
     }
 }
 

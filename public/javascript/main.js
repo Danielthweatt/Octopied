@@ -16,7 +16,8 @@ const tradeCost ={
     fish: results.gameConfig.fish_trade_cost,
     shark: results.gameConfig.shark_trade_cost
 };
-const resourceDiffuculityRank ={    dirt: results.gameConfig.dirt_resource_difficulty_rank,
+const resourceDiffuculityRank ={    
+    dirt: results.gameConfig.dirt_resource_difficulty_rank,
     rock: results.gameConfig.rock_resource_difficulty_rank,
     steel: results.gameConfig.steel_resource_difficulty_rank,
     worm: results.gameConfig.worm_resource_difficulty_rank,
@@ -64,7 +65,6 @@ const collectorStatus ={
     fish: results.statisticsConfig.fish_collector_status,
     shark: results.statisticsConfig.shark_collector_status
 };
-
 const resourseUpgradeList = {
     //rank is defined as level / 3 rounded up
     //for example House level 1 2 3 are all rank 1, Rank 2 would 4 5 and 6
@@ -137,11 +137,11 @@ function refreshDisplay() {
     }
 };
 
-refreshDisplay();
 
 function updateDB(alertSave) {
     if (alertSave) {
-        alert('Your progress is being saved!');
+        const toastHTML = 'Your progress is being saved!';
+        M.toast({html: toastHTML});
     };
     $.ajax("/game", {
         type: "PUT",
@@ -157,11 +157,13 @@ function updateDB(alertSave) {
     });
 };
 
+refreshDisplay();
+
 $('#save-progress').click(function() {
     updateDB(false);
 });
 
-setInterval(function() {updateDB(true);}, 180000);
+setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
@@ -334,7 +336,8 @@ function levelup() {
         $('.current-exp').text(`Exp: ${octoStats.exp}`)
 
         if(octoStats.level === 10 && octoStats.exp === 0) {
-            alert('Oh Something Happening');
+            const toastHTML = 'Oh Something Happening';
+            M.toast({html: toastHTML});
            evolve();
         }
        
@@ -359,7 +362,8 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        alert(`you dont have enouf points You Need  ${tradeCost[itemName]}  points`)
+        const toastHTML = `You dont have enough food! You Need  ${tradeCost[itemName]}  food`
+        M.toast({html:toastHTML})
     }
 }
 
@@ -382,7 +386,8 @@ function buyItem(itemName, count = 1) {
         $(selector).text( resources[itemName])
         return true;
     }else{
-        alert(`you dont have enouf ${itemName}s`)
+        const toastHTML = `you dont have enough ${itemName}s`
+        M.toast({html:toastHTML});
         return false;
     }
 }
@@ -398,7 +403,8 @@ function buyUpgrade(upgrade) {
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`)
+       const toastHTML = `You need ${resourceQuanityNeeded}  ${requiredResource} to buy this item!`
+       M.toast({html:toastHTML});
    }
 }
 
@@ -413,10 +419,12 @@ function buildHouse(){
     if (resourceQuanityNeeded <=  resources[requiredResource]) {
         resources[requiredResource] -=resourceQuanityNeeded;
         resources.house++;
-        alert('house Updated')
+        const toastHTML = 'house Updated'
+        M.toast({html: toastHTML});
        $('.house-level').text(resources.house)
        }else{
-           alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`)
+           const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`
+           M.toast({html: toastHTML});
        }
 }
 
@@ -449,7 +457,8 @@ $('.upgrade-house').on('click', function() {
 
 $('.collect-worm').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.worm ? babby.stopCollecting('worm') : babby.startCollecting('worm') ;
@@ -460,7 +469,8 @@ $('.collect-worm').on('click', function() {
 
 $('.collect-fish').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.fish ? babby.stopCollecting('fish') : babby.startCollecting('fish') ;
@@ -470,7 +480,8 @@ $('.collect-fish').on('click', function() {
 
 $('.collect-shark').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.shark ? babby.stopCollecting('shark') : babby.startCollecting('shark') ;
@@ -480,11 +491,13 @@ $('.collect-shark').on('click', function() {
 
 $('.collect-dirt').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     if(resources.points < 0) {
-        alert('please collect food')
+        const toastHTML = 'please collect food'
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.dirt ? babby.stopCollecting('dirt') : babby.startCollecting('dirt') ;
@@ -494,7 +507,8 @@ $('.collect-dirt').on('click', function() {
 
 $('.collect-rock').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.rock ? babby.stopCollecting('rock') : babby.startCollecting('rock') ;
@@ -504,7 +518,8 @@ $('.collect-rock').on('click', function() {
 
 $('.collect-steel').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+       const toastHTML = "You must have a child to collect resources"
+        M.toast({html: toastHTML});
         return;
     }
     collectorStatus.steel ? babby.stopCollecting('steel') : babby.startCollecting('steel') ;
@@ -637,7 +652,8 @@ $('.have-babby').on('click', function() {
             babby.createBaby();
         }
     }else {
-        alert('You do not have enogh room in your house')
+        const toastHTML = 'You do not have enough room in your house!'
+        M.toast({html: toastHTML});
     }
       
     
@@ -701,7 +717,8 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
-        console.log('Crital Hit!!');
+        const toastHTML = 'Crital Hit!!';
+        M.toast({html: toastHTML});
     }
     console.log(dammage);
      return dammage;
@@ -748,7 +765,8 @@ let boss = {
             boss.setMonster();
        }
        if(Math.random() > .5){
-           alert(' You got Attacked');
+           const toastHTML = ' You got Attacked'
+           M.toast({html: toastHTML});
        }
        if(this.isBoss === true){
         setTimeout(() => {
