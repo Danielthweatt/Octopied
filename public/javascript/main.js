@@ -468,7 +468,6 @@ function buildHouse() {
     }
 };
 
-
 //?
 // function checkForCollectors() {
 //     const check = '[]';
