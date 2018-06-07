@@ -151,7 +151,8 @@ function updateDB(alertSave) {
             collectorStatus: collectorStatus
         }
     }).then(function() {
-        console.log('Your progress has been saved!');
+        const toastHTML = 'Your progress has been saved!';
+        M.toast({html: toastHTML});
     }).catch(function(err) {
         console.log(`Oh boy, it broke: ${err}`);
     });
@@ -201,7 +202,9 @@ const babby = {
             // Builds the name of the funcition that needs to be called useing the given resource
             startGivenCollector(resource);
         }else{
-            console.error('You do not have enough babies')
+           const toastHTML =  'You do not have enough babies';
+        M.toast({html:toastHTML})
+        
         }
        
     },
@@ -422,7 +425,9 @@ function buildHouse(){
         alert('house Updated')
        $('.house-level').text(resources.house)
        }else{
-           alert(`you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`)
+           const innerHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`
+           M.toast({html:toastHTML})
+
        }
 }
 
@@ -455,7 +460,8 @@ $('.upgrade-house').on('click', function() {
 
 $('.collect-worm').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources"
+        M.toast({html:toastHTML})
         return;
     }
     collectorStatus.worm ? babby.stopCollecting('worm') : babby.startCollecting('worm') ;
@@ -466,7 +472,8 @@ $('.collect-worm').on('click', function() {
 
 $('.collect-fish').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources"
+        M.toast({html:toastHTML})
         return;
     }
     collectorStatus.fish ? babby.stopCollecting('fish') : babby.startCollecting('fish') ;
@@ -476,7 +483,8 @@ $('.collect-fish').on('click', function() {
 
 $('.collect-shark').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources"
+        M.toast({html:toastHTML})
         return;
     }
     collectorStatus.shark ? babby.stopCollecting('shark') : babby.startCollecting('shark') ;
@@ -486,7 +494,8 @@ $('.collect-shark').on('click', function() {
 
 $('.collect-dirt').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources"
+        M.toast({html:toastHTML})
         return;
     }
     if(resources.points < 0) {
@@ -501,7 +510,8 @@ $('.collect-dirt').on('click', function() {
 
 $('.collect-rock').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources";
+        M.toast({html:toastHTML});
         return;
     }
     collectorStatus.rock ? babby.stopCollecting('rock') : babby.startCollecting('rock') ;
@@ -511,7 +521,8 @@ $('.collect-rock').on('click', function() {
 
 $('.collect-steel').on('click', function() {
     if(babby.number === 0) {
-        console.log("You must have a child to collect resources")
+        const toastHTML = "You must have a baby to collect resources"
+        M.toast({html:toastHTML})
         return;
     }
     collectorStatus.steel ? babby.stopCollecting('steel') : babby.startCollecting('steel') ;
@@ -589,7 +600,8 @@ function collectResource(type) {
     if(collectorStatus[type]) {
         setTimeout(function() {
             resources[type]++;
-            console.log("resource is added", resources);
+            const toastHTML = "resource is added", resources;
+            M.toast({html:toastHTML})
             collectResource(type);
 
         }, (collecitonTimeModifer));
@@ -696,7 +708,8 @@ Need a text animation to display text (for level ups and other events)
 
 function theHunger() {
     babby.feed();
-    console.log('The hunger strikes')
+    const toastHTML = 'The hunger strikes';
+    M.toast({html:toastHTML});
     setTimeout(() => {
         theHunger();
     }, 5000);
@@ -709,7 +722,8 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
-        console.log('Crital Hit!!');
+        const innerHTML = 'Crital Hit!!';
+        M.toast({html:toastHTML});
     }
     console.log(dammage);
      return dammage;
