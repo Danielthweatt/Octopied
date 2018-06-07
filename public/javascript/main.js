@@ -365,7 +365,7 @@ function buyResource(itemName, count = 1) {
         const selector = '.resource-' + [itemName];
         $(selector).text( resources[itemName])
     }else{
-        const toastHTML = `You dont have enough points! You Need  ${tradeCost[itemName]}  points`
+        const toastHTML = `You dont have enough food! You Need  ${tradeCost[itemName]}  food`
         M.toast({html:toastHTML})
     }
 }
@@ -406,7 +406,7 @@ function buyUpgrade(upgrade) {
     octoStats.proficiency[upgrade]++;
     refreshDisplay();
    }else{
-       const toastHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To buy this Item`
+       const toastHTML = `You need ${resourceQuanityNeeded}  ${requiredResource} to buy this item!`
        M.toast({html:toastHTML});
    }
 }
@@ -422,7 +422,8 @@ function buildHouse(){
     if (resourceQuanityNeeded <=  resources[requiredResource]) {
         resources[requiredResource] -=resourceQuanityNeeded;
         resources.house++;
-        alert('house Updated')
+        const toastHTML = 'house Updated'
+        M.toast({html: toastHTML});
        $('.house-level').text(resources.house)
        }else{
            const innerHTML = `you need ${resourceQuanityNeeded}  ${requiredResource} To Upgrade your house`
@@ -656,7 +657,7 @@ $('.have-babby').on('click', function() {
             babby.createBaby();
         }
     }else {
-        const toastHTML = 'You do not have enogh room in your house'
+        const toastHTML = 'You do not have enough room in your house!'
         M.toast({html: toastHTML});
     }
       
@@ -722,8 +723,13 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
+<<<<<<< HEAD
         const innerHTML = 'Crital Hit!!';
         M.toast({html:toastHTML});
+=======
+        const toastHTML = 'Crital Hit!!';
+        M.toast({html: toastHTML});
+>>>>>>> 2a440db568f1f415af520580e16d02fb09979e7a
     }
     console.log(dammage);
      return dammage;
@@ -770,7 +776,8 @@ let boss = {
             boss.setMonster();
        }
        if(Math.random() > .5){
-           alert(' You got Attacked');
+           const toastHTML = ' You got Attacked'
+           M.toast({html: toastHTML});
        }
        if(this.isBoss === true){
         setTimeout(() => {

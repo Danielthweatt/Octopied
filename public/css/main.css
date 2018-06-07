@@ -123,14 +123,13 @@ border-radius: 5px;
   grid-column-end:3;
 }
 .octo{
+
   grid-row-start: 2;
   grid-row-end:2;
   grid-column-start:2;
   grid-column-end:2;
 }
-/* .numBabies{
-display: none;
-} */
+
 .setting{
   display: none;
 }
