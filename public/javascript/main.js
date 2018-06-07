@@ -601,7 +601,7 @@ function collectResource(type) {
     if(collectorStatus[type]) {
         setTimeout(function() {
             resources[type]++;
-            const toastHTML = "resource is added", resources;
+            const toastHTML = `resource is added ${resources}`;
             M.toast({html:toastHTML})
             collectResource(type);
 
@@ -709,8 +709,6 @@ Need a text animation to display text (for level ups and other events)
 
 function theHunger() {
     babby.feed();
-    const toastHTML = 'The hunger strikes';
-    M.toast({html:toastHTML});
     setTimeout(() => {
         theHunger();
     }, 5000);
@@ -723,13 +721,13 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if(crit === 2.5){
-<<<<<<< HEAD
-        const innerHTML = 'Crital Hit!!';
-        M.toast({html:toastHTML});
-=======
+        $('.boss-container').addClass('crit-hit');
+        $('.crit-hit').one(animationEvent,
+            function(event) {
+              $(this).removeClass('crit-hit');
+        });
         const toastHTML = 'Crital Hit!!';
         M.toast({html: toastHTML});
->>>>>>> 2a440db568f1f415af520580e16d02fb09979e7a
     }
     console.log(dammage);
      return dammage;
@@ -745,6 +743,7 @@ let boss = {
             octoStats.stage++
             $('.current-stage').text(octoStats.stage);
             boss.setMonster();
+            changeStage();
     },
     // TODO: Clean Up merge two exp functions
     getRewards: function() {
@@ -840,18 +839,67 @@ function whichAnimationEvent(){
        attackCounter++;
    }else{
        attackCounter = 1;
-       $('.boss-image').empty();
+      
    }
    console.log(attackCounter);
     $('.slash-1').one(animationEvent,
                 function(event) {
-     $(this).remove();
+        $(this).remove();
+    });
+    $('.slash-2').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-3').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-4').one(animationEvent,
+        function(event) {
+          $(this).remove();
+    });
+    $('.slash-5').one(animationEvent,
+        function(event) {
+          $(this).remove();
     });
   }); 
 
+  function changeStage(){
+     const stageBackground ={
+          stage1:'<div class="stage-1"></div>',
+          stage2: ' <div class="stars"></div><div class="clouds"></div> <div class="twinkling"></div>',
+          stage3: '<div class="stars"></div><div class="stars-2"></div> ',
+          stage4: '<div class="stars"></div><div class="stars-2"></div><div class="space-clouds"></div> '
+      }
+      $('.backgrounds').empty();
 
+      if (octoStats.stage <=10) {
+        $('.backgrounds').append( stageBackground.stage1);
+      }
+      if (octoStats.stage <= 20 &&  octoStats.stage > 10) {
+        $('.backgrounds').append( stageBackground.stage2);
+      }    
+      if (octoStats.stage <= 30 &&  octoStats.stage > 20)   {
+        $('.backgrounds').append( stageBackground.stage3);
+      }
+      if (octoStats.stage <= 40 &&  octoStats.stage > 30)   {
+        $('.backgrounds').append( stageBackground.stage4);
+      }
+      
+          
+         
+     
+           
+             
+       
+        
+  }
+
+changeStage();
 theHunger();
 boss.setMonster();
+
+
 
 
 }).catch(function(err) {

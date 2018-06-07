@@ -1,5 +1,18 @@
-:<main class="stage">
-    <div class="overlay"></div>
+<div class="backgrounds">
+    <!-- Stage 1 -->
+        {{!-- <div class="stage-1"></div> --}}
+  <!-- Stage 2 -->
+     {{!-- <div class="stars"></div>
+     <div class="clouds"></div>
+     <div class="twinkling"></div> --}}
+     <!-- Stage 3 -->
+      {{!-- <div class="stars"></div>
+    <div class="stars-2"></div>
+    <div class="space-clouds"></div>  --}}
+
+</div>
+<main class="stage">
+    {{!-- <div class="overlay"></div> --}}
     <div class="wrapper">
         <div class="modal" id="setting">
             <div class="modal-content">
@@ -113,12 +126,15 @@
                 <button class="upgrade-babby material-icons">exposure_plus_1</button>
             </div>
         </div>
-        <div class="boss"><span>HP:</span>  <span class="boss-hp">10</span> 
-            <div class="boss-image monster"> abc</div>
+        <div class="boss "><span>HP:</span>  <span class="boss-hp">10</span> 
+            <div class="boss-container">
+                    <div class="boss-image monster crit-hit"></div>
+            </div>
+            
             <div > <span>Stage:</span> <span class="current-stage" ></span></div>
             <div > Battle Time: <span class="battle-time"></span> </div>
         </div>
-        <image class="octo" style="width:80px; margin-left:45%; margin-top:25%;" src="/images/original.gif"></image>
+        <image class="octo" style="width:130px;" src="/images/original.gif"></image>
         
         
         <div class="fixed-action-btn">
