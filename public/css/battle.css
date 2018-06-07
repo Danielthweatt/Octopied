@@ -278,11 +278,9 @@
   
   /*stage-1 / stars twinkling clouds  / stars twinkling /  stars stars2 space-clouds //.stars-nebula  stars-2  space-clouds */
   .stars, .stars-2, .twinkling, .clouds, .stage-1, .space-clouds, .stars-nebula {
-  position:absolute;
+  position:fixed;
   top:0;
   left:0;
-  right:0;
-  bottom:0;
   width:100%;
   height:100%;
   display:block;
