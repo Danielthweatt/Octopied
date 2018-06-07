@@ -204,7 +204,7 @@ p{
   bottom: 10%;
   left:7%;  
 }
-  /**************** Stage Backgrounds *************/
+  /* *************** Stage Backgrounds ************ */
 .overlay{
     position:fixed;
     background:url('/../images/Metallic-Blue24.jpg');
@@ -218,7 +218,7 @@ p{
   }
 
   /**************** Animations (KeyFrames) ****************/
-  @keyframes scroll {
+   @keyframes scroll {
     100%{
       background-position:0px 3000px;
     }
@@ -234,7 +234,7 @@ p{
     100%{
       font-size:3em;
     }
-  }
+  }  
 
 /* media queries */ 
 
@@ -260,18 +260,6 @@ margin: 5px;
 
 
 @keyframes slash-animation-1 {
-  /* 0%{
-    opacity: 0;
-    background-position:  -960px -540px;
-  }
-  50%{
-    background-position:  -960px -540px;
-    opacity: 0;
-  } */
-  /* 51%{
-    background-position:  -960px -540px;
-    opacity: 1;
-  } */
   100%{
     background-position:  -960px -540px;
     opacity: 1;
@@ -515,7 +503,7 @@ transform: scale(.7,-.7) ;
   z-index: -4;
 }
 
-/*stage-1 / stars twinkling clouds  / stars twinkling /  stars stars2 space-clouds */
+/*stage-1 / stars twinkling clouds  / stars twinkling /  stars stars2 space-clouds //.stars-nebula  stars-2  space-clouds */
 .stars, .stars-2, .twinkling, .clouds, .stage-1, .space-clouds, .stars-nebula {
 position:absolute;
 top:0;

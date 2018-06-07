@@ -869,7 +869,9 @@ function whichAnimationEvent(){
           stage1:'<div class="stage-1"></div>',
           stage2: ' <div class="stars"></div><div class="clouds"></div> <div class="twinkling"></div>',
           stage3: '<div class="stars"></div><div class="stars-2"></div> ',
-          stage4: '<div class="stars"></div><div class="stars-2"></div><div class="space-clouds"></div> '
+          stage4: '<div class="stars"></div><div class="stars-2"></div><div class="space-clouds"></div> ',
+          stage5: '<div class="stars-2"></div><div class="space-clouds"></div> <div class="stars-nebula"</div>'
+
       }
       $('.backgrounds').empty();
 
@@ -885,6 +887,10 @@ function whichAnimationEvent(){
       if (octoStats.stage <= 40 &&  octoStats.stage > 30)   {
         $('.backgrounds').append( stageBackground.stage4);
       }
+      if (octoStats.stage <= 50 &&  octoStats.stage > 40)   {
+        $('.backgrounds').append( stageBackground.stage5);
+      }
+     
       
           
          
