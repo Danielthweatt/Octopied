@@ -887,7 +887,7 @@ function whichAnimationEvent(){
       if (octoStats.stage <= 40 &&  octoStats.stage > 30)   {
         $('.backgrounds').append( stageBackground.stage4);
       }
-      if (octoStats.stage <= 50 &&  octoStats.stage > 40)   {
+      if (octoStats.stage > 40)   {
         $('.backgrounds').append( stageBackground.stage5);
       }
      
