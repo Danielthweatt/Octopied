@@ -138,17 +138,20 @@ border-radius: 5px;
    line-height: 2em;
 }
 .boss{
-  
+  background-color: blue;
+  grid-row-start: 1;
+  grid-row-end:1;
+  grid-column-start:4;
+  grid-column-end:4;
 }
 .octo{
+
   grid-row-start: 2;
   grid-row-end:3;
   grid-column-start:2;
   grid-column-end:3;
 }
-/* .numBabies{
-display: none;
-} */
+
 .setting{
   display: none;
 }
