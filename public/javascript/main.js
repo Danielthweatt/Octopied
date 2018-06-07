@@ -967,7 +967,6 @@ $(".boss").click(function() {
 changeStage();
 
 boss.setMonster();
-boss.monsterCountDown();
 
 function youWin() {
     // a function that informs you that you win and resets your data so you can play again
