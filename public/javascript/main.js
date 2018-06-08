@@ -205,7 +205,9 @@ function configRocketPieceAvailability() {
     while (stage > 20 && pieces.length > 0) {
         piece = pieces.shift();
         stage -= 20;
-        rocketPiecesCount++;
+        if (resources[piece[0]] === 1) {
+            rocketPiecesCount++;
+        }
         $('#resources-list').append(`<li>Rocket ${piece[1]}:<span class="resource-${piece[0]}"> ${resources[piece[0]]} </span><button><a class="buy-${piece[0]}"><i class="material-icons">attach_money</i></a></button></li>`);
     }
     return pieces;
