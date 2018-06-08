@@ -44,7 +44,7 @@ const resources ={
     shuttleBody: results.resourcesConfig.shuttle_bodies,
     shuttleComputer: results.resourcesConfig.shuttle_computers
 };
-const rocketPieces = [feul, thruster, shuttleBody, shuttleComputer];
+const rocketPieces = ['feul', 'thruster', 'shuttleBody', 'shuttleComputer'];
 const octoStats = {
     level: results.statisticsConfig.level,
     exp: results.statisticsConfig.experience,
