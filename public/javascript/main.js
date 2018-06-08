@@ -792,19 +792,19 @@ $('.buy-steel').on('click', function() {
     buyResource('steel');
 });
 
-$('.buy-feul').on('click', function() {
+$(document).on('click', '.buy-feul', function() {
     buyRocketPiece('feul');
 });
 
-$('.buy-thruster').on('click', function() {
+$(document).on('click', '.buy-thruster', function() {
     buyRocketPiece('thruster');
 });
 
-$('.buy-shuttleBody').on('click', function() {
+$(document).on('click', '.buy-shuttleBody', function() {
     buyRocketPiece('shuttleBody');
 });
 
-$('.buy-shuttleComputer').on('click', function() {
+$(document).on('click', '.buy-shuttleComputer', function() {
     buyRocketPiece('shuttleComputer');
 });
 
