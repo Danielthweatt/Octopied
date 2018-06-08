@@ -300,6 +300,7 @@ module.exports = function(app, passport, db){
             experience: parseInt(req.body.octoStats.exp),
             prestige: parseInt(req.body.octoStats.prestidge),
             stage: parseInt(req.body.octoStats.stage),
+            hp: parseInt(req.body.octoStats.hp),
             food_proficiency: parseInt(req.body.octoStats.proficiency.food),
             gather_proficiency: parseInt(req.body.octoStats.proficiency.gather),
             attack_proficiency: parseInt(req.body.octoStats.proficiency.attack),

@@ -21,6 +21,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             defaultValue: 1
         },
+        hp: {
+            type: DataTypes.INTEGER,
+            defaultValue: 30
+        },
         food_proficiency: {
             type: DataTypes.INTEGER,
             defaultValue: 1
