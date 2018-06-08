@@ -468,7 +468,7 @@ function buyResource(itemName, count = 1) {
 };
 
 function buyRocketPiece(piece) {
-    if (resources[piece] > 1) {
+    if (resources[piece] > 0) {
         const toastHTML = 'You already have that Rocket Piece!';
         M.toast({html:toastHTML});
     } else {
@@ -477,9 +477,16 @@ function buyRocketPiece(piece) {
             canBuy = true;
         }
         if (canBuy) {
+            resources.worm -= 10;
+            resources.fish -= 10;
+            resources.shark -= 10;
+            resources.dirt -= 10;
+            resources.rock -= 10;
+            resources.steel -= 10;
             resources[piece]++;
-            const selector = '.resource-' + [itemName];
-            $(selector).text(resources[itemName]);
+            const selector = '.resource-' + [piece];
+            $(selector).text(resources[piece]);
+            refreshDisplay(false);
             rocketPiecesCount++;
             if (rocketPiecesCount === 4) {
                 const toastHTML = 'You won! :D';
