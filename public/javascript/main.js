@@ -44,7 +44,8 @@ const resources ={
     shuttleBody: results.resourcesConfig.shuttle_bodies,
     shuttleComputer: results.resourcesConfig.shuttle_computers
 };
-const rocketPieces = ['feul', 'thruster', 'shuttleBody', 'shuttleComputer'];
+const rocketPieces = [['feul', 'Feul'], ['thruster', 'Thruster'], 
+['shuttleBody', 'Shuttle Body'], ['shuttleComputer', 'Shuttle Computer']];
 const octoStats = {
     level: results.statisticsConfig.level,
     exp: results.statisticsConfig.experience,
@@ -192,9 +193,22 @@ function updateDB(alertSave, reload) {
     });
 };
 
-
 initialInstruction();
 refreshDisplay(true);
+
+function configRocketPieceAvailability() {
+    let stage = octoStats.stage;
+    let pieces = rocketPieces;
+    let piece;
+    while (stage > 20 && pieces.length > 0) {
+        piece = pieces.shift();
+        stage -= 20;
+        $('#resources-list').append(`<li>Rocket ${piece[1]}:<span class="resource-${piece[0]}"> ${resources[piece[0]]} </span><button><a class="buy-${piece[0]}"><i class="material-icons">attach_money</i></a></button></li>`);
+    }
+    return pieces;
+};
+
+const rocketPiecesToUnlock = configRocketPieceAvailability();
 
 $('#save-progress').click(function() {
     updateDB(false);
@@ -872,7 +886,12 @@ function calculateAttack() {
 };
 
 function unlockRocketPiece() {
-
+    if (rocketPiecesToUnlock.length > 0) {
+        const toastHTML = 'You can now buy a new piece of your Rocket Ship!';
+        M.toast({html:toastHTML});
+        const piece = rocketPiecesToUnlock.shift();
+        $('#resources-list').append(`<li>Rocket ${piece[1]}:<span class="resource-${piece[0]}"> 0 </span><button><a class="buy-${piece[0]}"><i class="material-icons">attach_money</i></a></button></li>`);
+    }
 };
  
 $('.battle-time-div').hide();
