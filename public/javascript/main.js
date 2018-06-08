@@ -44,8 +44,8 @@ const resources ={
     shuttleBody: results.resourcesConfig.shuttle_bodies,
     shuttleComputer: results.resourcesConfig.shuttle_computers
 };
-const rocketPieces = [['feul', 'Feul'], ['thruster', 'Thruster'], 
-['shuttleBody', 'Shuttle Body'], ['shuttleComputer', 'Shuttle Computer']];
+const rocketPieces = [['feul', 'Feul'], ['thruster', 'Thrusters'], 
+['shuttleBody', 'Shuttle Bodies'], ['shuttleComputer', 'Shuttle Computers']];
 const octoStats = {
     level: results.statisticsConfig.level,
     exp: results.statisticsConfig.experience,
@@ -196,6 +196,8 @@ function updateDB(alertSave, reload) {
 initialInstruction();
 refreshDisplay(true);
 
+let rocketPiecesCount = 0;
+
 function configRocketPieceAvailability() {
     let stage = octoStats.stage;
     let pieces = rocketPieces;
@@ -203,6 +205,7 @@ function configRocketPieceAvailability() {
     while (stage > 20 && pieces.length > 0) {
         piece = pieces.shift();
         stage -= 20;
+        rocketPiecesCount++;
         $('#resources-list').append(`<li>Rocket ${piece[1]}:<span class="resource-${piece[0]}"> ${resources[piece[0]]} </span><button><a class="buy-${piece[0]}"><i class="material-icons">attach_money</i></a></button></li>`);
     }
     return pieces;
@@ -457,10 +460,36 @@ function buyResource(itemName, count = 1) {
         //update Screen
         $('.counter').text(resources.points);
         const selector = '.resource-' + [itemName];
-        $(selector).text(resources[itemName]); //?
+        $(selector).text(resources[itemName]);
     } else {
         const toastHTML = `You don't have enough food! You need ${tradeCost[itemName]} food.`;
         M.toast({html:toastHTML});
+    }
+};
+
+function buyRocketPiece(piece) {
+    if (resources[piece] > 1) {
+        const toastHTML = 'You already have that Rocket Piece!';
+        M.toast({html:toastHTML});
+    } else {
+        let canBuy = false;
+        if (resources.worm > 10 && resources.fish > 10 && resources.shark > 10 && resources.dirt > 10 && resources.rock > 10 && resources.steel > 10) {
+            canBuy = true;
+        }
+        if (canBuy) {
+            resources[piece]++;
+            const selector = '.resource-' + [itemName];
+            $(selector).text(resources[itemName]);
+            rocketPiecesCount++;
+            if (rocketPiecesCount === 4) {
+                const toastHTML = 'You won! :D';
+                M.toast({html:toastHTML});
+                youWin();
+            }
+        } else {
+            const toastHTML = 'You must have ten rock, steel, dirt, fish, shark, and worm to buy a Rocket Ship piece!';
+            M.toast({html:toastHTML});
+        }
     }
 };
 
@@ -763,8 +792,23 @@ $('.buy-steel').on('click', function() {
     buyResource('steel');
 });
 
+$('.buy-feul').on('click', function() {
+    buyRocketPiece('feul');
+});
+
+$('.buy-thruster').on('click', function() {
+    buyRocketPiece('thruster');
+});
+
+$('.buy-shuttleBody').on('click', function() {
+    buyRocketPiece('shuttleBody');
+});
+
+$('.buy-shuttleComputer').on('click', function() {
+    buyRocketPiece('shuttleComputer');
+});
+
 $('.have-babby').on('click', function() {
-    //set requirments  Must be lv 11 // have home //  cost 10 fish for first
     if (babby.number < resources.house) {
         if (buyItem('worm', 1)) {
             babby.createBaby();
