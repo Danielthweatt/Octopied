@@ -483,6 +483,9 @@ function buyUpgrade(upgrade) {
             currentUpgradeLevel =  resources.hearts;
             rank = resources.hearts; 
         }
+    } else if (upgrade === 'babby') {
+        currentUpgradeLevel = resources.babbiesLevel;
+        rank = Math.ceil(currentUpgradeLevel / 10);
     } else {
         currentUpgradeLevel =  octoStats.proficiency[upgrade];
         rank = Math.ceil(currentUpgradeLevel / 10);
@@ -490,7 +493,7 @@ function buyUpgrade(upgrade) {
     const rankName = 'Rank' + rank;
     const requiredResource = resourseUpgradeList[upgrade][rankName];
     let resourceQuanityNeeded;
-    if (upgrade === 'heart') {
+    if (upgrade === 'heart' || upgrade === 'babby') {
         resourceQuanityNeeded = 3 * rank;
     } else {
         resourceQuanityNeeded = 3 * octoStats.proficiency[upgrade] * rank;
@@ -500,6 +503,9 @@ function buyUpgrade(upgrade) {
         if (upgrade === 'heart') {
             resources.hearts++;
             octoStats.hp += 10;
+        } else if (upgrade === 'babby') {
+            babby.level++;
+            resources.babbiesLevel++;
         } else {
             octoStats.proficiency[upgrade]++;
         }
@@ -548,6 +554,10 @@ $('.upgrade-defense').on('click', function() {
 
 $('.upgrade-house').on('click', function() {
     buildHouse();
+});
+
+$('.upgrade-babby').on('click', function() {
+    buyUpgrade('babby');
 });
 
 $('.collect-worm').on('click', function() {
@@ -634,7 +644,7 @@ function collectWorms() {
     $('.resource-worm').text(resources.worm);
     if (resources.points > 0 && collectorStatus.worm) {
         getWorms = setTimeout(function() {
-            resources.worm++;
+            resources.worm += babby.level;
             collectWorms();
         }, (collecitonTimeModifer * resourceDiffuculityRank.worm));
     }
@@ -646,7 +656,7 @@ function collectFish() {
     $('.resource-fish').text(resources.fish);
     if (resources.points > 0 && collectorStatus.fish) {
         getFish = setTimeout(function() {
-            resources.fish++;
+            resources.fish += babby.level;
             collectFish();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.fish));
     }
@@ -658,7 +668,7 @@ function collectShark() {
     $('.resource-shark').text(resources.shark);
     if (resources.points > 0 && collectorStatus.shark) {
         getSharks = setTimeout(function() {
-            resources.shark++;
+            resources.shark += babby.level;
             collectShark();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.shark));
     }
@@ -670,7 +680,7 @@ function collectDirt() {
     $('.resource-dirt').text(resources.dirt);
     if (resources.points > 0 && collectorStatus.dirt) {
         getDirt = setTimeout(function() {
-            resources.dirt++;
+            resources.dirt += babby.level;
             collectDirt();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.dirt));
     }
@@ -682,7 +692,7 @@ function collectRock() {
     $('.resource-rock').text(resources.rock);
     if (resources.points > 0 && collectorStatus.rock) {
         getRocks = setTimeout(function() {
-            resources.rock++;
+            resources.rock += babby.level;
             collectRock();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.rock));
     }
@@ -694,7 +704,7 @@ function collectSteel() {
     $('.resource-steel').text(resources.steel);
     if (resources.points > 0 && collectorStatus.steel) {
         getSteel = setTimeout(function() {
-            resources.steel++;
+            resources.steel += babby.level;
             collectSteel();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.steel));
     }
@@ -806,7 +816,7 @@ function getAttacked() {
         } else {
             octoStats.hp -= 3;
             if (firstBossAttack) {
-                const toastHTML = `You might want to upgrade your defense!`;
+                const toastHTML = `You might want to upgrade your defense! Attacks will hurt you less.`;
                 M.toast({html:toastHTML});
             }
             firstBossAttack = false;
@@ -817,7 +827,7 @@ function getAttacked() {
         } else {
             octoStats.hp -= 1;
             if (firstMonsterAttack) {
-                const toastHTML = `You might want to upgrade your defense!`;
+                const toastHTML = `You might want to upgrade your defense! Attacks will hurt you less.`;
                 M.toast({html:toastHTML});
             }
             firstMonsterAttack = false;
