@@ -823,19 +823,21 @@ function getAttacked() {
             firstMonsterAttack = false;
         }
     }
-    if (octoStats.hp % 10 === 0) {
-        resources.hearts -= 1;
+    if (octoStats.hp < 20 && resources.hearts === 3) {
+        resources.hearts = 2;
         refreshDisplay(false);
-        if (resources.hearts > 0) {
-            const toastHTML = `You are taking too much damage! You lost a heart!`;
-            M.toast({html:toastHTML});
-        }
-        if (resources.hearts === 1) {
-            const toastHTML = `You may want to purchase more hearts!`;
-            M.toast({html:toastHTML});
-        }
+        const toastHTML = `You are taking too much damage! You lost a heart!`;
+        M.toast({html:toastHTML});
     }
-    if (octoStats.hp === 0) {
+    if (octoStats.hp < 10 && resources.hearts === 2) {
+        resources.hearts = 1;
+        refreshDisplay(false);
+        let toastHTML = `You are taking too much damage! You lost a heart!`;
+        M.toast({html:toastHTML});
+        toastHTML = `You may want to purchase more hearts!`;
+        M.toast({html:toastHTML});
+    }
+    if (octoStats.hp < 1) {
         const toastHTML = `You lost all your hearts. You lost. :(`;
         M.toast({html: toastHTML});
         youLose();
