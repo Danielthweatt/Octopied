@@ -161,11 +161,11 @@ function refreshDisplay(onLoad) {
 };
 
 
-function updateDB(alertSave) {
+function updateDB(alertSave, reload) {
     if (alertSave) {
         const toastHTML = 'Your progress is being saved!';
         M.toast({html: toastHTML});
-    };
+    }
     $.ajax("/game", {
         type: "PUT",
         data: {
@@ -174,8 +174,13 @@ function updateDB(alertSave) {
             collectorStatus: collectorStatus
         }
     }).then(function() {
-        const toastHTML = 'Your progress has been saved!';
-        M.toast({html: toastHTML});
+        if (alertSave) {
+            const toastHTML = 'Your progress has been saved!';
+            M.toast({html: toastHTML});
+        }
+        if (reload === 'reload') {
+            location.reload();
+        }
     }).catch(function(err) {
         console.log(`Oh boy, it broke: ${err}`);
     });
@@ -189,7 +194,11 @@ $('#save-progress').click(function() {
     updateDB(false);
 });
 
-setInterval(function(){updateDB(true);}, 180000);
+$('#restart').click(function() {
+    startOver();
+});
+
+const autoUpdate = setInterval(function(){updateDB(true);}, 180000);
 
 // Could add a generateor to create custom kids and indepent levels ** strech
 const babby = {
@@ -619,85 +628,77 @@ $('.collect-steel').on('click', function() {
     M.toast({html:toastHTML});
 });
 
+let getWorms;
+
 function collectWorms() {
     $('.resource-worm').text(resources.worm);
     if (resources.points > 0 && collectorStatus.worm) {
-        setTimeout(function() {
-            // if (collectorStatus.worm) {
-                resources.worm++;
-                collectWorms();
-            // }
+        getWorms = setTimeout(function() {
+            resources.worm++;
+            collectWorms();
         }, (collecitonTimeModifer * resourceDiffuculityRank.worm));
     }
 };
 
+let getFish;
+
 function collectFish() {
     $('.resource-fish').text(resources.fish);
     if (resources.points > 0 && collectorStatus.fish) {
-        setTimeout(function() {
-            // if (collectorStatus.fish) {
-                resources.fish++;
-                collectFish();
-            // }
+        getFish = setTimeout(function() {
+            resources.fish++;
+            collectFish();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.fish));
     }
 };
 
+let getSharks;
+
 function collectShark() {
     $('.resource-shark').text(resources.shark);
     if (resources.points > 0 && collectorStatus.shark) {
-        setTimeout(function() {
+        getSharks = setTimeout(function() {
             resources.shark++;
             collectShark();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.shark));
     }
 };
 
+let getDirt;
+
 function collectDirt() {
     $('.resource-dirt').text(resources.dirt);
     if (resources.points > 0 && collectorStatus.dirt) {
-        setTimeout(function() {
+        getDirt = setTimeout(function() {
             resources.dirt++;
             collectDirt();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.dirt));
     }
 };
 
+let getRocks;
+
 function collectRock() {
     $('.resource-rock').text(resources.rock);
     if (resources.points > 0 && collectorStatus.rock) {
-        setTimeout(function() {
+        getRocks = setTimeout(function() {
             resources.rock++;
             collectRock();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.rock));
     }
 };
 
+let getSteel;
+
 function collectSteel() {
     $('.resource-steel').text(resources.steel);
     if (resources.points > 0 && collectorStatus.steel) {
-        setTimeout(function() {
+        getSteel = setTimeout(function() {
             resources.steel++;
             collectSteel();
         }, (collecitonTimeModifer  * resourceDiffuculityRank.steel));
     }
 };
-
-//?
-// function collectResource(type) {
-//     $('.resource-' + type).text(resources[type]);
-//     if(collectorStatus[type]) {
-//         setTimeout(function() {
-//             resources[type]++;
-//             console.log("resource is added", resources);
-//             collectResource(type);
-
-//         }, (collecitonTimeModifer));
-   
-//     }
-// };
-
-
 
 /**  
  * this is a function that will collect the reouces over time
@@ -783,11 +784,12 @@ Need a text animation to display text (for level ups and other events)
 
 
 */
+let hungryBabies;
 
 function theHunger() {
     babby.feed();
     // console.log('The hunger strikes');
-    setTimeout(() => {
+    hungryBabies = setTimeout(() => {
         theHunger();
     }, 5000);
 };
@@ -1055,13 +1057,62 @@ changeStage();
 boss.setMonster();
 
 function youWin() {
-    // a function that informs you that you win and resets your data so you can play again
-    // called if you unlock the ability to buy your rocket ship parts and actually buy them
+    alert('You won! You have aqcuired what you need to build your rocket ship to fly to your home planet.');
+    startOver();
 };
 
 function youLose() {
-    // a function that informs you that you lose and resets your data so you can play again
-    // called if you lose all your health or (maybe) if your babies get too hungry
+    clearInterval(autoUpdate);
+    clearTimeout(hungryBabies);
+    clearTimeout(getWorms);
+    clearTimeout(getFish);
+    clearTimeout(getSharks);
+    clearTimeout(getDirt);
+    clearTimeout(getRocks);
+    clearTimeout(getSteel);
+    alert('You lost! You are back to the stage you were at when you last saved your progress.');
+    location.reload();
+};
+
+
+function startOver() {
+    clearInterval(autoUpdate);
+    clearTimeout(hungryBabies);
+    clearTimeout(getWorms);
+    clearTimeout(getFish);
+    clearTimeout(getSharks);
+    clearTimeout(getDirt);
+    clearTimeout(getRocks);
+    clearTimeout(getSteel);
+    resources.points = 0;
+    resources.hearts = 3;
+    resources.babbies = 0;
+    resources.babbiesActive = 0;
+    resources.babbiesAvailable = 0;
+    resources.babbiesHunger = 0;
+    resources.babbiesLevel = 1;
+    resources.worm = 0;
+    resources.fish = 0;
+    resources.shark = 0;
+    resources.dirt = 0;
+    resources.rock = 0;
+    resources.steel = 0;
+    resources.house = 0;
+    octoStats.level = 1;
+    octoStats.exp = 0;
+    octoStats.prestidge = 0;
+    octoStats.stage = 1;
+    octoStats.hp = 30;
+    octoStats.proficiency.food = 1;
+    octoStats.proficiency.attack = 1;
+    octoStats.proficiency.defense = 1;
+    collectorStatus.dirt = false;
+    collectorStatus.rock = false;
+    collectorStatus.steel = false;
+    collectorStatus.worm = false;
+    collectorStatus.fish = false;
+    collectorStatus.shark = false;
+    updateDB(false, 'reload');
 };
 
 
