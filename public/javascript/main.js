@@ -38,8 +38,13 @@ const resources ={
     dirt: results.resourcesConfig.dirt,
     rock: results.resourcesConfig.rocks,
     steel: results.resourcesConfig.steel,
-    house: results.resourcesConfig.houses
+    house: results.resourcesConfig.houses,
+    feul: results.resourcesConfig.feul,
+    thruster: results.resourcesConfig.thrusters,
+    shuttleBody: results.resourcesConfig.shuttle_bodies,
+    shuttleComputer: results.resourcesConfig.shuttle_computers
 };
+const rocketPieces = [feul, thruster, shuttleBody, shuttleComputer];
 const octoStats = {
     level: results.statisticsConfig.level,
     exp: results.statisticsConfig.experience,
@@ -48,7 +53,6 @@ const octoStats = {
     hp: results.statisticsConfig.hp,
     proficiency :{
         food: results.statisticsConfig.food_proficiency,
-        gather: results.statisticsConfig.gather_proficiency,
         attack: results.statisticsConfig.attack_proficiency,
         defense: results.statisticsConfig.defense_proficiency
     },
@@ -111,6 +115,8 @@ function initialInstruction() {
         const toastHTML = 'Click on the monster to attack it!';
         M.toast({html: toastHTML});
     }
+    const toastHTML = 'Buy what you need to assemble your rocket to win (and get to your home planet!).';
+    M.toast({html: toastHTML});
 };
 
 function refreshCollectorStatuses(onLoad) {
@@ -864,6 +870,10 @@ function calculateAttack() {
     // console.log(dammage);
     return dammage;
 };
+
+function unlockRocketPiece() {
+
+};
  
 $('.battle-time-div').hide();
 
@@ -887,7 +897,7 @@ const boss = {
         $('.counter').text(resources.points);
         levelup();
         if (octoStats.stage % 20 === 0) {
-            // get ability to purchase a new rocket ship part
+            unlockRocketPiece();
         }
         boss.nextStage();
     },
@@ -1110,6 +1120,10 @@ function startOver() {
     resources.rock = 0;
     resources.steel = 0;
     resources.house = 0;
+    resources.feul = 0;
+    resources.thruster = 0;
+    resources.shuttleBody = 0;
+    resources.shuttleComputer = 0;
     octoStats.level = 1;
     octoStats.exp = 0;
     octoStats.prestidge = 0;

@@ -29,10 +29,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             defaultValue: 1
         },
-        gather_proficiency: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1
-        },
         attack_proficiency: {
             type: DataTypes.INTEGER,
             defaultValue: 1

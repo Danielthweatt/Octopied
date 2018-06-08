@@ -329,7 +329,11 @@ module.exports = function(app, passport, db){
             dirt: parseInt(req.body.resources.dirt),
             rocks: parseInt(req.body.resources.rock),
             steel: parseInt(req.body.resources.steel),
-            houses: parseInt(req.body.resources.house)
+            houses: parseInt(req.body.resources.house),
+            feul: parseInt(req.body.resources.feul),
+            thrusters: parseInt(req.body.resources.thruster),
+            shuttle_bodies: parseInt(req.body.resources.shuttleBody),
+            shuttle_computers: parseInt(req.body.resources.shuttleComputer)
         };
         Resources.update(resources,
         {
