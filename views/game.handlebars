@@ -17,6 +17,30 @@
                 </a>
             </div>
         </div>
+        <div class="modal" id="modal2">
+            <div class="modal-content">
+                <h3>You lost! Your babies got too hungry.</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
+        <div class="modal" id="modal3">
+            <div class="modal-content">
+                <h3>You lost! You ran out of hearts.</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
+        <div class="modal" id="modal4">
+            <div class="modal-content">
+                <h3>You won!! You bought all you need to construct your Rocket Ship and go to your home planet.</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
         <div class="side-bar">
             <div class="currnet-level">
                 <p>Level:</p>
@@ -166,7 +190,7 @@
         $('.fixed-action-btn').floatingActionButton();
         {            
                 $("#settings").on("click", function () {
-                    $(".modal").modal();
+                    $("#setting").modal();
                 });
         }
         $("#shop").on("click", function () {

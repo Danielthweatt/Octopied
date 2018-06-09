@@ -106,6 +106,29 @@ const resourseUpgradeList = {
         Rank3: results.gameConfig.baby_RUL_rank_three 
     }
 };
+const wonOrLost = {
+    lostOne = results.statisticsConfig.lost_one,
+    lostTwo = results.statisticsConfig.lost_two,
+    won = results.statisticsConfig.won
+};
+
+if (wonOrLost.lostOne) {
+    $('#modal2').modal();
+    $('#modal2').modal('open');
+    wonOrLost.lostOne = false;
+}
+
+if (wonOrLost.lostTwo) {
+    $('#modal3').modal();
+    $('#modal3').modal('open');
+    wonOrLost.lostTwo = false;
+}
+
+if (wonOrLost.won) {
+    $('#modal4').modal();
+    $('#modal4').modal('open');
+    wonOrLost.won = false;
+}
 
 function initialInstruction() {
     if (resources.points === 0) {
@@ -178,7 +201,8 @@ function updateDB(alertSave, reload) {
         data: {
             resources: resources,
             octoStats: octoStats,
-            collectorStatus: collectorStatus
+            collectorStatus: collectorStatus,
+            wonOrLost: wonOrLost
         }
     }).then(function() {
         if (alertSave) {
@@ -281,9 +305,7 @@ const babby = {
                 M.toast({html: toastHTML});
             }
             if (this.hunger % 60 === 0) {
-                const toastHTML = `Your babies were too hungry. You lost. :(`;
-                M.toast({html: toastHTML});
-                youLose();
+                youLose(1);
             }
         }
     },
@@ -491,8 +513,6 @@ function buyRocketPiece(piece) {
             refreshDisplay(false);
             rocketPiecesCount++;
             if (rocketPiecesCount === 4) {
-                const toastHTML = 'You won! :D';
-                M.toast({html:toastHTML});
                 youWin();
             }
         } else {
@@ -921,9 +941,7 @@ function getAttacked() {
         M.toast({html:toastHTML});
     }
     if (octoStats.hp < 1) {
-        const toastHTML = `You lost all your hearts. You lost. :(`;
-        M.toast({html: toastHTML});
-        youLose();
+        youLose(2);
     }
 };
 
@@ -1151,11 +1169,16 @@ changeStage();
 boss.setMonster();
 
 function youWin() {
-    alert('You won! You have aqcuired what you need to build your rocket ship to fly to your home planet.');
+    wonOrLost.won = true;
     startOver();
 };
 
-function youLose() {
+function youLose(typeOfLoss) {
+    if (typeOfLoss === 1) {
+        wonOrLost.lostOne = true;
+    } else if (typeOfLoss === 2) {
+        wonOrLoss.lostTwo = true;
+    }
     clearInterval(autoUpdate);
     clearTimeout(hungryBabies);
     clearTimeout(getWorms);
@@ -1164,7 +1187,6 @@ function youLose() {
     clearTimeout(getDirt);
     clearTimeout(getRocks);
     clearTimeout(getSteel);
-    alert('You lost! You are back to the stage you were at when you last saved your progress.');
     location.reload();
 };
 

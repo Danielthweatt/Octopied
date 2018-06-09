@@ -73,6 +73,18 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        lost_one: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        lost_two: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        won: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         user_id: {
             type: DataTypes.INTEGER,
             unique: true,
