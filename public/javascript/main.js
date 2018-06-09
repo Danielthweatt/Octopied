@@ -107,9 +107,9 @@ const resourseUpgradeList = {
     }
 };
 const wonOrLost = {
-    lostOne = results.statisticsConfig.lost_one,
-    lostTwo = results.statisticsConfig.lost_two,
-    won = results.statisticsConfig.won
+    lostOne: results.statisticsConfig.lost_one,
+    lostTwo: results.statisticsConfig.lost_two,
+    won: results.statisticsConfig.won
 };
 
 if (wonOrLost.lostOne) {
@@ -1104,7 +1104,6 @@ $(".boss").click(function() {
        attackCounter = 1;
       
    }
-   console.log(attackCounter);
     $('.slash-1').one(animationEvent,
                 function(event) {
         $(this).remove();
@@ -1177,7 +1176,7 @@ function youLose(typeOfLoss) {
     if (typeOfLoss === 1) {
         wonOrLost.lostOne = true;
     } else if (typeOfLoss === 2) {
-        wonOrLoss.lostTwo = true;
+        wonOrLost.lostTwo = true;
     }
     clearInterval(autoUpdate);
     clearTimeout(hungryBabies);
