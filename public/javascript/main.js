@@ -217,9 +217,6 @@ function updateDB(alertSave, reload) {
     });
 };
 
-initialInstruction();
-refreshDisplay(true);
-
 let rocketPiecesCount = 0;
 
 function configRocketPieceAvailability() {
@@ -340,12 +337,6 @@ const babby = {
         }
     }
 };
-
-if (resources.babbies > 0) {
-    const toastHTML = `Your baby${(resources.babbies === 0) ? ' is' : 's are'} hungry! They will eat your food.`;
-    M.toast({html:toastHTML});
-    theHunger();
-}
 
 function startGivenCollector(resource) {
     switch(resource) {
@@ -846,11 +837,11 @@ Need a text animation to display text (for level ups and other events)
 
 
 */
+
 let hungryBabies;
 
 function theHunger() {
     babby.feed();
-    // console.log('The hunger strikes');
     hungryBabies = setTimeout(() => {
         theHunger();
     }, 5000);
@@ -1122,6 +1113,13 @@ $(".boss").click(function() {
   }
 
 changeStage();
+initialInstruction();
+refreshDisplay(true);
+if (resources.babbies > 0) {
+    const toastHTML = `Your baby${(resources.babbies === 0) ? ' is' : 's are'} hungry! They will eat your food.`;
+    M.toast({html:toastHTML});
+    theHunger();
+}
 
 boss.setMonster();
 
