@@ -949,8 +949,7 @@ function calculateAttack() {
     const crit = (Math.random() > .11) ? 1 : 2.5;
     const dammage =  ((octoStats.proficiency.attack * 3) + (octoStats.level * 2)) * ((octoStats.prestidge * .1) + 1) * crit;
     if (crit === 2.5) {
-        const toastHTML = 'Critical Hit!';
-        M.toast({html:toastHTML});
+        console.log('Critical hit!');
     }
     // console.log(dammage);
     return dammage;
@@ -1178,15 +1177,7 @@ function youLose(typeOfLoss) {
     } else if (typeOfLoss === 2) {
         wonOrLost.lostTwo = true;
     }
-    clearInterval(autoUpdate);
-    clearTimeout(hungryBabies);
-    clearTimeout(getWorms);
-    clearTimeout(getFish);
-    clearTimeout(getSharks);
-    clearTimeout(getDirt);
-    clearTimeout(getRocks);
-    clearTimeout(getSteel);
-    location.reload();
+    startOver();
 };
 
 
